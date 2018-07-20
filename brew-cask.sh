@@ -46,3 +46,5 @@ brew cask install visual-studio-code
 
 brew cask install torbrowser
 brew cask install wireshark
+
+brew cask install google-chrome
