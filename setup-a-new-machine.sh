@@ -76,9 +76,6 @@ ssh-add -k ~/.ssh/id_rsa
 pbcopy < ~/.ssh/id_rsa.pub
 
 # https://help.github.com/articles/generating-a-new-gpg-key/
-
-# Setup gpg for github
-
 # https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work
 
 # Generate GPG Key
@@ -87,11 +84,9 @@ gpg --list-secret-keys --keyid-format LONG
 
 # GPG key to GitHub
 gpg --armor --export # "sec id"
-
 git config --global user.signingkey # "sec id"
 
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
-
 
 ### end of GitHub
 ##############################################################################################################
