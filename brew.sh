@@ -84,6 +84,10 @@ pbcopy < ~/.ssh/id_rsa.pub
 # Generate GPG Key
 gpg --full-generate-key
 gpg --list-secret-keys --keyid-format LONG
+
+# GPG key to GitHub
+gpg --armor --export # "sec id"
+
 git config --global user.signingkey # "sec id"
 
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
