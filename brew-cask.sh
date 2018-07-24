@@ -48,3 +48,4 @@ brew cask install torbrowser
 brew cask install wireshark
 
 brew cask install google-chrome
+brew cask install slack
