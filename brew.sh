@@ -97,6 +97,8 @@ brew install ssh-copy-id
 # install JSON
 brew install jq
 
+brew install glances
+
 # build process
 brew install heroku
 brew install babel
