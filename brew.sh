@@ -34,6 +34,7 @@ brew install grc
 
 # Docker
 brew install docker docker-compose docker-machine
+brew install kubernetes-cli
 
 # Install `wget` with IRI support.
 brew install wget --with-iri
