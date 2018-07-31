@@ -95,6 +95,7 @@ gpg --armor --export # "sec id"
 git config --global user.signingkey # "sec id"
 git config --global user.name "James Davis"
 git config --global user.email "ragingsmurf@gmail.com"
+git config --global commit.gpgsign true
 
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 
