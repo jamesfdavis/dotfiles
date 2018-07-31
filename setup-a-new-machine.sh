@@ -43,7 +43,6 @@ fi
 ##############################################################################################################
 
 
-
 ##############################################################################################################
 ### homebrew!
 
@@ -88,16 +87,7 @@ pbcopy < ~/.ssh/id_rsa.pub
 
 # Generate GPG Key
 gpg --full-generate-key
-gpg --list-secret-keys --keyid-format LONG
-
-# GPG key to GitHub
 gpg --armor --export # "sec id"
-git config --global user.signingkey # "sec id"
-git config --global user.name "James Davis"
-git config --global user.email "ragingsmurf@gmail.com"
-git config --global commit.gpgsign true
-
-echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 
 ### end of GitHub
 ##############################################################################################################
@@ -110,9 +100,6 @@ echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 # github.com/jamiew/git-friendly
 # the `push` command which copies the github compare URL to my clipboard is heaven
 # bash < <( curl https://raw.githubusercontent.com/jamiew/git-friendly/master/install.sh)
-
-# NVM - Node Version Manager
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 
 # # Type `git open` to open the GitHub page or website for a repository.
 # npm install -g git-open
@@ -232,8 +219,21 @@ sh .macos
 #   move git credentials into ~/.gitconfig.local    	http://stackoverflow.com/a/13615531/89484
 #   now .gitconfig can be shared across all machines and only the .local changes
 
+# NVM - Node Version Manager
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
 # bootstrap it up!
 ./bootstrap.sh
+
+# GPG key
+gpg --list-secret-keys --keyid-format LONG
+
+git config --global user.signingkey # "sec id"
+git config --global user.name "James Davis"
+git config --global user.email "ragingsmurf@gmail.com"
+git config --global commit.gpgsign true
+
+echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 
 # add manual symlink for .ssh/config and probably .config/fish
 
