@@ -86,8 +86,6 @@ pbcopy < ~/.ssh/id_rsa.pub
 # https://help.github.com/articles/generating-a-new-gpg-key/
 # https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work
 
-
-
 # Generate GPG Key
 gpg --full-generate-key
 gpg --list-secret-keys --keyid-format LONG
