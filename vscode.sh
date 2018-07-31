@@ -15,3 +15,4 @@ code --install-extension shakram02.bash-beautify
 code --install-extension xabikos.JavaScriptSnippets
 code --install-extension haaaad.ansible
 code --install-extension vstirbu.vscode-mermaid-preview
+code --install-extension dracula-theme.theme-dracula
