@@ -32,6 +32,9 @@ fi;
 # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
 brew install grc
 
+# Docker
+brew install docker docker-compose docker-machine
+
 # Install `wget` with IRI support.
 brew install wget --with-iri
 
