@@ -2,6 +2,9 @@
 
 # Install command-line tools using Homebrew
 
+# Dependency
+brew cask install java
+
 # Make sure we’re using the latest Homebrew
 brew update
 
@@ -32,7 +35,7 @@ fi;
 # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
 brew install grc
 
-# Docker
+# Orchestration
 brew install docker docker-compose docker-machine
 brew install kubernetes-cli
 
@@ -70,6 +73,7 @@ brew install xz
 
 # Install other useful binaries.
 brew install ack
+
 #brew install exiv2
 brew install git
 brew install git-lfs
@@ -100,17 +104,14 @@ brew install ssh-copy-id
 
 # install JSON
 brew install jq
-
 brew install glances
 
 # build process
 brew install heroku
-brew install babel
+# brew install babel
 
-# # mtr - ping & traceroute. best.
+# mtr - ping & traceroute. best.
 brew install mtr
-
-brew install git
 brew install pidcat   # colored logcat guy
 
 # Remove outdated versions from the cellar

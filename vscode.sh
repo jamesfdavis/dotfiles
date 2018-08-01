@@ -16,3 +16,6 @@ code --install-extension xabikos.JavaScriptSnippets
 code --install-extension haaaad.ansible
 code --install-extension vstirbu.vscode-mermaid-preview
 code --install-extension dracula-theme.theme-dracula
+code --install-extension alefragnani.project-manager
+code --install-extension hollowtree.vue-snippets
+code --install-extension quicktype.quicktype
