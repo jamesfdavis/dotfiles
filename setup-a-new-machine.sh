@@ -144,6 +144,7 @@ gpg --armor --export # "sec id"
 npm install -g tldr
 
 npm install -g clinic
+npm install -g autocannon
 
 # github.com/rupa/z   - oh how i love you
 # git clone https://github.com/rupa/z.git ~/code/z
