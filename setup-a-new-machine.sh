@@ -230,13 +230,6 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 
 # GPG key
 gpg --list-secret-keys --keyid-format LONG
-
-# in /.extra file
-# git config --global user.signingkey # "sec id"
-# git config --global user.name "James Davis"
-# git config --global user.email "ragingsmurf@gmail.com"
-# git config --global commit.gpgsign true
-
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 
 # add manual symlink for .ssh/config and probably .config/fish
