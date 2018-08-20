@@ -45,6 +45,9 @@ brew install wget --with-iri
 # Install GnuPG to enable PGP-signing commits.
 brew install gnupg
 
+# GoLang
+brew install go
+
 # Install some CTF tools; see https://github.com/ctfs/write-ups.
 brew install aircrack-ng
 brew install bfg
