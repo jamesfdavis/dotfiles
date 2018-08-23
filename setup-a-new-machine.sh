@@ -238,6 +238,10 @@ git config --global user.signingkey # "sec id"
 
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
 
+# Stocker Checker
+curl -o ~/.ticker.sh https://raw.githubusercontent.com/pstadler/ticker.sh/master/ticker.sh
+chmod +x .ticker.sh
+
 # add manual symlink for .ssh/config and probably .config/fish
 
 ###
