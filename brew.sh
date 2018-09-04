@@ -76,6 +76,7 @@ brew install xz
 
 # Install other useful binaries.
 brew install ack
+brew install bat
 
 #brew install exiv2
 brew install git
