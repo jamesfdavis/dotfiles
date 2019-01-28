@@ -36,14 +36,23 @@ fi;
 brew install grc
 
 # Orchestration
-brew install docker docker-compose docker-machine
+brew install 
+
+docker-compose docker-machine
 brew install kubernetes-cli
+
+#Docker Dive
+brew tap wagoodman/dive
+brew install dive
 
 # Install `wget` with IRI support.
 brew install wget --with-iri
 
 # Install GnuPG to enable PGP-signing commits.
 brew install gnupg
+
+# GoLang
+brew install go
 
 # Install some CTF tools; see https://github.com/ctfs/write-ups.
 brew install aircrack-ng
@@ -73,6 +82,7 @@ brew install xz
 
 # Install other useful binaries.
 brew install ack
+brew install bat
 
 #brew install exiv2
 brew install git

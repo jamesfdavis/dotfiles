@@ -225,12 +225,22 @@ sh .macos
 # NVM - Node Version Manager
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
+# GVM - Go Version Manager
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+
 # bootstrap it up!
 ./bootstrap.sh
 
 # GPG key
 gpg --list-secret-keys --keyid-format LONG
+
+git config --global user.signingkey # "sec id"
+
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
+
+# Stocker Checker
+curl -o ~/.ticker.sh https://raw.githubusercontent.com/pstadler/ticker.sh/master/ticker.sh
+chmod +x .ticker.sh
 
 # add manual symlink for .ssh/config and probably .config/fish
 
