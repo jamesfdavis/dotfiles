@@ -3,6 +3,9 @@
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
+	# View format for invoice export
+	linv = !"git log --pretty=format:'%h from %cn on %ad | %s' --since='15 days ago' --date=short"
+
 	# View the current working tree status using the short format
 	s = status -s
 
@@ -188,3 +191,6 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
+[gpg]
+	program = gpg
