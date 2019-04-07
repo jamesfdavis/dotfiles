@@ -231,6 +231,8 @@ bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/bins
 # bootstrap it up!
 ./bootstrap.sh
 
+# Yubikey git commit test.
+
 # GPG key
 gpg --list-secret-keys --keyid-format LONG
 
