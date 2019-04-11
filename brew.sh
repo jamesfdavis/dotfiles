@@ -18,6 +18,8 @@ brew install moreutils
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
 brew install findutils
 
+
+
 # GNU `sed`, overwriting the built-in `sed`
 brew install gnu-sed --with-default-names
 
@@ -50,6 +52,9 @@ brew install wget --with-iri
 
 # Install GnuPG to enable PGP-signing commits.
 brew install gnupg
+
+# Yubikey Tools
+brew install yubikey-personalization hopenpgp-tools ykman pinentry-mac
 
 # GoLang
 brew install go
