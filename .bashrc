@@ -1,5 +1,4 @@
-# eval `ssh-agent -s`
-
-eval $( gpg-agent --daemon --enable-ssh-support )
+gpgconf --launch gpg-agent
 
 [ -n "$PS1" ] && source ~/.bash_profile;
+
