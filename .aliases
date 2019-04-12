@@ -25,6 +25,8 @@ else # macOS `ls`
 	export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 fi
 
+export BLOCKSIZE="3"
+
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
 
