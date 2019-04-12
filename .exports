@@ -33,4 +33,5 @@ export MANPAGER='less -X';
 # https://stackoverflow.com/a/42265848/96656
 export GPG_TTY=$(tty);
 
+# GPG Config
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
