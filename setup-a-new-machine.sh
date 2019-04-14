@@ -82,6 +82,10 @@ fi
 # # Copy out public key
 # pbcopy < ~/.ssh/id_rsa.pub
 
+# gpg-agent connections.
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
 # GnuPG Setup
 mkdir ~/.gnupg
 cp ./gpg-agent.conf ~/.gnupg/gpg-agent.conf
