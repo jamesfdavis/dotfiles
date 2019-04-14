@@ -83,6 +83,8 @@ fi
 # pbcopy < ~/.ssh/id_rsa.pub
 
 # GnuPG Setup
+mkdir ~/.gnupg
+cp ./gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 gpg --import ~/Downloads/yubikey-pubkey.txt
 gpg --edit-key $KEYID
