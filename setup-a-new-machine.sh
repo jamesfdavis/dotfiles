@@ -74,20 +74,27 @@ fi
 ##############################################################################################################
 ### GitHub!
 
-# Generate Host Client Key
-ssh-keygen -t rsa -b 4096 -C "ragingsmurf@gmail.com"
-eval "$(ssh-agent -s)"
-ssh-add -k ~/.ssh/id_rsa
+# # Generate Host Client Key
+# ssh-keygen -t rsa -b 4096 -C "ragingsmurf@gmail.com"
+# eval "$(ssh-agent -s)"
+# ssh-add -k ~/.ssh/id_rsa
 
-# Copy out public key
-pbcopy < ~/.ssh/id_rsa.pub
+# # Copy out public key
+# pbcopy < ~/.ssh/id_rsa.pub
+
+# GnuPG Setup
+
+gpg --import ~/Downloads/yubikey-pubkey.txt
+gpg --edit-key $KEYID
+
+gpg>trust
 
 # https://help.github.com/articles/generating-a-new-gpg-key/
 # https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work
 
 # Generate GPG Key
-gpg --full-generate-key
-gpg --armor --export # "sec id"
+# gpg --full-generate-key
+# gpg --armor --export # "sec id"
 
 ### end of GitHub
 ##############################################################################################################
@@ -141,17 +148,17 @@ gpg --armor --export # "sec id"
 # npm i -g google-maps-direction-cli
 
 # simpler man pages
-npm install -g tldr
+# npm install -g tldr
 
-npm install -g clinic
-npm install -g autocannon
+# npm install -g clinic
+# npm install -g autocannon
 
 # github.com/rupa/z   - oh how i love you
 # git clone https://github.com/rupa/z.git ~/code/z
 # consider reusing your current .z file if possible. it's painful to rebuild :)
 # z is hooked up in .bash_profile
 
-mkdir ~/projects
+mkdir ~/Projects
 
 # sudo easy_install pip
 # sudo pip install virtualenv
