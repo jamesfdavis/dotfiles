@@ -82,19 +82,18 @@ fi
 # # Copy out public key
 # pbcopy < ~/.ssh/id_rsa.pub
 
-# gpg-agent connections.
-export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpg-connect-agent updatestartuptty /bye
-
 # GnuPG Setup
 mkdir ~/.gnupg
 cp ./gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
 gpg --import ~/Downloads/yubikey-pubkey.txt
 gpg --edit-key $KEYID
 
-gpg>trust
+# Trust public cert.
+# gpg>trust
 
 # https://help.github.com/articles/generating-a-new-gpg-key/
 # https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work
@@ -248,15 +247,17 @@ bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/bins
 # Yubikey git commit testing.
 
 # GPG key
-gpg --list-secret-keys --keyid-format LONG
+# gpg --list-secret-keys --keyid-format LONG
 
-git config --global user.signingkey # "sec id"
+# git config --global user.signingkey # "sec id"
 
 echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
+echo 'export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)'
+
 
 # Stocker Checker
-curl -o ~/.ticker.sh https://raw.githubusercontent.com/pstadler/ticker.sh/master/ticker.sh
-chmod +x .ticker.sh
+# curl -o ~/.ticker.sh https://raw.githubusercontent.com/pstadler/ticker.sh/master/ticker.sh
+# chmod +x .ticker.sh
 
 # add manual symlink for .ssh/config and probably .config/fish
 
