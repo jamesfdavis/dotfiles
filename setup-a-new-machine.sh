@@ -19,7 +19,7 @@ if ! xcode-select --print-path &> /dev/null; then
         sleep 5
     done
 
-    print_result $? 'Install XCode Command Line Tools'
+    # print_result $? 'Install XCode Command Line Tools'
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -28,7 +28,7 @@ if ! xcode-select --print-path &> /dev/null; then
     # https://github.com/alrra/dotfiles/issues/13
 
     sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
-    print_result $? 'Make "xcode-select" developer directory point to Xcode'
+    # print_result $? 'Make "xcode-select" developer directory point to Xcode'
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -36,7 +36,7 @@ if ! xcode-select --print-path &> /dev/null; then
     # https://github.com/alrra/dotfiles/issues/10
 
     sudo xcodebuild -license
-    print_result $? 'Agree with the XCode Command Line Tools licence'
+    # print_result $? 'Agree with the XCode Command Line Tools licence'
 
 fi
 ###
@@ -65,26 +65,17 @@ fi
 ##############################################################################################################
 ### Visual Studio
  
-./vscode.sh
+# ./vscode.sh
 
 ### end of VS
 ##############################################################################################################
 
 
 ##############################################################################################################
-### GitHub!
+### GnuPG Setup
 
-# # Generate Host Client Key
-# ssh-keygen -t rsa -b 4096 -C "ragingsmurf@gmail.com"
-# eval "$(ssh-agent -s)"
-# ssh-add -k ~/.ssh/id_rsa
-
-# # Copy out public key
-# pbcopy < ~/.ssh/id_rsa.pub
-
-# GnuPG Setup
 mkdir ~/.gnupg
-cp ./gpg-agent.conf ~/.gnupg/gpg-agent.conf
+cp ./init/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -109,6 +100,9 @@ gpg --edit-key $KEYID
 ##############################################################################################################
 ### install of common things
 ###
+
+# NVM - Node Version Manager
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 # github.com/jamiew/git-friendly
 # the `push` command which copies the github compare URL to my clipboard is heaven
@@ -222,7 +216,11 @@ mkdir ~/Projects
 #   maybe something else in here https://github.com/hjuutilainen/dotfiles/blob/master/bin/osx-user-defaults.sh
 sh .macos
 
-# setup and run Rescuetime!
+# Enable firewall, stealth mode.
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+
 
 ###
 ##############################################################################################################
@@ -235,31 +233,9 @@ sh .macos
 #   move git credentials into ~/.gitconfig.local    	http://stackoverflow.com/a/13615531/89484
 #   now .gitconfig can be shared across all machines and only the .local changes
 
-# NVM - Node Version Manager
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-
-# GVM - Go Version Manager
-bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
 # bootstrap it up!
 ./bootstrap.sh
-
-# Yubikey git commit testing.
-
-# GPG key
-# gpg --list-secret-keys --keyid-format LONG
-
-# git config --global user.signingkey # "sec id"
-
-echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
-echo 'export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)'
-
-
-# Stocker Checker
-# curl -o ~/.ticker.sh https://raw.githubusercontent.com/pstadler/ticker.sh/master/ticker.sh
-# chmod +x .ticker.sh
-
-# add manual symlink for .ssh/config and probably .config/fish
 
 ###
 ##############################################################################################################

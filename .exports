@@ -31,8 +31,11 @@ export MANPAGER='less -X';
 
 # Avoid issues with `gpg` as installed via Homebrew.
 # https://stackoverflow.com/a/42265848/96656
+
+# Add GPG 
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
 
-# gpg-connect-agent updatestartuptty /bye
+# Launch GPG Agent
+gpgconf --launch gpg-agent
+gpg-connect-agent updatestartuptty /bye 
