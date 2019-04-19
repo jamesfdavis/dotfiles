@@ -72,10 +72,26 @@ fi
 
 
 ##############################################################################################################
+### Vim Setup
+ 
+mkdir ~/.vim/
+mkdir ~/.vim/backups
+mkdir ~/.vim/tmp
+mkdir ~/.vim/undo
+
+### end of VS
+##############################################################################################################
+
+
+##############################################################################################################
 ### GnuPG Setup
 
 mkdir ~/.gnupg
 cp ./init/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+
+# Setup permissions
+find ~/.gnupg -type f -exec chmod 600 {} \;
+find ~/.gnupg -type d -exec chmod 700 {} \;
 
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
