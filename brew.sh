@@ -9,7 +9,7 @@ brew cask install java
 brew update && brew upgrade
 
 # GNU core utilities (those that come with OS X are outdated)help
-brew install coreutils moreutils
+brew install coreutils moreutils htop
 
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
 brew install findutils
