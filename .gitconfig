@@ -111,7 +111,7 @@
 	untrackedCache = true
 
 	# Wait for editor
-	editor = "code -w"
+	editor = "vim"
 
 [color]
 

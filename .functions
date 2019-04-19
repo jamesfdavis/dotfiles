@@ -160,13 +160,13 @@ function getcertnames() {
 	fi;
 }
 
-# `s` with no arguments opens the current directory in VS Code, otherwise
+# `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
-function code() {
+function vs() {
 	if [ $# -eq 0 ]; then
-		code .;
+		/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code .;
 	else
-		code "$@";
+		/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code "$@";
 	fi;
 }
 
