@@ -1,14 +1,16 @@
 # nuke existing profile
 rm -rf ~/.gnupg 
 
+# Init folders
+gpg --list-keys
+
 # Getting settings
 curl -o ~/.gnupg/gpg.conf https://raw.githubusercontent.com/drduh/config/master/gpg.conf
 
-# Permissions
-chmod 600 ~/.gnupg/gpg.conf
-
-# Import Key
+# Import public key
 gpg --import $PUBLIC_KEY
 
-# Trust new key
+# Trust public key
 gpg --edit-key $KEYID
+
+echo "Restart terminal session."
