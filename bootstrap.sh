@@ -16,6 +16,7 @@ function doIt() {
 		--exclude "vscode*" \
 		--exclude "gpg-agent*" \
 		--exclude "init/" \
+		--exclude "yk-*" \
 		-avh --no-perms . ~;
 	source ~/.bash_profile;
 }
