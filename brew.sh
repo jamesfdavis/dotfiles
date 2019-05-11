@@ -5,6 +5,9 @@
 # Dependency
 brew cask install java
 
+# GoLang
+brew install go
+
 # Make sure we’re using the latest Homebrew
 brew update && brew upgrade
 
