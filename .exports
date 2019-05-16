@@ -36,6 +36,9 @@ export MANPAGER='less -X';
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 
+# GoLang
+export GOPATH=~/go
+
 # Launch GPG Agent
 gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye 

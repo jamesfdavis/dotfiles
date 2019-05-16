@@ -194,3 +194,7 @@
 
 [gpg]
 	program = gpg
+[user]
+	name = James Davis
+	email = ragingsmurf@gmail.com
+	signingkey = F2C37A1529D4A21B!

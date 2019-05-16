@@ -8,16 +8,17 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
-
 # Shortcuts
 alias d="cd ~/Documents/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
+
+# Programs
 alias g="git"
 alias gcp="gcloud"
 alias h="history"
-alias hs="history | grep"
+alias shellman="$GOPATH/bin/wuzz"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
