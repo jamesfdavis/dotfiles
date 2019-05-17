@@ -35,7 +35,7 @@ fi;
 brew install grc
 
 # Orchestration
-brew install docker-compose docker-machine kubernetes-cli
+brew install docker-compose docker-machine kubernetes-cli docker
 
 # Install `wget` with IRI support.
 brew install wget 
