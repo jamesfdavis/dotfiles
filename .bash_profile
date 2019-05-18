@@ -54,3 +54,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Brew sbin
 export PATH="/usr/local/sbin:$PATH"
+
+# GoLang
+export GOPATH=~/go
+export PATH=$PATH:$(go env GOPATH)/bin
