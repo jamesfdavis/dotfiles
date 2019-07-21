@@ -51,7 +51,6 @@ fi
 # export PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
 
 # Install Brew
-
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # install all the things
@@ -117,8 +116,17 @@ gpg --edit-key $KEYID
 ### install of common things
 ###
 
+# Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" # Install zsh
+chsh -s /bin/zsh # Set terminal to the zsh to the default shell
+
+# Zed
+curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
+# Save to ~/z.sh
+chmod +x ~/z.sh
+
 # NVM - Node Version Manager
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 # github.com/jamiew/git-friendly
 # the `push` command which copies the github compare URL to my clipboard is heaven
@@ -174,6 +182,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | 
 # consider reusing your current .z file if possible. it's painful to rebuild :)
 # z is hooked up in .bash_profile
 
+# Default projects directory
 mkdir ~/Projects
 
 # sudo easy_install pip
@@ -251,7 +260,7 @@ sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
 
 
 # bootstrap it up!
-./bootstrap.sh
+# ./bootstrap.sh
 
 ###
 ##############################################################################################################
