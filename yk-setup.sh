@@ -1,3 +1,5 @@
+# https://github.com/drduh/YubiKey-Guide
+
 # nuke existing profile
 rm -rf ~/.gnupg 
 
