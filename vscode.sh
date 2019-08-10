@@ -1,3 +1,5 @@
+cp ./init/code-settings.json ~/Library/Application Support/Code/User/settings.json
+
 code --install-extension dbaeumer.vscode-eslint 
 code --install-extension eg2.tslint
 code --install-extension eg2.vscode-npm-script
