@@ -155,6 +155,9 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
+alias k=kubectl
+
+
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
 function code() {
@@ -230,3 +233,6 @@ function  pip_install_save() {
 function tre() {
 	tree -aC -L 4 -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+source <(kubectl completion zsh)
+complete -F __start_kubectl k
