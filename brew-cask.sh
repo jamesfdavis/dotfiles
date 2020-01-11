@@ -7,7 +7,7 @@ brew update && brew upgrade && brew cleanup
 brew cask install virtualbox vagrant
 
 # Install native apps
-brew tap caskroom/versions
+brew tap homebrew/cask-versions
 
 # daily
 brew cask install spectacle dropbox 1password flux evernote macdown brave-browser
