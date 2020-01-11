@@ -24,6 +24,7 @@ brew install gnu-sed
 # Bash 5
 # Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before running `chsh`.
 brew install bash
+brew install minikube
 # brew install bash-completion2
 
 # Switch to using brew-installed bash as default shell
