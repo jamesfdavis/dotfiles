@@ -24,8 +24,6 @@ brew install gnu-sed
 # Bash 5
 # Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before running `chsh`.
 brew install bash
-brew install minikube
-# brew install bash-completion2
 
 # Switch to using brew-installed bash as default shell
 if ! fgrep -q '/usr/local/bin/bash' /etc/shells; then
@@ -45,7 +43,7 @@ brew install wget
 # Install GnuPG/Yubikey to enable PGP-signing commits.
 brew install gnupg yubikey-personalization hopenpgp-tools ykman pinentry-mac
 
-brew install nmap git tree hh
+brew install nmap git tree hh hub
 
 # Install more recent versions of some OS X tools
 brew install vim grep openssh screen

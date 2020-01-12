@@ -56,7 +56,6 @@ export MANPAGER='less -X';
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
     dotenv
     osx
     last-working-dir
@@ -82,38 +81,23 @@ alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
 
-## Git commands
-function gc() { git commit -m "$@" }
-alias gcm="git checkout master"
-alias gs="git status"
-alias gpull="git pull"
-alias gf="git fetch"
-alias gfa="git fetch --all"
-alias gfo="git fetch origin"
-alias gpush="git push"
-alias gd="git diff"
-alias ga="git add ."
-alias gb="git branch"
-alias gbr="git branch remote"
-alias gfr="git remote update"
-alias gbn="git checkout -B "
-alias grf="git reflog"
-alias grh="git reset HEAD~" #last commit
-alias gac="git add . && git commit -a -m "
-alias gca="git add -A && git commit -av"
-alias gsu="git push --set-upstream origin "
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
+## Environments
+alias k=kubectl
+alias g=git
+alias h=hub
+alias gc=gcloud
+alias catn="nl -b a"
 
-function gpr() {
-    if [$? -eq 0]; then
-        github_url = `git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#http://#' -e 's@com:@com/@' -e 's%\.git$%%'`;
-        branch_name = `git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3`;
-        pr_url = $github_url"/compare/master..."$branch_name;
-        open = $pr_url;
-    else
-        echo 'Failed to open pull request!';
-    fi
-}
+# function gpr() {
+#     if [$? -eq 0]; then
+#         github_url = `git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#http://#' -e 's@com:@com/@' -e 's%\.git$%%'`;
+#         branch_name = `git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3`;
+#         pr_url = $github_url"/compare/master..."$branch_name;
+#         open = $pr_url;
+#     else
+#         echo 'Failed to open pull request!';
+#     fi
+# }
 
 ## npm aliases
 alias ni="npm install"
@@ -154,9 +138,6 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-
-alias k=kubectl
-alias catn="nl -b a"
 
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
@@ -234,5 +215,13 @@ function tre() {
 	tree -aC -L 4 -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+# TODO - Move this install to someplace else.
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/localhost/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/localhost/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Laoding kube resources from gcloud libraries.
 source <(kubectl completion zsh)
 complete -F __start_kubectl k
