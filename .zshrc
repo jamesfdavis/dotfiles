@@ -156,7 +156,7 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 alias k=kubectl
-
+alias catn="nl -b a"
 
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
