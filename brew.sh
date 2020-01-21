@@ -12,6 +12,9 @@ brew install go
 # Make sure we’re using the latest Homebrew
 brew update && brew upgrade
 
+# MarkDown
+brew install mdcat
+
 # GNU core utilities (those that come with OS X are outdated)help
 brew install coreutils moreutils htop
 
@@ -43,7 +46,10 @@ brew install wget
 # Install GnuPG/Yubikey to enable PGP-signing commits.
 brew install gnupg yubikey-personalization hopenpgp-tools ykman pinentry-mac
 
-brew install nmap git tree hh hub
+# Install Password Management 
+brew install pass
+
+brew install nmap git tree hub
 
 # Install more recent versions of some OS X tools
 brew install vim grep openssh screen
