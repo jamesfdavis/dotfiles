@@ -14,6 +14,9 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye 
 
+export NOTE_REPO="expert-happiness"
+export NOTE_LOCAL="/Users/$USER/Projects/$NOTE_REPO"
+
 # Node (nvm)
 export NVM_DIR="$HOME/.nvm";
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
@@ -139,6 +142,28 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+# Search local notes by filename.
+function name() {
+       	find $NOTE_LOCAL -name "*$1*"
+}
+
+# Search local note contents.
+function fix() {
+	grep -r "FIX" $NOTE_LOCAL/$1*
+}
+
+# Search local note contents.
+function note() {
+	grep -ri "$1" $NOTE_LOCAL/
+}
+
+# Generate todo list.
+function todo() {
+	rm $NOTE_LOCAL/todo.txt
+	grep -r 'TODO' $NOTE_LOCAL/meeting/$1* >> $NOTE_LOCAL/todo.txt
+	catn $NOTE_LOCAL/todo.txt
+}
 
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
