@@ -87,6 +87,7 @@ alias g=git
 alias h=hub
 alias gc=gcloud
 alias catn="nl -b a"
+alias duck="ddg"
 
 # function gpr() {
 #     if [$? -eq 0]; then
