@@ -155,7 +155,7 @@ function fix() {
 
 # Search local note contents.
 function note() {
-	grep -ri "$1" $NOTE_LOCAL/
+	grep -ri "$*" $NOTE_LOCAL/
 }
 
 # Generate todo list.
