@@ -161,7 +161,7 @@ function note() {
 # Generate todo list.
 function todo() {
 	rm $NOTE_LOCAL/todo.txt
-	grep -r 'TODO' $NOTE_LOCAL/meeting/$1* >> $NOTE_LOCAL/todo.txt
+	grep -r 'TODO' $NOTE_LOCAL/$1* >> $NOTE_LOCAL/todo.txt
 	catn $NOTE_LOCAL/todo.txt
 }
 
