@@ -150,19 +150,19 @@ function name() {
 
 # Search local note contents.
 function fix() {
-	grep -r "FIX" $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//Fix : /g" | catn
+	grep -r "FIX" $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//Fix : /g" | mdcat | catn
 }
 
 # Search local note contents.
 function note() {
-	grep -ri "$*" $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\//Notes : /g" | grep -ri "$*"
+	grep -ri "$*" $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\// Notes : /g" | mdcat | catn | grep -ri "$*" 
 }
 
 # Generate todo list.
 function todo() {
 	rm $NOTE_LOCAL/todo.txt
-	grep -r 'TODO' $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//To Do : /g" >> $NOTE_LOCAL/todo.txt
-	catn $NOTE_LOCAL/todo.txt
+	grep -r 'TODO' --exclude=todo.txt $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//To Do : /g" >> $NOTE_LOCAL/todo.txt
+	mdcat $NOTE_LOCAL/todo.txt | catn
 }
 
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
