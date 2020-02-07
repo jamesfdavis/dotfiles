@@ -150,18 +150,18 @@ function name() {
 
 # Search local note contents.
 function fix() {
-	grep -r "FIX" $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\//[:Notes:] /g"
+	grep -r "FIX" $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//Fix : /g" | catn
 }
 
 # Search local note contents.
 function note() {
-	grep -ri "$*" $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\//[:Notes:] /g"
+	grep -ri "$*" $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\//Notes : /g" | grep -ri "$*"
 }
 
 # Generate todo list.
 function todo() {
 	rm $NOTE_LOCAL/todo.txt
-	grep -r 'TODO' $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//[:Notes:] /g" >> $NOTE_LOCAL/todo.txt
+	grep -r 'TODO' $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//To Do : /g" >> $NOTE_LOCAL/todo.txt
 	catn $NOTE_LOCAL/todo.txt
 }
 
