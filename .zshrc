@@ -243,6 +243,9 @@ function tre() {
 	tree -aC -L 4 -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+# Process the extra file (local vars)
+source ~/.extra
+
 # TODO - Move this install to someplace else.
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc'; fi
