@@ -59,15 +59,15 @@ export MANPAGER='less -X';
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+	brew
     dotenv
+	extract
+	history
+	last-working-dir
     osx
-    last-working-dir
-    web-search
-    brew
-    extract
-    history
     sudo
-    yarn
+	yarn
+    web-search
 )
 
 # Init extensions
@@ -85,12 +85,14 @@ alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
 
 ## Environments
-alias k=kubectl
-alias g=git
-alias h=hub
-alias gc=gcloud
 alias catn="nl -b a"
 alias duck="ddg"
+alias gc=gcloud
+alias g=git
+alias h=hub
+alias k=kubectl
+alias v=vagrant
+alias vb="VBoxManage"
 
 # function gpr() {
 #     if [$? -eq 0]; then
