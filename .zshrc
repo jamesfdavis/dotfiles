@@ -167,6 +167,9 @@ function todo() {
 	mdcat $NOTE_LOCAL/todo.txt | catn
 }
 
+# Recursive find and replace inline.
+# find . -type f -name '*.md' -print0 | xargs -0 sed -i '' -e "s/this/that/g"
+
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
 function code() {
