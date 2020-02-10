@@ -157,7 +157,7 @@ function fix() {
 
 # Search local note contents.
 function note() {
-	grep -ri "$*" $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\// Notes : /g" | mdcat | catn | grep -ri "$*" 
+	grep -ri "$*" --exclude=todo.txt $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\// Notes : /g" | mdcat | catn | grep -ri "$*" 
 }
 
 # Generate todo list.
