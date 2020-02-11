@@ -155,16 +155,43 @@ function fix() {
 	grep -r "FIX" $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//Fix : /g" | mdcat | catn
 }
 
-# Search local note contents.
-function note() {
-	grep -ri "$*" --exclude=todo.txt $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\// Notes : /g" | mdcat | catn | grep -ri "$*" 
-}
 
 # Generate todo list.
 function todo() {
 	rm $NOTE_LOCAL/todo.txt
 	grep -r 'TODO' --exclude=todo.txt $NOTE_LOCAL/$1* | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\//To Do : /g" >> $NOTE_LOCAL/todo.txt
 	mdcat $NOTE_LOCAL/todo.txt | catn
+}
+
+# Search local note contents.
+function notes() {
+	grep -ri "$*" --exclude=todo.txt $NOTE_LOCAL/ | sed  "s/\/Users\/$USER\/Projects\/$NOTE_REPO\/\// Notes : /g" | mdcat | catn | grep -ri "$*" 
+}
+
+# Create a new note
+function note() {
+	if [ -z "$*" ]
+	then
+		echo "File name is empty!"
+	else
+		title=notes
+		today=$(date +"%Y-%m-%d")
+		newly="$NOTE_LOCAL$meeting/$title/$today/$*.md"
+		echo "$newly" | sed  "s/ /-/g" | awk '{print tolower($0)}'
+	fi
+}
+
+# Create new meeting
+function meet() {
+	if [ -z "$*" ]
+	then
+		echo "File name is empty!"
+	else
+		title=meeting
+		today=$(date +"%Y-%m-%d")
+		newly="$NOTE_LOCAL$meeting/$title/$today/$*.md"
+		echo "$newly" | sed  "s/ /-/g" | awk '{print tolower($0)}'
+	fi
 }
 
 # Recursive find and replace inline.
