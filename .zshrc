@@ -176,7 +176,7 @@ function note() {
 	else
 		title=notes
 		today=$(date +"%Y-%m-%d")
-		newly="$NOTE_LOCAL$meeting/$title/$today/$*.md"
+		newly="$NOTE_LOCAL$meeting/$title/$today-$*.md"
 		echo "$newly" | sed  "s/ /-/g" | awk '{print tolower($0)}'
 	fi
 }
@@ -189,7 +189,7 @@ function meet() {
 	else
 		title=meeting
 		today=$(date +"%Y-%m-%d")
-		newly="$NOTE_LOCAL$meeting/$title/$today/$*.md"
+		newly="$NOTE_LOCAL$meeting/$title/$today-$*.md"
 		echo "$newly" | sed  "s/ /-/g" | awk '{print tolower($0)}'
 	fi
 }
