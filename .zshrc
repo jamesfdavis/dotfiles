@@ -119,6 +119,8 @@ alias flush-npm="rm -rf node_modules && npm i && echo NPM  is done"
 ## Utilities
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend" # Lock the screen (when going AFK)
 alias c="tr -d '\n' | pbcopy"
+alias df="df -h"
+alias du="du -hd1 | sort -h"
 alias usage="du -h -d1"
 alias runp="lsof -i"
 alias update="source ~/.zshrc"
@@ -128,6 +130,7 @@ alias reload="exec ${SHELL} -l"
 alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)'"
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
 
 # # Empty the Trash on all mounted volumes and the main HDD.
 # # Also, clear Apple’s System Logs to improve shell startup speed.
