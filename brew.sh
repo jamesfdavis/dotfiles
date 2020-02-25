@@ -46,6 +46,9 @@ brew install wget
 # Install GnuPG/Yubikey to enable PGP-signing commits.
 brew install gnupg yubikey-personalization hopenpgp-tools ykman pinentry-mac
 
+# Git Hub CLI Tools
+brew install github/gh/gh
+
 # Install Password Management 
 brew install pass
 
