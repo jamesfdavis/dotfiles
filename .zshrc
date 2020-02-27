@@ -187,6 +187,11 @@ function meet() {
 	fi
 }
 
+# Load Key Card
+function loadcard() {
+	export GNUPGHOME="~/Documents/Dropbox/Private/pki/card-$(ykman info | grep -o '\d\d\d\d\d\d\d\d')"
+}
+
 # GPG
 secret () {
         output=~/"${1}".$(date +%s).enc
