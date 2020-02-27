@@ -189,7 +189,13 @@ function meet() {
 
 # Load Key Card
 function loadcard() {
-	export GNUPGHOME="~/Documents/Dropbox/Private/pki/card-$(ykman info | grep -o '\d\d\d\d\d\d\d\d')"
+	unset GNUPGHOME
+	if [ ! -z $(ykman info | grep -o '\d\d\d\d\d\d\d\d') ]
+		export GNUPGHOME="~/Documents/Dropbox/Private/pki/card-$(ykman info | grep -o '\d\d\d\d\d\d\d\d')"
+		return
+	if [ ! -z $(ykman info | grep -o '\d\d\d\d\d\d\d\d\d') ]
+		export GNUPGHOME="~/Documents/Dropbox/Private/pki/card-$(ykman info | grep -o '\d\d\d\d\d\d\d\d\d')"
+		return
 }
 
 # GPG
