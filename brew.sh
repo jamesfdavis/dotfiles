@@ -18,6 +18,9 @@ brew install mdcat
 # GNU core utilities (those that come with OS X are outdated)help
 brew install coreutils moreutils htop
 
+# Diagrams # https://diagrams.mingrammer.com
+brew install graphviz
+
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
 brew install findutils
 
