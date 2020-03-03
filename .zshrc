@@ -94,7 +94,6 @@ alias k=kubectl
 alias v=vagrant
 alias vb="VBoxManage"
 
-
 ## npm aliases
 alias ni="npm install"
 alias nrs="npm run start -s --"
