@@ -137,6 +137,7 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
+
 # Search local notes by filename.
 function name() {
        	find $NOTE_LOCAL -name "*$1*"
@@ -288,6 +289,8 @@ function tre() {
 # Process the extra file (local vars)
 source ~/.extra
 
+# https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html
+
 # TODO - Move this install to someplace else.
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc'; fi
@@ -295,6 +298,15 @@ if [ -f '/Users/localhost/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/U
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/localhost/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/localhost/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
 
-# Laoding kube resources from gcloud libraries.
+# Kube resources from gcloud libraries.
 source <(kubectl completion zsh)
 complete -F __start_kubectl k
+
+# pip bash completion start
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
+}
+complete -o default -F _pip_completion pip
