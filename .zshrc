@@ -119,11 +119,10 @@ alias reload="exec ${SHELL} -l"
 alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)'"
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+alias pip=pip3
 
-
-# # Empty the Trash on all mounted volumes and the main HDD.
-# # Also, clear Apple’s System Logs to improve shell startup speed.
-# # Finally, clear download history from quarantine. https://mths.be/bum
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
 # Show/hide hidden files in Finder
@@ -137,10 +136,9 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
-
 # Search local notes by filename.
 function name() {
-       	find $NOTE_LOCAL -name "*$1*"
+	find $NOTE_LOCAL -name "*$1*"
 }
 
 # Search local note contents.
@@ -187,7 +185,7 @@ function meet() {
 	fi
 }
 
-# Load Key Card
+# Load KeyCard
 function loadcard() {
 	unset GNUPGHOME
 
@@ -210,6 +208,10 @@ reveal () {
 # Recursive find and replace inline.
 # find . -type f -name '*.md' -print0 | xargs -0 sed -i '' -e "s/this/that/g"
 
+# Replace something inside a git repo.
+replace () {
+ if [ ! -z $(git rev-parse --is-inside-work-tree) ]; then $(find . -type f -name "*.md" -print0 | xargs -0 sed -i '' -e "s/$1/$2/g"); fi
+}
 # `s` with no arguments opens the curcdrent directory in VS Code, otherwise
 # opens the given location
 function code() {
