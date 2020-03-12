@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Install command-line tools using Homebrew
 
 # Dependency
@@ -22,7 +21,7 @@ brew install coreutils moreutils htop
 brew install graphviz
 
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
-brew install findutils
+brew install findutils ack
 
 # GNU `sed`, overwriting the built-in `sed`
 brew install gnu-sed 
