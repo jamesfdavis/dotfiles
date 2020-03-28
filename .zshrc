@@ -190,7 +190,7 @@ function loadcard() {
 	unset GNUPGHOME
 
 	if [ ! -z $(ykman info | grep -o '[0-9][0-9]*[0-9]') ]
-		export GNUPGHOME="~/Documents/Dropbox/Private/pki/card-$(ykman info | grep -o '[0-9][0-9]*[0-9]')"
+		export GNUPGHOME="/Users/$USER/Documents/Dropbox/Private/pki/card-$(ykman info | grep -o '[0-9][0-9]*[0-9]')"
 		return
 }
 
