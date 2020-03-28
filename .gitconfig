@@ -3,6 +3,9 @@
 # Source so new alises. Plugin is not 
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git/
 
+	nosign = config commit.gpgsign false
+	sign = config commit.gpgsign true
+
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	ls = log --pretty=oneline -n 20 --graph --abbrev-commit
 
