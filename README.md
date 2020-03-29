@@ -32,7 +32,7 @@ git config --global user.email "$GIT_AUTHOR_EMAIL"
 git config --global user.signingkey $KEYID!
 ```
 
-### macOS defaults
+### MacOS defaults
 
 When setting up a new Mac, you may want to set some sensible macOS defaults:
 
