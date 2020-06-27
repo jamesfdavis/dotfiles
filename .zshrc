@@ -21,8 +21,8 @@ export NOTE_LOCAL="/Users/$USER/Projects/$NOTE_REPO"
 export NVM_DIR="$HOME/.nvm";
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
 # GoLang
-export GOPATH=~/go;
-export PATH=$PATH:$(go env GOPATH)/bin;
+#export GOPATH=~/go;
+#export PATH=$PATH:$(go env GOPATH)/bin;
 # Brew
 export PATH="/usr/local/sbin:$PATH";
 # Make vim code the default editor.
@@ -73,7 +73,7 @@ plugins=(
 # Init extensions
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Directory browser and search
 source ~/z.sh
@@ -87,6 +87,8 @@ alias p="cd ~/Projects"
 ## Environments
 alias catn="nl -b a"
 alias duck="ddg"
+alias stack="stackoverflow"
+alias wolf="wolframalpha"
 alias gc=gcloud
 alias g=git
 alias h=hub

@@ -10,7 +10,10 @@ brew cask install virtualbox vagrant
 brew tap homebrew/cask-versions
 
 # daily
-brew cask install spectacle dropbox flux evernote macdown brave-browser
+brew cask install spectacle dropbox evernote macdown brave-browser
+
+# vpn 
+brew cask install private-internet-access
 
 # developer tools 
 brew cask install iterm2 visual-studio-code slack

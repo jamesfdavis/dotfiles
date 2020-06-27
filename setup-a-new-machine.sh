@@ -120,6 +120,10 @@ gpg --edit-key $KEYID
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" # Install zsh
 chsh -s /bin/zsh # Set terminal to the zsh to the default shell
 
+# Setup permissions
+chmod 755 /usr/local/share/zsh
+chmod 755 /usr/local/share/zsh/site-functions
+
 # Zed
 curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
 # Save to ~/z.sh
