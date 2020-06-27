@@ -17,4 +17,3 @@ brew cask install private-internet-access
 
 # developer tools 
 brew cask install iterm2 visual-studio-code slack
-
