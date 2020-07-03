@@ -18,8 +18,9 @@ export NOTE_REPO="expert-happiness"
 export NOTE_LOCAL="/Users/$USER/Projects/$NOTE_REPO"
 
 # Node (nvm)
-export NVM_DIR="$HOME/.nvm";
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
+# export NVM_DIR="$HOME/.nvm";
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh";
+
 # GoLang
 #export GOPATH=~/go;
 #export PATH=$PATH:$(go env GOPATH)/bin;
@@ -295,12 +296,15 @@ source ~/.extra
 
 # https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html
 
-# TODO - Move this install to someplace else.
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "/Users/$USER/Downloads/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/Downloads/google-cloud-sdk/path.zsh.inc"; fi
+# GCP Auto-Complete
+for zsh users
+    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
-# The next line enables shell command completion for gcloud.
-if [ -f "/Users/$USER/Downloads/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$USER/Downloads/google-cloud-sdk/completion.zsh.inc"; fi
+# Node version manager.
+ export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Kube resources from gcloud libraries.
 source <(kubectl completion zsh)
