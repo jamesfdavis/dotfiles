@@ -16,4 +16,4 @@ brew cask install spectacle dropbox evernote macdown brave-browser
 brew cask install private-internet-access
 
 # developer tools 
-brew cask install iterm2 visual-studio-code slack
+brew cask install iterm2 visual-studio-code slack ngrok
