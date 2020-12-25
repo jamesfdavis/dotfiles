@@ -54,6 +54,9 @@ brew install github/gh/gh
 # Install Password Management 
 brew install pass
 
+# Install time management
+brew install rescuetime
+
 brew install nmap git tree hub
 
 # Install more recent versions of some OS X tools
