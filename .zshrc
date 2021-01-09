@@ -96,6 +96,7 @@ alias h=hub
 alias k=kubectl
 alias v=vagrant
 alias vb="VBoxManage"
+alias compose="docker-compose"
 
 ## npm aliases
 alias ni="npm install"
