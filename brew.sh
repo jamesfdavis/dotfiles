@@ -59,7 +59,7 @@ brew install pass
 # Install time management
 brew install rescuetime
 
-brew install nmap git tree hub
+brew install nmap git tree # hub - hub is being deprecated in favor of gh
 
 # Install more recent versions of some OS X tools
 brew install vim grep openssh screen
