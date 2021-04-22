@@ -51,7 +51,7 @@ brew install wget
 brew install gnupg yubikey-personalization hopenpgp-tools ykman pinentry-mac
 
 # Git Hub CLI Tools
-brew install github/gh/gh
+brew install gh
 
 # Install Password Management 
 brew install pass
