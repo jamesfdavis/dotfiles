@@ -3,7 +3,7 @@
 # Install command-line tools using Homebrew
 
 # Dependency
-brew cask install java
+# brew cask install java - Cask 'java' is unavailable (check for alt java install)
 
 # GoLang
 brew install go
