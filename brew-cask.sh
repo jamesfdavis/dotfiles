@@ -4,16 +4,16 @@
 brew update && brew upgrade && brew cleanup
 
 # VM Management
-brew cask install virtualbox vagrant
+brew install --cask virtualbox vagrant
 
 # Install native apps
 brew tap homebrew/cask-versions
 
 # daily
-brew cask install spectacle dropbox evernote macdown brave-browser
+brew install --cask spectacle dropbox evernote macdown brave-browser
 
 # vpn 
-brew cask install private-internet-access
+brew install --cask private-internet-access
 
 # developer tools 
-brew cask install iterm2 visual-studio-code slack ngrok
+brew install --cask iterm2 visual-studio-code slack ngrok
