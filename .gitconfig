@@ -41,6 +41,8 @@
 	branches = branch -a
 	remotes = remote -v
 
+	recent = branch --sort=-committerdate --format="%(committerdate:relative)%09%(refname:short)"
+
 	# List aliases
 	aliases = config --get-regexp alias
 
