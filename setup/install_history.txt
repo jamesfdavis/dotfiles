@@ -1,0 +1,447 @@
+    1  whoami
+    2  exit
+    3  cd
+    4  pwd
+    5  touch setup-new-machine.sh
+    6  vim setup-new-machine.sh
+    7  cat setup-new-machine.sh
+    8  main() {\n\n    if ! xcode-select --print-path &> /dev/null; then\n\n        # Prompt user to install the XCode Command Line Tools\n        xcode-select --install &> /dev/null\n\n        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n        # Wait until the XCode Command Line Tools are installed\n        until xcode-select --print-path &> /dev/null; do\n            sleep 5\n        done\n\n        print_result $? 'Install XCode Command Line Tools'\n\n        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n        # Point the `xcode-select` developer directory to\n        # the appropriate directory from within `Xcode.app`\n        # https://github.com/alrra/dotfiles/issues/13\n\n        sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer\n        print_result $? 'Make "xcode-select" developer directory point to Xcode'\n\n        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n        # Prompt user to agree to the terms of the Xcode license\n        # https://github.com/alrra/dotfiles/issues/10\n\n        sudo xcodebuild -license\n        print_result $? 'Agree with the XCode Command Line Tools licence'\n\n    fi\n\n    print_result $? 'XCode Command Line Tools'\n\n}\n\nmain
+    9  if ! xcode-select --print-path &> /dev/null; then\n\n    # Prompt user to install the XCode Command Line Tools\n    xcode-select --install &> /dev/null\n\n    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n    # Wait until the XCode Command Line Tools are installed\n    until xcode-select --print-path &> /dev/null; do\n        sleep 5\n    done\n\n    # print_result $? 'Install XCode Command Line Tools'\n\n    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n    # Point the `xcode-select` developer directory to\n    # the appropriate directory from within `Xcode.app`\n    # https://github.com/alrra/dotfiles/issues/13\n\n    sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer\n    # print_result $? 'Make "xcode-select" developer directory point to Xcode'\n\n    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n\n    # Prompt user to agree to the terms of the Xcode license\n    # https://github.com/alrra/dotfiles/issues/10\n\n    sudo xcodebuild -license\n    # print_result $? 'Agree with the XCode Command Line Tools licence'\n\nfi
+   10  xcode
+   11   -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   12  zsh  -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   13  bash  -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   14  brew version
+   15  brew ver
+   16  brew
+   17  brew info
+   18  brew list
+   19  brew doctor
+   20  brew config
+   21  xcode-select --install &> /dev/null
+   22   until xcode-select --print-path &> /dev/null; do\n            sleep 5\n        done
+   23  sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+   24  sudo xcodebuild -license
+   25  xcode-select --install
+   26  xcode-select --install
+   27  xcode-select
+   28  xcode-select --install
+   29  sudo xcode-select --switch /Library/Developer/CommandLineTools
+   30  brew config
+   31  vim setup-new-machine.sh
+   32  LS
+   33  vim setup-new-machine.sh
+   34  brew update && brew upgrade
+   35  brew install coreutils moreutils htop
+   36  htop
+   37  vim setup-new-machine.sh
+   38  touch brew.sh
+   39  vim brew.sh
+   40  brew install findutils ack
+   41  ack
+   42  clear
+   43  brew install gnu-sed 
+   44  brew info
+   45  sed
+   46  man sed
+   47  brew install wget
+   48  brew install gnupg
+   49  gpg --list-keys
+   50  ls
+   51  ls -salt
+   52  cd .gnupg
+   53  ls
+   54  ls s-atl
+   55  ls -salt
+   56  cd
+   57  clear
+   58  brew info
+   59  brew info gh
+   60  brew install gh
+   61  gh
+   62  brew install rescuetime
+   63  brew install nmap git tree
+   64  git
+   65  tre
+   66  tree
+   67  clear
+   68  ls
+   69  brew install vim grep openssh screen
+   70  vim
+   71  brew info
+   72  brew install ssh-copy-id
+   73  brew install jq
+   74  brew cleanup
+   75  ls
+   76  vim brew.sh
+   77  brew update && brew upgrade && brew cleanup
+   78  brew install --cask virtualbox vagrant
+   79  vagrant
+   80  brew tap homebrew/cask-versions
+   81  brew update && brew upgrade && brew cleanup
+   82  brew install --cask spectacle brave-browser
+   83  ls
+   84  touch brew-cask.sh
+   85  vim brew-cask.sh
+   86  brew install --cask spectacle dropbox 
+   87  brew install --cask private-internet-access
+   88  brew install --cask iterm2 visual-studio-code slack
+   89  vim setup-new-machine.sh
+   90  vim setup-new-machine.sh 
+   91  mkdir ~/.vim/\nmkdir ~/.vim/backups\nmkdir ~/.vim/tmp\nmkdir ~/.vim/undo
+   92  ls -salt
+   93  cat .zsh_
+   94  cat .zsh_history
+   95  cat .zsh_sessions
+   96  ls
+   97  cd
+   98  clear
+   99  ls
+  100  lwp
+  101  lwd
+  102  cd
+  103  clear
+  104  brew info
+  105  tre
+  106  tree
+  107  tree -2
+  108  tre . e
+  109  tree -L 2
+  110  tree -Ls 2
+  111  tree -L 2
+  112  brew list
+  113  ls 0salt
+  114  ls -salt
+  115  vim
+  116  clear
+  117  brew list
+  118  exit
+  119  ls -salt
+  120  cd .vim
+  121  ls
+  122  clear
+  123  cd
+  124  ls -salt
+  125  ls
+  126  exit
+  127  ls 
+  128  ls -salt
+  129  cd .gnupg
+  130  exit
+  131  pwd
+  132  ls
+  133  ls -salt
+  134  clear
+  135  clear
+  136  ls
+  137  cat brew-cask.sh
+  138  cat setup-new-machine.sh
+  139  clear
+  140  ls -salt
+  141  ls -salt
+  142  vim setup-new-machine.sh
+  143  vim setup-new-machine.sh
+  144  vim setup-new-machine.sh
+  145  printenv
+  146  clear
+  147  printenv
+  148  clear
+  149  ls -salt
+  150  cd Desktop
+  151  ls
+  152  ls -salt
+  153  cat .lc
+  154  cat .localized
+  155  ls -salt
+  156  cd
+  157  ls
+  158  printenv
+  159  touch .extra
+  160  vim .extra
+  161  ls
+  162  . .extra
+  163  . .extra
+  164  cd
+  165  ls
+  166  ls -salt
+  167  cat .extra
+  168  . .extra 
+  169  source .extra
+  170  print
+  171  printenv
+  172  clear
+  173  printenv
+  174  whoami
+  175  wget -O $GNUPGHOME/gpg.conf https://raw.githubusercontent.com/drduh/config/master/gpg.conf
+  176  vim .gnupg/gpg.conf
+  177  gpg --expert --full-generate-key
+  178  vim .exgra
+  179  vim .extra
+  180  source .extrq
+  181  source .extrq=a
+  182  source .extra
+  183  clera
+  184  cclear
+  185  clear
+  186  htop
+  187  clear
+  188  gpg --expert --edit-key $KEYID
+  189  gpg -K
+  190  gpg --export $KEYID | hokey lint
+  191  brew search hokey
+  192  hokey lint
+  193  cd .gnupg
+  194  grep -ve "^#" gpg-agent.conf
+  195  grep -ve "^#" gpg.conf
+  196  grep -ve '^#' gpg.conf
+  197  clear
+  198  ls 
+  199  cd
+  200  ls -salt
+  201  cd .gnupg
+  202  ls
+  203  code gpg.conf
+  204  reload
+  205  code gpg.conf
+  206  wget https://raw.githubusercontent.com/drduh/config/master/gpg-agent.conf
+  207  ls
+  208  code gpg-agent.conf
+  209  ssh git@github.com
+  210  ssh -T git@github.com
+  211  ssh -T git@github.com
+  212  clear
+  213  ssh -T git@github.com
+  214  ssh-add -L
+  215  exit
+  216  ssh-add -L
+  217  wget https://raw.githubusercontent.com/jamesfdavis/dotfiles/master/.zshrc
+  218  ls
+  219  ls -salt
+  220  reload
+  221  exit
+  222  reload
+  223  ssh -T git@github.com
+  224  ssh-add -L
+  225  ssh-add -K
+  226  clear
+  227  reload
+  228  ls
+  229  ls -salt
+  230  cat .zcompdump-localhost’s\ MacBook\ Pro-5.8
+  231  ls
+  232  ls -salt
+  233  cat .zshrc
+  234  clear
+  235  ls
+  236  ls -salt
+  237  mv .zshrc.pre-oh-my-zsh zshrcnew
+  238  mv .zshrc zshrcnewish
+  239  mv zshrcnew .zshrc
+  240  relaod
+  241  reload
+  242  exit
+  243  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" # Install zsh
+  244  reload
+  245  ssh -T git@github.com
+  246  ssh-add -L
+  247  reload
+  248  grep site .zshrc
+  249  vim .zshrc
+  250  reload
+  251  chmod 755 /usr/local/share/zsh\nchmod 755 /usr/local/share/zsh/site-functions
+  252  reload
+  253  curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
+  254  wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
+  255  ls
+  256  chmod +x ~/z.sh
+  257  z 
+  258  z
+  259  reload
+  260  z
+  261  brew install google-cloud-sdk
+  262  htop
+  263  exit
+  264  relaod
+  265  reload
+  266  vim brew.sh
+  267  brew search docker
+  268  brew cask info docker
+  269  brew casks
+  270  ssh -T git@github.com
+  271  brew install kubectl 
+  272  reload
+  273  kubectl
+  274  vim .zshrc
+  275  reload
+  276  vim brew.sh
+  277  vim .zshrc
+  278  brew install zsh-syntax-highlighting
+  279  reload
+  280  vim brew.sh
+  281  reload
+  282  ls
+  283  echo "blah"
+  284  echo "{}"|jq
+  285  reload
+  286  brew search zsh-autosuggestions
+  287  brew info zsh-autosuggestions
+  288  brew install zsh-autosuggestions
+  289  reload
+  290  vim .zshrc
+  291  reload
+  292  echo "{}"|jq
+  293  htop
+  294  clear
+  295  ls
+  296  ls -salt
+  297  cat zshrcnewish
+  298  cat .zshrc
+  299  code .zshrc
+  300  man hub
+  301  hub
+  302  k
+  303  k diff
+  304  k
+  305  k info
+  306  k version
+  307  celar
+  308  clear
+  309  k
+  310  du
+  311  dh
+  312  df
+  313  upgrade
+  314  htop
+  315  exit
+  316  htop
+  317  exit
+  318  upgrade
+  319  htop
+  320  relaod
+  321  reload
+  322  exit
+  323  clear
+  324  ls
+  325  ssh-add -L
+  326  ls
+  327  gpg --list-keys
+  328  ssh -T git@github.com
+  329  relad
+  330  reload
+  331  clear
+  332  export GPG_TTY="$(tty)"\nexport SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"\ngpg-connect-agent updatestartuptty /bye > /dev/null
+  333  ssh-add -L
+  334  #export GPG_TTY="$(tty)"\n#export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"\n#gpg-connect-agent updatestartuptty /bye > /dev/null
+  335  clear
+  336  ls
+  337  ssh -T git@github.com
+  338  ssh-add -L
+  339  reload
+  340  ssh-add -L
+  341  code .zshrc
+  342  # Add GPG \nexport GPG_TTY="$(tty)"\nexport SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)\n\n# Start GPG Agent\ngpgconf --launch gpg-agent\ngpg-connect-agent updatestartuptty /bye 
+  343  ssh-add -L
+  344  cd .gnupg
+  345  ls
+  346  printenv
+  347  printenv | grep PG
+  348  cd $GNUPGHOME
+  349  ls
+  350  grep -ve "^#" gpg-agent.conf
+  351  touch sshcontrol
+  352  vim sshcontrol
+  353  gpg --with-keygrip
+  354  clear
+  355  gpg --with-keygrip -k $KEYID
+  356  vim sshcontrol
+  357  reload
+  358  ssh-add -L
+  359  brew install 1password
+  360  cd
+  361  vim brew.sh
+  362  gpg --armor --export $KEYID | pbcopy
+  363  ssh -T git@github.com
+  364  clear
+  365  brew search obsidian
+  366  brew info obsidian
+  367  brew install obsidian
+  368  vim brew.sh
+  369  ls
+  370  p
+  371  reload
+  372* exit
+  373  mkdir ~/Projects
+  374  p
+  375  ls
+  376  ls -salt
+  377  clear
+  378  ls -salt
+  379  clear
+  380  git clone git@github.com:jamesfdavis/dotfiles.git
+  381  cd dotfiles
+  382  ls
+  383  ls -salt
+  384  g aliases
+  385  git aliase
+  386  g s
+  387  g status
+  388  ls -salt
+  389  clear
+  390  code .
+  391  gh
+  392  gh ssh-key
+  393  gh ssh-key list
+  394  gh auth login
+  395  gh ssh-key list
+  396  \ngh auth refresh -s read:public_key
+  397  gh ssh-key list
+  398  gh
+  399  gh actions
+  400  gh workflow list
+  401  gh
+  402  gh gist
+  403  gh gist list
+  404  gh
+  405  gh config
+  406  gh
+  407  clear
+  408  gh
+  409  gh issue
+  410  gh issue list
+  411  clear
+  412  g
+  413  di
+  414  g di
+  415  g diff
+  416  git tags
+  417  g s
+  418  git status
+  419  git diff
+  420  cear
+  421  cd
+  422  clear
+  423  ls
+  424  ls s-salt
+  425  ls -salt
+  426  cd .ssh
+  427  ls
+  428  ls -salt
+  429  cd
+  430  ls
+  431  gpg --armor --export $KEYID
+  432  gpg --armor --export $KEYID >> ~/Documents/id_rsa.pub
+  433  clear
+  434  ssh localhost@156.146.48.37
+  435  ssh localhost@68.116.125.38
+  436  ssh localhost@192.168.1.2
+  437  ls
+  438  ssh -T git@github.com
+  439  htop
+  440  ls
+  441  cd Projects
+  442  ls
+  443  cd dotfiles
+  444  ls
+  445  htop
+  446  code .
+  447  history

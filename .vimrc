@@ -1,5 +1,6 @@
 " Use the Solarized Dark theme
 set background=dark
+colorscheme solarized
 let g:solarized_termtrans=1
 
 " Make Vim more useful
@@ -25,7 +26,7 @@ set binary
 set noeol
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
-set directory=~/.vim/tmp
+set directory=~/.vim/swaps
 if exists("&undodir")
 	set undodir=~/.vim/undo
 endif
