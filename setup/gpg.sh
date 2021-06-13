@@ -42,3 +42,6 @@
 # PasswordAuthentication no
 # PermitEmptyPasswords no
 # ChallengeResponseAuthentication no
+
+# Docker Command over SSH
+`security -v unlock-keychain ~/Library/Keychains/login.keychain-db`
