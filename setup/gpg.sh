@@ -8,6 +8,8 @@
 
 # Generate Master Key
 `gpg --expert --full-generate-key` #8 -> Certify Key
+`gpg --list-secret-keys --keyid-format=long`
+
 `export KEYID=0x`
 
 # SubKeys
