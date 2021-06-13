@@ -3,7 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/$USER/.oh-my-zsh"
-ZSH_THEME="ys"
+ZSH_THEME="crunch"
 
 # Add GPG 
 export GPG_TTY="$(tty)"
