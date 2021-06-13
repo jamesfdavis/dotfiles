@@ -6,9 +6,9 @@ export ZSH="/Users/$USER/.oh-my-zsh"
 
 # Change them for SSH
 if [[ -n $SSH_CONNECTION ]]; then
-  ZSH_THEME="sorin"
+  ZSH_THEME="aussiegeek"
 else
-  ZSH_THEME="agnoster"
+  ZSH_THEME="sorin"
 fi
 
 # Add GPG 
