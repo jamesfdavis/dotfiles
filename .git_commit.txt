@@ -1,7 +1,8 @@
-# If applied, this commit will...
 
-# Why is this change needed?
+# ^ If applied, this commit will...
 
-# How does it address the issue?
+# ^ Why is this change needed?
 
-# Provide links to any relevant tickets, articles or other resources
+# ^ How does it address the issue?
+
+# ^ Provide links to any relevant tickets, articles or other resources
