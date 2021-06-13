@@ -40,8 +40,7 @@ brew install nmap
 brew install jq
 
 # Containers
-brew install kubectl
-brew install google-cloud-sdk
+brew install kubectl google-cloud-sdk
 
 # Install Password Management 
 brew install 1password
