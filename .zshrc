@@ -32,6 +32,13 @@ source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Change them for SSH
+if [[ -n $SSH_CONNECTION ]]; then
+  ZSH_THEME="sorin"
+else
+  ZSH_THEME="agnoster"
+fi
+
 # Directory browser and search
 source ~/z.sh
 
