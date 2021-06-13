@@ -6,7 +6,7 @@ export ZSH="/Users/$USER/.oh-my-zsh"
 
 # Change them for SSH
 if [[ -n $SSH_CONNECTION ]]; then
-  ZSH_THEME="aussiegeek"
+  ZSH_THEME="crunch"
 else
   ZSH_THEME="sorin"
 fi
