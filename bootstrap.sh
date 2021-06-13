@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-cd "$(dirname "~/dotfiles")";
+cd ${HOME}/dotfiles;
 
 git pull origin master;
 
