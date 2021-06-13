@@ -10,7 +10,7 @@ brew install --cask virtualbox vagrant
 brew tap homebrew/cask-versions
 
 # Daily
-brew install --cask spectacle dropbox evernote brave-browser
+brew install --cask spectacle dropbox evernote brave-browser paw obsidian
 
 # VPN
 brew install --cask private-internet-access
