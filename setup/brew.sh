@@ -39,6 +39,10 @@ brew install nmap
 # install JSON
 brew install jq
 
+# Containers
+brew install kubectl
+brew install google-cloud-sdk
+
 # Install Password Management 
 brew install 1password
 
