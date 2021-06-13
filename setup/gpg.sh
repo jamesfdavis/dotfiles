@@ -33,3 +33,12 @@
 # https://github.com/drduh/YubiKey-Guide
 # https://docs.github.com/en/github/authenticating-to-github/troubleshooting-ssh
 
+# SSH Lockout
+
+# Disable password based SSH authentication
+`sudo vim /private/etc/ssh/sshd_config`
+
+# PermitRootLogin no
+# PasswordAuthentication no
+# PermitEmptyPasswords no
+# ChallengeResponseAuthentication no
