@@ -39,6 +39,9 @@ if ! xcode-select --print-path &> /dev/null; then
     # print_result $? 'Agree with the XCode Command Line Tools licence'
 
 fi
+
+# Do a Software Update on the MBP; completes xcode install.
+
 ###
 ##############################################################################################################
 
@@ -49,6 +52,13 @@ fi
 # install all the things!
 ./brew.sh
 ./brew-cask.sh
+
+# Start up ssh client
+
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+gpg-connect-agent updatestartuptty /bye 
 
 # Git Projects Folder
 mkdir ~/Projects
