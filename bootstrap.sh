@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
-cd "$(dirname "$HOME/Projects/dotfiles")";
+cd "$(dirname "~/dotfiles")";
 
-git pull origin main;
+git pull origin master;
 
 function doIt() {
 	rsync --exclude ".git/" \
