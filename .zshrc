@@ -50,9 +50,15 @@ source ~/.extra
 # https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html
 
 # GCP Auto-Complete
-for zsh users
-    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+if [[ -n $WORK_HOST ]]; then
+  for zsh users
+      source "/Users/$USER/google-cloud-sdk/path.zsh.inc"
+      source "/Users/$USER/google-cloud-sdk/completion.zsh.inc"
+else
+  for zsh users
+      source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+      source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+fi
 
 # Kube resources from gcloud libraries.
 source <(kubectl completion zsh)
