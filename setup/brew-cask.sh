@@ -21,6 +21,10 @@ brew install --cask iterm2 visual-studio-code
 # Communication
 brew install --cask slack
 
+#Terraform
+brew tap hashicorp/tap
+brew install terraform
+
 # Remove outdated versions from the cellar
 brew cleanup
 
