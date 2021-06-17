@@ -19,6 +19,7 @@ alias stack="stackoverflow"
 alias wolf="wolframalpha"
 alias gc=gcloud
 alias k=kubectl
+alias t=terraform
 alias v=vagrant
 alias vb="VBoxManage"
 alias compose="docker-compose"
