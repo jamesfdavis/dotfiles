@@ -47,7 +47,8 @@ fi
 
 
 ##############################################################################################################
-### cargo
+### cargo - rust package manager
+# https://doc.rust-lang.org/cargo/getting-started/installation.html
  
 # install
 curl https://sh.rustup.rs -sSf | sh
