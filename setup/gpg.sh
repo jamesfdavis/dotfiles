@@ -12,8 +12,10 @@
 
 `export KEYID=0x`
 
-# SubKeys
+# Master Key
+`gpg --armor --export | pbcopy`
 
+# SubKeys
 `gpg --expert --edit-key $KEYID`
 
 # Backup Keys
@@ -49,5 +51,3 @@ default-cache-ttl 28800
 
 # Docker Command over SSH
 `security -v unlock-keychain ~/Library/Keychains/login.keychain-db`
-
-# Testing my key, and yet another test..
