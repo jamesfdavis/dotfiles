@@ -24,6 +24,12 @@ brew install grc
 # Directory Tree
 brew install tree
 
+# Python and R programming languages for scientific computing
+ brew install miniconda
+ 
+#  conda create -n jupyter-env jupyter pandas
+#  conda activate jupyter-env
+ 
 # Install `wget` with IRI support.
 brew install wget 
 
