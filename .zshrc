@@ -4,6 +4,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/$USER/.oh-my-zsh"
 
+export PATH="/usr/local/sbin:$PATH"
+
 # Change them for SSH
 if [[ -n $SSH_CONNECTION ]]; then
   ZSH_THEME="ys"
