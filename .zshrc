@@ -30,7 +30,7 @@ gpg-connect-agent updatestartuptty /bye
 plugins=(
 	brew
     dotenv
-    osx
+    macos
     sudo
     web-search
 )
