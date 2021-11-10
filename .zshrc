@@ -29,7 +29,6 @@ gpg-connect-agent updatestartuptty /bye
 # https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
 plugins=(
 	brew
-    dotenv
     macos
     sudo
     web-search
