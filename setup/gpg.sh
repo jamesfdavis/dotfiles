@@ -29,8 +29,10 @@
 `wget -O $GNUPGHOME/gpg-agent.conf https://raw.githubusercontent.com/drduh/config/master/gpg-agent.conf`
 
 # Increase default timeout
-max-cache-ttl 28800
-default-cache-ttl 28800
+default-cache-ttl 25200
+default-cache-ttl-ssh 25200
+max-cache-ttl 25200
+max-cache-ttl-ssh 25200
 
 # Control SSH Agent
 `gpg --with-keygrip -k $KEYID`
