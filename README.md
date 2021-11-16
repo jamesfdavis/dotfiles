@@ -44,6 +44,21 @@ GIT_AUTHOR_EMAIL="ragingsmurf@gmail.com"
 GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+# GPG Key
+export KEYID=0x_master_key_id
+
+# GitHub
+export SIGNING_KEY="pgp_signing_key_id"
+export GIT_AUTHOR_NAME="James Davis"
+export GIT_AUTHOR_EMAIL="ragingsmurf@gmail.com"
+
+export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+
+git config --global user.name "$GIT_AUTHOR_NAME"
+git config --global user.email "$GIT_AUTHOR_EMAIL"
+git config --global user.signingkey "$SIGNING_KEY"!
 ```
 
 > Add `WORK_HOST=true` to flag loading resources from alt locations.
