@@ -18,6 +18,9 @@
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state.
 	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
+	# load local difftool
+	dt = difftool
+
 	# Pull in remote changes for the current repository and all its submodules.
 	pl = pull --recurse-submodules
 
@@ -146,6 +149,12 @@
 
 	# Detect copies as well as renames.
 	renames = copies
+	tool = vimdiff
+
+[difftool]
+
+	# Auto open diff files
+	prompt = false
 
 [diff "bin"]
 
