@@ -65,7 +65,7 @@ curl https://sh.rustup.rs -sSf | sh
 # install all the things!
 ./brew.sh
 ./brew-cask.sh
-
+./npm.sh
 # Start up ssh client
 
 export GPG_TTY="$(tty)"
