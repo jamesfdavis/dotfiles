@@ -11,29 +11,32 @@ alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
 alias g="git"
-
-## Environments
+alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf' # TODO - Research and test.
 alias catn="nl -b a"
+
+## Sources
 alias duck="ddg"
 alias stack="stackoverflow"
 alias wolf="wolframalpha"
-alias gc=gcloud
-alias k=kubectl
-alias t=terraform
+
+## Environments
 alias v=vagrant
 alias vb="VBoxManage"
+alias t=terraform
 alias compose="docker-compose"
+alias gc=gcloud
+alias k=kubectl
 
 ## npm aliases
-# alias ni="npm install"
-# alias nrs="npm run start -s --"
-# alias nrb="npm run build -s --"
-# alias nrd="npm run dev -s --"
-# alias nrt="npm run test -s --"
-# alias nrtw="npm run test:watch -s --"
-# alias nrv="npm run validate -s --"
-# alias rnm="rm -rf node_modules"
-# alias flush-npm="rm -rf node_modules && npm i && echo NPM  is done"
+alias ni="npm install"
+alias nrs="npm run start -s --"
+alias nrb="npm run build -s --"
+alias nrd="npm run dev -s --"
+alias nrt="npm run test -s --"
+alias nrtw="npm run test:watch -s --"
+alias nrv="npm run validate -s --"
+alias rnm="rm -rf node_modules"
+alias flush-npm="rm -rf node_modules && npm i && echo NPM  is done"
 
 ## Utilities
 alias c="tr -d '\n' | pbcopy"
@@ -41,16 +44,21 @@ alias df="df -h"
 alias du="du -hd1 | sort -h"
 alias usage="du -h -d1"
 alias runp="lsof -i"
-alias update="source ~/.zshrc"
-alias upgrade='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update; sudo gem cleanup'
-alias path='echo -e ${PATH//:/\\n}'
+
+## Shell
+alias update="source ~/.zshrc" # Reload terminal profile. 
+alias bootstrap="source /Users/$USER/dotfiles/bootstrap.sh" # Regenerate dotfiles
 alias reload="exec ${SHELL} -l"
+
+## Software
+alias upgrade='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update; sudo gem cleanup'
+alias pip=pip3
+alias path='echo -e ${PATH//:/\\n}'
+
+## Network
 alias ip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)'"
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
-alias pip=pip3
-alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf'
-alias path='echo -e ${PATH//:/\\n}'
 
 # Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
