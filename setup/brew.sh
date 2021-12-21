@@ -54,6 +54,9 @@ brew install 1password
 # Install time management
 brew install rescuetime
 
+# React Native - Android Development
+brew install android-studio
+
 # Install more recent versions of some OS X tools
 brew install vim grep openssh screen
 

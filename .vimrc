@@ -1,5 +1,5 @@
 set background=dark
-colorscheme delek
+colorscheme evening
 
 " Make Vim more useful
 set nocompatible
