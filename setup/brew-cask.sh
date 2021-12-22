@@ -4,7 +4,7 @@
 brew update && brew upgrade && brew cleanup
 
 # Local VM Management
-brew install --cask virtualbox vagrant
+brew install --cask virtualbox vagrant docker
 
 # Install native apps
 brew tap homebrew/cask-versions
