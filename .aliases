@@ -51,7 +51,7 @@ alias bootstrap="source /Users/$USER/dotfiles/bootstrap.sh" # Regenerate dotfile
 alias reload="exec ${SHELL} -l"
 
 ## Software
-alias upgrade='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update; sudo gem cleanup'
+alias upgrade='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update --user-install; sudo gem cleanup'
 alias pip=pip3
 alias path='echo -e ${PATH//:/\\n}'
 
