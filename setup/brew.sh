@@ -26,7 +26,8 @@ brew install tree
 
 # Python and R programming languages for scientific computing
  brew install miniconda
- 
+
+# conda init "$(basename "${SHELL}")"
 #  conda create -n jupyter-env jupyter pandas
 #  conda activate jupyter-env
  
@@ -40,7 +41,10 @@ brew install gnupg
 brew install git gh
 
 # Network Scan
-brew install nmap 
+brew install nmap
+
+# Node
+brew install nvm
 
 # install JSON
 brew install jq

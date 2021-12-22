@@ -20,6 +20,7 @@ brew install --cask iterm2 visual-studio-code
 
 # Communication
 brew install --cask slack
+brew install --cask discord
 
 #Terraform
 brew tap hashicorp/tap
