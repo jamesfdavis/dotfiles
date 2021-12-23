@@ -22,9 +22,10 @@ alias k=kubectl
 alias t=terraform
 alias v=vagrant
 alias vb="VBoxManage"
+alias g=git
 
 ## IDE
-alias roid="open -a /Applications/Android\ Studio.app"
+alias studio="open -a /Applications/Android\ Studio.app"
 alias xcode="open -a /Applications/XCode.app"
 
 ## npm aliases
