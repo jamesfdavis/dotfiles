@@ -67,7 +67,7 @@ curl https://sh.rustup.rs -sSf | sh
 ./brew-cask.sh
 ./npm.sh
 # Start up ssh client
-
+R
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
@@ -120,7 +120,7 @@ mkdir ~/.vim/backups
 mkdir ~/.vim/swaps
 mkdir ~/.vim/undo
 
-### end of VS
+### end of Vim
 ##############################################################################################################
 
 
@@ -165,7 +165,6 @@ mkdir ~/sbin # Local system binaries
 mkdir ~/share # Local architecture-independent hierarchy
 mkdir ~/src # Local source code (Git Repos)
 
-
 ###
 ##############################################################################################################
 
@@ -196,8 +195,10 @@ sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
 #   move git credentials into ~/.gitconfig.local    	http://stackoverflow.com/a/13615531/89484
 #   now .gitconfig can be shared across all machines and only the .local changes
 
-# bootstrap it up!
-# ./bootstrap.sh
+ln -s ~/src/dotfiles ~/dotfiles
+
+# Redeploy dotfiles to $HOME
+# sh bootstrap
 
 ###
 ##############################################################################################################
