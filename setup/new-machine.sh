@@ -74,8 +74,7 @@ gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye 
 
 # Git Projects Folder
-mkdir ~/Projects
-
+# mkdir ~/Projects
 
 ### end of homebrew
 ##############################################################################################################
@@ -156,9 +155,15 @@ mkdir ~/.vim/undo
 ##############################################################################################################
 ### Make the common things
 ###
-
-# Default projects directory
-mkdir ~/Projects
+  
+mkdir ~/bin # Local binaries
+mkdir ~/etc # Host-specific system configuration for local binaries
+mkdir ~/lib # Local libraries (flutter)
+mkdir ~/lib64 # Local 64-bit libraries
+mkdir ~/man # Local online manuals
+mkdir ~/sbin # Local system binaries
+mkdir ~/share # Local architecture-independent hierarchy
+mkdir ~/src # Local source code (Git Repos)
 
 
 ###

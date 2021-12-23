@@ -3,8 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/$USER/.oh-my-zsh"
-
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/Users/$USER/Developer/flutter/bin:/usr/local/sbin:$PATH"
 
 # Change them for SSH
 if [[ -n $SSH_CONNECTION ]]; then

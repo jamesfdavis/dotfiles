@@ -9,7 +9,7 @@ alias -- -="cd -"
 ## File shortcuts
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias p="cd ~/Projects"
+# alias p="cd ~/Projects"
 alias g="git"
 alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf' # TODO - Research and test.
 alias catn="nl -b a"
