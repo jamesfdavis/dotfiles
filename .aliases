@@ -9,23 +9,23 @@ alias -- -="cd -"
 ## File shortcuts
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-# alias p="cd ~/Projects"
-alias g="git"
-alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf' # TODO - Research and test.
-alias catn="nl -b a"
 
-## Sources
-alias duck="ddg"
+## Web Stuff
 alias stack="stackoverflow"
+alias duck="ddg"
 alias wolf="wolframalpha"
 
 ## Environments
-alias v=vagrant
-alias vb="VBoxManage"
-alias t=terraform
 alias compose="docker-compose"
 alias gc=gcloud
 alias k=kubectl
+alias t=terraform
+alias v=vagrant
+alias vb="VBoxManage"
+
+## IDE
+alias roid="open -a /Applications/Android\ Studio.app"
+alias xcode="open -a /Applications/XCode.app"
 
 ## npm aliases
 alias ni="npm install"
@@ -44,6 +44,7 @@ alias df="df -h"
 alias du="du -hd1 | sort -h"
 alias usage="du -h -d1"
 alias runp="lsof -i"
+alias catn="nl -b a"
 
 ## Shell
 alias update="source ~/.zshrc" # Reload terminal profile. 
@@ -54,6 +55,7 @@ alias reload="exec ${SHELL} -l"
 alias upgrade='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update --user-install; sudo gem cleanup'
 alias pip=pip3
 alias path='echo -e ${PATH//:/\\n}'
+alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf' # TODO - Research and test.
 
 ## Network
 alias ip="ipconfig getifaddr en0"

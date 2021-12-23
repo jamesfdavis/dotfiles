@@ -158,7 +158,7 @@ mkdir ~/.vim/undo
   
 mkdir ~/bin # Local binaries
 mkdir ~/etc # Host-specific system configuration for local binaries
-mkdir ~/lib # Local libraries (flutter)
+mkdir ~/lib # Local libraries
 mkdir ~/lib64 # Local 64-bit libraries
 mkdir ~/man # Local online manuals
 mkdir ~/sbin # Local system binaries

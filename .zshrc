@@ -3,7 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/$USER/.oh-my-zsh"
-export PATH="/Users/$USER/Developer/flutter/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:/Users/$USER/.local/flutter/bin:$PATH"
 
 # Change them for SSH
 if [[ -n $SSH_CONNECTION ]]; then
@@ -28,9 +28,9 @@ gpg-connect-agent updatestartuptty /bye
 # https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
 plugins=(
 	brew
-    macos
-    sudo
-    web-search
+  macos
+  sudo
+  web-search
 )
 
 # Init extensions
