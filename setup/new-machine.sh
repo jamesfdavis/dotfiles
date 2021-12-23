@@ -63,6 +63,10 @@ curl https://sh.rustup.rs -sSf | sh
 ### homebrew!
 
 # install all the things!
+
+# Download and install the JRE
+# https://www.java.com/en/download/
+
 ./brew.sh
 ./brew-cask.sh
 ./npm.sh
