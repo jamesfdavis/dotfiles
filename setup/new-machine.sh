@@ -71,7 +71,7 @@ curl https://sh.rustup.rs -sSf | sh
 ./brew-cask.sh
 ./npm.sh
 # Start up ssh client
-R
+
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
