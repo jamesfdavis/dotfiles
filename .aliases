@@ -27,6 +27,7 @@ alias g=git
 ## IDE
 alias studio="open -a /Applications/Android\ Studio.app"
 alias xcode="open -a /Applications/XCode.app"
+alias iphone="open -a Simulator"
 
 ## npm aliases
 alias ni="npm install"
