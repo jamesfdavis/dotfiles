@@ -1,7 +1,6 @@
-# Install for Node.js pacakages, primarily for platform development.
+#!/bin/zsh
+
+# Node.js environment.
 
 nvm install --lts
-
-npm install -g nativescript
-
 

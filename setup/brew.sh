@@ -1,7 +1,4 @@
-#!/bin/bash
-
-# Install command-line tools using Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#!/bin/zsh
 
 # Make sure we’re using the latest Homebrew
 brew update && brew upgrade
@@ -25,7 +22,7 @@ brew install grc
 brew install tree
 
 # Python and R programming languages for scientific computing
- brew install miniconda
+brew install miniconda
 
 # conda init "$(basename "${SHELL}")"
 #  conda create -n jupyter-env jupyter pandas

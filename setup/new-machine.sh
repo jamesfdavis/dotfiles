@@ -62,14 +62,21 @@ fi
 ##############################################################################################################
 ### homebrew!
 
+# Install command-line tools using Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Source external files.
+brew install wget
+
 # install all the things!
 
 # Download and install the JRE
 # https://www.java.com/en/download/
 
-./npm.sh
+# Use Wget to get following files to local
 ./brew.sh
 ./brew-cask.sh
+./npm.sh
 
 # Start up ssh client
 
@@ -182,7 +189,7 @@ mkdir ~/src # Local source code (Git Repos)
 
 # set up Mac OS defaults
 # https://github.com/mathiasbynens/dotfiles/blob/main/.macos
-sh .macos
+sh setup/.macos
 
 # Enable firewall, stealth mode.
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
