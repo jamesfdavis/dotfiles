@@ -65,9 +65,6 @@ fi
 # Install command-line tools using Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Source external files.
-brew install wget
-
 # install all the things!
 
 # Download and install the JRE
@@ -84,9 +81,6 @@ export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye 
-
-# Git Projects Folder
-# mkdir ~/Projects
 
 ### end of homebrew
 ##############################################################################################################
@@ -109,7 +103,7 @@ chmod 755 /usr/local/share/zsh/site-functions
 # Zed
 curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
 # Make z.sh executable
-chmod +x ~/z.sh
+chmod +x ~/lib/z.sh
 
 ### end of VS
 ##############################################################################################################
