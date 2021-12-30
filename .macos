@@ -71,6 +71,13 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
+# Trackpad -> Scroll & Zoom -> Enable natural scroll direction.
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+# - Tap to Click (Internal)
+defaults write NSGlobalDomain com.apple.trackpad.threeFingerTapGesture -int 
+# - Tap to CLick (BlueTooth)
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool 
+
 # Display ASCII control characters using caret notation in standard text views
 # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
 defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
@@ -363,7 +370,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
 # Set the icon size of Dock items to 36 pixels
-defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock tilesize -int 23
 
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "scale"

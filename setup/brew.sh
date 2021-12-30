@@ -10,7 +10,7 @@ brew update && brew upgrade
 brew install coreutils moreutils htop
 
 # Diagrams # https://diagrams.mingrammer.com
-brew install graphviz
+# brew install graphviz
 
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
 brew install findutils ack

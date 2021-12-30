@@ -51,9 +51,9 @@ fi
 # https://doc.rust-lang.org/cargo/getting-started/installation.html
  
 # install
-curl https://sh.rustup.rs -sSf | sh
+# curl https://sh.rustup.rs -sSf | sh
 
-./cargo.sh
+# ./cargo.sh
 
 ###
 ##############################################################################################################
@@ -67,9 +67,10 @@ curl https://sh.rustup.rs -sSf | sh
 # Download and install the JRE
 # https://www.java.com/en/download/
 
+./npm.sh
 ./brew.sh
 ./brew-cask.sh
-./npm.sh
+
 # Start up ssh client
 
 export GPG_TTY="$(tty)"
