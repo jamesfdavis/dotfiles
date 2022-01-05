@@ -18,6 +18,9 @@ brew install gnu-sed
 # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
 brew install grc
 
+# Grammarly
+brew install grammarly
+
 # Directory Tree
 brew install tree
 
