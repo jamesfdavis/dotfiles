@@ -67,6 +67,9 @@ brew install vim grep openssh screen
 # install public key in a remote machine's authorized_keys
 brew install ssh-copy-id
 
+# install tunnel
+brew install ngrok
+
 # mtr - ping & traceroute. best.
 brew install mtr
 brew install pidcat # colored logcat guy
