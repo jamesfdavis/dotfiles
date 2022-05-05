@@ -46,6 +46,7 @@ fi
 ##############################################################################################################
 
 
+<<<<<<< Updated upstream
 ##############################################################################################################
 ### cargo - rust package manager
 # https://doc.rust-lang.org/cargo/getting-started/installation.html
@@ -75,6 +76,8 @@ fi
 ./brew-cask.sh
 ./npm.sh
 
+=======
+>>>>>>> Stashed changes
 # Start up ssh client
 
 export GPG_TTY="$(tty)"
@@ -100,11 +103,14 @@ wget https://raw.githubusercontent.com/jamesfdavis/dotfiles/master/.zshrc
 chmod 755 /usr/local/share/zsh
 chmod 755 /usr/local/share/zsh/site-functions
 
+<<<<<<< Updated upstream
 # Zed
 curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
 # Make z.sh executable
 chmod +x ~/lib/z.sh
 
+=======
+>>>>>>> Stashed changes
 ### end of VS
 ##############################################################################################################
 
@@ -175,15 +181,56 @@ mkdir ~/src # Local source code (Git Repos)
 ##############################################################################################################
 
 
+# go read mathias, paulmillr, gf3, alraa's dotfiles to see what's worth stealing.
+# set up Mac OS defaults
+# https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+sh setup/.macos
+
+# Zed
+cd ~/lib
+
+curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/plugins/z/z.sh 
+# Make z.sh executable
+chmod +x ~/lib/z.sh
+
+
+##############################################################################################################
+### cargo - rust package manager
+# https://doc.rust-lang.org/cargo/getting-started/installation.html
+ 
+# install
+# curl https://sh.rustup.rs -sSf | sh
+
+# ./cargo.sh
+
+###
+##############################################################################################################
+
+
+##############################################################################################################
+### homebrew!
+
+# Install command-line tools using Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# install all the things!
+
+# Download and install the JRE
+# https://www.java.com/en/download/
+
+# Use Wget to get following files to local
+./brew.sh
+./brew-cask.sh
+./npm.sh
+
+# Setup 1Password
+
+gh 
+
 ##############################################################################################################
 ### Remaining configuration
 ###
 
-# go read mathias, paulmillr, gf3, alraa's dotfiles to see what's worth stealing.
-
-# set up Mac OS defaults
-# https://github.com/mathiasbynens/dotfiles/blob/main/.macos
-sh setup/.macos
 
 # Enable firewall, stealth mode.
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
