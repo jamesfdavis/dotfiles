@@ -31,6 +31,7 @@ plugins=(
   macos
   sudo
   web-search
+  docker
 )
 
 # Init extensions
@@ -39,7 +40,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Directory browser and search
-source ~/lib/z.sh
+source ~/z.sh
 
 # Process the extra file (local vars)
 source ~/.exports
@@ -79,6 +80,12 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
   
 
+FILE=.nvmrc
+if test -f "$FILE"; then
+    nvm install
+fi
+
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/usr/local/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -93,3 +100,5 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
