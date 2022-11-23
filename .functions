@@ -23,6 +23,11 @@ function dataurl() {
 	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
 }
 
+// Send pkm to PenroseDev repository.
+function publish() {
+	rsync -a /Users/$USER/src/pkm/Obsidian/Projects/penrose.dev/publish/ /Users/$USER/src/PenroseDev/PenroseDev
+}
+
 # Crypto Price
 function price() {
 	curl -X POST 'https://api.livecoinwatch.com/coins/single' -H 'content-type: application/json' -H 'x-api-key: '"$LIVE_COIN_WATCH"'' -d '{"currency":"USD","code":"'${1}'","meta":true}'
