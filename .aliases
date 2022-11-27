@@ -23,6 +23,7 @@ alias t=terraform
 alias v=vagrant
 alias vb="VBoxManage"
 alias g=git
+alias f=flutter
 
 ## IDE
 alias studio="open -a /Applications/Android\ Studio.app"
