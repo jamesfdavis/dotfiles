@@ -17,7 +17,7 @@ alias wolf="wolframalpha"
 
 ## Environments
 alias compose="docker-compose"
-alias gc=gcloud
+alias gcp=gcloud
 alias k=kubectl
 alias t=terraform
 alias v=vagrant
