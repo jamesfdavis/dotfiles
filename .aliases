@@ -24,6 +24,7 @@ alias v=vagrant
 alias vb="VBoxManage"
 alias g=git
 alias f=flutter
+alias fd="flutter doctor -v"
 
 ## IDE
 alias studio="open -a /Applications/Android\ Studio.app"
