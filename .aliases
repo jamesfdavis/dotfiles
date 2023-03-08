@@ -10,6 +10,10 @@ alias -- -="cd -"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 
+## GPG
+alias keys="gpg --list-secret-keys --keyid-format=long"
+alias keygrip="gpg -K --with-keygrip"
+
 ## Web Stuff
 alias stack="stackoverflow"
 alias duck="ddg"
