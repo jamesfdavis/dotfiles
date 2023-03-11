@@ -9,7 +9,7 @@ export PATH="/usr/local/sbin:/Users/$USER/.local/flutter/bin:$PATH"
 if [[ -n $SSH_CONNECTION ]]; then
   ZSH_THEME="ys"
 else
-  ZSH_THEME="duellj"
+  ZSH_THEME="frisk"
 fi
 
 # Add GPG 
