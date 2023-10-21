@@ -55,8 +55,8 @@ brew install kubectl google-cloud-sdk
 # Install Password Management 
 brew install 1password
 
-# Install time management
-brew install rescuetime
+# Install Google Earth
+brew install google-earth-pro
 
 # React Native - Android Development
 brew install android-studio google-chrome cocoapod firefoxs
