@@ -47,3 +47,6 @@ export GNUPGHOME=$HOME/.gnupg
 
 # Hide the “default interactive shell is now zsh” warning on macOS.
 export BASH_SILENCE_DEPRECATION_WARNING=1;
+
+# N8N Env
+export N8N_VERSION=1.16.0
