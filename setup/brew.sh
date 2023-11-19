@@ -24,6 +24,9 @@ brew install grammarly
 # Directory Tree
 brew install tree
 
+# Database
+brew install postgresql
+
 # Python and R programming languages for scientific computing
 brew install miniconda
 
