@@ -52,6 +52,11 @@ brew install nvm
 # install JSON
 brew install jq
 
+# Performance and Tuning
+brew install vegeta
+brew install rs/tap/jaggr
+brew install rs/tap/jplot
+
 # Containers
 brew install kubectl google-cloud-sdk
 
