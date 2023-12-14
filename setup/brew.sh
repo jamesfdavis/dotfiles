@@ -12,6 +12,9 @@ brew install coreutils moreutils htop
 # GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed
 brew install findutils ack
 
+# Local Certs
+brew install mkcert
+
 # GNU `sed`, overwriting the built-in `sed`
 brew install gnu-sed 
 
