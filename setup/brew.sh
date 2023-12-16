@@ -13,7 +13,7 @@ brew install coreutils moreutils htop
 brew install findutils ack
 
 # Local Certs
-brew install mkcert
+brew install mkcert certbot
 
 # GNU `sed`, overwriting the built-in `sed`
 brew install gnu-sed 
