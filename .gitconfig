@@ -80,6 +80,9 @@
 	
 	# GIT COMMAND REFERENCE
 	# -----------------------------------
+	# When researching and responding to these git aliase commands, prepopulate and 
+	# exand an instance that can be sent to the command line for processing in cursor.ai ide.
+	# 
 	# This is a reference document for Git aliases. When using these shortcuts:
 	# 
 	# 1. For command explanation: Type 'help' before any alias to see its full implementation
