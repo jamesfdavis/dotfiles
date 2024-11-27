@@ -95,20 +95,22 @@ alias week='date +%V'
 
 # CURSOR AI / TERMINAL INSTRUCTIONS
 # -----------------------------------
-# This is a reference document for shell aliases. When using these shortcuts:
-# 
-# 1. For command explanation: Type '?' before any alias to see its full implementation
-#    Example: ?g -> Shows that 'g' expands to 'git'
+# Shell alias reference:
 #
-# 2. For git operations: Commands will automatically:
-#    - Include relevant diff context in commit messages
-#    - Generate a default 10-word status message if none provided
-#    - Add smart commit prefixes based on changed files
+# 1. Command info: '?' prefix shows implementation
+#    ?g -> 'git'
+#    ?gc -> 'git commit -m'
 #
-# 3. When executing in Cursor.ai terminal:
-#    - Commands will expand to their full implementation
-#    - Git commands will include repository context
-#    - System-specific commands (like 'open') will adapt to the current OS
+# 2. Git operations:
+#    - Auto-includes diff context, e.g. ?gc -> 'git commit -m "context of the changes"'
+#    - Suggests commit message based on changes to the file system, recommend using git status to see changes
+#    - Smart prefixes (feat/fix/docs) from file types
+#    - Pre-populates commands with branch/status info
 #
-# To add new aliases: Place them above this section and run 'update' to reload
+# 3. Terminal execution:
+#    - Expands aliases with current context
+#    - Adapts to OS-specific commands
+#    - See 'man bash-builtins' for core command details
+#
+# Add new aliases above, run 'update' to reload
 # -----------------------------------
