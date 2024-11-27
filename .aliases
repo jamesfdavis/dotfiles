@@ -92,3 +92,23 @@ alias sudo='sudo '
 
 # Get week number
 alias week='date +%V'
+
+# CURSOR AI / TERMINAL INSTRUCTIONS
+# -----------------------------------
+# This is a reference document for shell aliases. When using these shortcuts:
+# 
+# 1. For command explanation: Type '?' before any alias to see its full implementation
+#    Example: ?g -> Shows that 'g' expands to 'git'
+#
+# 2. For git operations: Commands will automatically:
+#    - Include relevant diff context in commit messages
+#    - Generate a default 10-word status message if none provided
+#    - Add smart commit prefixes based on changed files
+#
+# 3. When executing in Cursor.ai terminal:
+#    - Commands will expand to their full implementation
+#    - Git commands will include repository context
+#    - System-specific commands (like 'open') will adapt to the current OS
+#
+# To add new aliases: Place them above this section and run 'update' to reload
+# -----------------------------------
