@@ -111,6 +111,9 @@ alias week='date +%V'
 #    - Expands aliases with current context
 #    - Adapts to OS-specific commands
 #    - See 'man bash-builtins' for core command details
+#    - Try to grab context of the current state by selecting a git command and sending it to the clipboard.
+#    ?g diff | pbcopy
+#    ?g show | bcopy
 #
 # Add new aliases above, run 'update' to reload
 # -----------------------------------
