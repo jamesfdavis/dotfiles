@@ -77,6 +77,43 @@
 
 	# Show the user email for the current repository.
 	whoami = config user.email
+	
+	# GIT COMMAND REFERENCE
+	# -----------------------------------
+	# This is a reference document for Git aliases. When using these shortcuts:
+	# 
+	# 1. For command explanation: Type 'help' before any alias to see its full implementation
+	#    Example: help g -> Shows that 'g' expands to 'git'
+	#
+	# 2. View any command's full implementation:
+	#    $ git aliases | grep <alias> | pbcopy
+	#    Example: git aliases | grep l | pbcopy
+	#
+	# 3. For git operations: Commands will automatically:
+	#    - Include relevant diff context in commit messages
+	#    - Generate a default 10-word status message if none provided
+	#    - Add smart commit prefixes based on changed files
+	#
+	# 4. Git operations in this config:
+	#    - l    = Pretty git log with graph
+	#    - s    = Short status
+	#    - ca   = Commit all changes
+	#    - go   = Switch/create branch
+	#    - dt   = Open diff tool
+	#    - reb  = Interactive rebase
+	#    - dm   = Delete merged branches
+	#
+	# 5. Useful combinations:
+	#    - git s && git ca     (check status & commit all)
+	#    - git pl && git ps    (pull & push)
+	#    - git dt HEAD~1       (diff against previous commit)
+	#
+	# 6. Common search commands:
+	#    - fb = Find branches containing commit
+	#    - ft = Find tags containing commit
+	#    - fc = Find commits by source code
+	#    - fm = Find commits by message
+	# -----------------------------------
 
 [apply]
 
