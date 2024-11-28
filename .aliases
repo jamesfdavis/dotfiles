@@ -93,27 +93,63 @@ alias sudo='sudo '
 # Get week number
 alias week='date +%V'
 
-# CURSOR AI / TERMINAL INSTRUCTIONS
+# Cursor.AI specific aliases
+alias ai-commit="git smart-commit"
+alias ai-review="git review"
+alias ai-branch="git smart-branch"
+
+# Enhanced development workflow
+alias analyze="cursor-ai analyze-code"
+alias suggest="cursor-ai suggest-improvement"
+alias doc="cursor-ai generate-docs"
+
+# Context-aware git operations
+alias gc='f() { \
+    if [ -n "$CURSOR_AI_ACTIVE" ]; then \
+        git diff --cached | cursor-ai suggest-commit-message | git commit -F -; \
+    else \
+        git commit -m "$*"; \
+    fi \
+}; f'
+
+# File change analysis
+alias changes='f() { \
+    if [ -n "$CURSOR_AI_ACTIVE" ]; then \
+        git status --porcelain | cursor-ai analyze-changes; \
+    else \
+        git status --porcelain; \
+    fi \
+}; f'
+
+# CURSOR AI INTEGRATION INSTRUCTIONS
 # -----------------------------------
-# Shell alias reference:
+# Environment Detection:
+# - $CURSOR_AI_ACTIVE indicates Cursor.AI IDE presence
+# - Smart commands adapt based on environment
 #
-# 1. Command info: '?' prefix shows implementation
-#    ?g -> 'git'
-#    ?gc -> 'git commit -m'
+# Enhanced Git Operations:
+# 1. Commit Messages:
+#    - ai-commit: Generate context-aware commit messages
+#    - gc: Smart commit with LLM suggestions
 #
-# 2. Git operations:
-#    - Auto-includes diff context, e.g. ?gc -> 'git commit -m "context of the changes"'
-#    - Suggests commit message based on changes to the file system, recommend using git status to see changes
-#    - Smart prefixes (feat/fix/docs) from file types
-#    - Pre-populates commands with branch/status info
+# 2. Code Review:
+#    - ai-review: Get AI-powered code review
+#    - analyze: Deep code analysis
 #
-# 3. Terminal execution:
-#    - Expands aliases with current context
-#    - Adapts to OS-specific commands
-#    - See 'man bash-builtins' for core command details
-#    - Try to grab context of the current state by selecting a git command and sending it to the clipboard.
-#    ?g diff | pbcopy
-#    ?g show | bcopy
+# 3. Branch Management:
+#    - ai-branch: Generate meaningful branch names
 #
-# Add new aliases above, run 'update' to reload
+# 4. Documentation:
+#    - doc: Generate documentation based on code
+#    - suggest: Get code improvement suggestions
+#
+# Usage Examples:
+# - ai-commit              # Generate smart commit message
+# - ai-review HEAD~1       # Review changes since last commit
+# - changes               # Analyze current changes
+# - doc ./src/feature.js  # Generate documentation
+#
+# Note: Commands adapt to environment:
+# - In Cursor.AI: Full LLM capabilities
+# - Outside: Fallback to standard git operations
 # -----------------------------------
