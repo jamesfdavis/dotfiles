@@ -1,3 +1,52 @@
+# GIT & CURSOR.AI INTEGRATION
+# -----------------------------------
+# This .gitconfig is enhanced with Cursor.AI integration capabilities.
+# When running in the Cursor.AI environment ($CURSOR_AI_ACTIVE is set),
+# git commands are augmented with AI-powered features.
+#
+# ENVIRONMENT DETECTION:
+# - Commands automatically detect Cursor.AI environment
+# - Enhanced features activate when $CURSOR_AI_ACTIVE is present
+# - Graceful fallback to standard git operations outside Cursor.AI
+#
+# SMART FEATURES:
+# 1. Commit Messages:
+#    - Analyzes diffs for context-aware commit suggestions
+#    - Identifies patterns in code changes
+#    - Suggests conventional commit types (feat/fix/docs)
+#    - Pre-fills commit messages with relevant details
+#
+# 2. Code Review:
+#    - Provides AI-powered diff analysis
+#    - Identifies potential issues and improvements
+#    - Suggests code optimizations
+#    - Checks for common patterns and anti-patterns
+#
+# 3. Branch Management:
+#    - Generates contextual branch names
+#    - Suggests names based on current changes
+#    - Maintains consistent naming conventions
+#
+# USAGE IN CURSOR.AI:
+# - All [alias] commands are context-aware
+# - Use 'smart-commit' for AI-assisted commits
+# - Use 'review' for intelligent code review
+# - Use 'smart-branch' for context-aware branch naming
+#
+# Examples:
+#   git smart-commit         # AI generates commit message
+#   git review HEAD~1       # AI reviews recent changes
+#   git smart-branch        # AI suggests branch name
+#
+# For detailed documentation on each command, use:
+#   git help <command>
+#
+# Note: This configuration automatically adapts based on environment:
+# - In Cursor.AI: Full AI-powered features
+# - Outside Cursor.AI: Standard git functionality
+# -----------------------------------
+
+
 [alias]
 
 	nosign = config commit.gpgsign false
@@ -77,46 +126,40 @@
 
 	# Show the user email for the current repository.
 	whoami = config user.email
-	
-	# GIT COMMAND REFERENCE
-	# -----------------------------------
-	# When researching and responding to these git aliase commands, prepopulate and 
-	# exand an instance that can be sent to the command line for processing in cursor.ai ide.
-	# 
-	# This is a reference document for Git aliases. When using these shortcuts:
-	# 
-	# 1. For command explanation: Type 'help' before any alias to see its full implementation
-	#    Example: help g -> Shows that 'g' expands to 'git'
-	#
-	# 2. View any command's full implementation:
-	#    $ git aliases | grep <alias> | pbcopy
-	#    Example: git aliases | grep l | pbcopy
-	#
-	# 3. For git operations: Commands will automatically:
-	#    - Include relevant diff context in commit messages
-	#    - Generate a default 10-word status message if none provided
-	#    - Add smart commit prefixes based on changed files
-	#
-	# 4. Git operations in this config:
-	#    - l    = Pretty git log with graph
-	#    - s    = Short status
-	#    - ca   = Commit all changes
-	#    - go   = Switch/create branch
-	#    - dt   = Open diff tool
-	#    - reb  = Interactive rebase
-	#    - dm   = Delete merged branches
-	#
-	# 5. Useful combinations:
-	#    - git s && git ca     (check status & commit all)
-	#    - git pl && git ps    (pull & push)
-	#    - git dt HEAD~1       (diff against previous commit)
-	#
-	# 6. Common search commands:
-	#    - fb = Find branches containing commit
-	#    - ft = Find tags containing commit
-	#    - fc = Find commits by source code
-	#    - fm = Find commits by message
-	# -----------------------------------
+
+	# AI-assisted commit message generation
+	smart-commit = "!f() { \
+			changes=$(git diff --cached --name-only); \
+			if [ -n \"$changes\" ]; then \
+					echo \"Analyzing changes for commit message suggestion...\"; \
+					if [ -n \"$CURSOR_AI_ACTIVE\" ]; then \
+							# When in Cursor.AI, leverage the LLM for detailed analysis
+							git diff --cached | cursor-ai suggest-commit-message; \
+					else \
+							# Default to basic commit message based on changed files
+							echo \"feat: changes in $(echo $changes | tr '\n' ' ')\"; \
+					fi \
+			fi; \
+	}; f"
+
+	# AI-assisted code review
+	review = "!f() { \
+			if [ -n \"$CURSOR_AI_ACTIVE\" ]; then \
+					git diff $1 | cursor-ai review-changes; \
+			else \
+					git diff $1; \
+			fi \
+	}; f"
+
+	# Context-aware branch naming
+	smart-branch = "!f() { \
+			if [ -n \"$CURSOR_AI_ACTIVE\" ]; then \
+					current_branch=$(git rev-parse --abbrev-ref HEAD); \
+					git status | cursor-ai suggest-branch-name; \
+			else \
+					echo \"feature/$(date +%Y%m%d)-\"; \
+			fi \
+	}; f"
 
 [apply]
 
@@ -247,3 +290,4 @@
 [gpg]
 
 	program = gpg
+
