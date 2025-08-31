@@ -1,314 +1,139 @@
-#!/usr/bin/env zsh
+[user]
+	name = localhost
+	email = user@localhost.local
 
-# Modern Shell Aliases for 2025
-# Updated for current tools and workflows
+[core]
+	editor = vim
+	autocrlf = input
+	trustctime = false
+	preloadindex = true
+	fscache = true
 
-###############################################################################
-# Navigation Aliases                                                          #
-###############################################################################
+[alias]
+	# View abbreviated SHA, description, and history graph of the latest 20 commits
+	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	# View the current working tree status using the short format
+	s = status -s
+	# Show the diff between the latest commit and the current state
+	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+	# Pull in remote changes for the current repository and all its submodules
+	p = !"git pull; git submodule foreach git pull origin master"
+	# Clone a repository including all submodules
+	c = clone --recursive
+	# Commit all changes
+	ca = !git add -A && git commit -av
+	# Switch to a branch, creating it if necessary
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+	# List aliases
+	aliases = config --get-regexp alias
+	# Amend the currently staged files to the latest commit
+	amend = commit --amend --reuse-message=HEAD
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+	# Interactive rebase with the given number of latest commits
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	# Remove the old tag with this name and tag the latest commit with it.
+	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+	# Find commits by source code
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	# Remove branches that have already been merged with master
+	# a.k.a. 'delete merged'
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
 
-# Enhanced directory navigation
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias -- -="cd -"
+[apply]
+	# Detect whitespace errors when applying a patch
+	whitespace = fix
 
-# Quick directory access
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias dev="cd ~/Development"
-alias docs="cd ~/Documents"
+[core]
+	# Use custom `.gitignore` and `.gitattributes`
+	excludesfile = ~/.gitignore
+	attributesfile = ~/.gitattributes
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+	# Make `git rebase` safer on macOS
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
+	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+	precomposeunicode = false
+	# Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+	untrackedCache = true
 
-# Better directory listing (use eza if available, fallback to ls)
-if command -v eza &> /dev/null; then
-    alias ls="eza --group-directories-first --icons"
-    alias ll="eza -la --group-directories-first --icons --git"
-    alias lt="eza --tree --level=2 --icons"
-else
-    alias ll="ls -la"
-    alias la="ls -A"
-    alias l="ls -CF"
-fi
+[color]
+	# Use colors in Git commands that are capable of colored output when
+	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+	ui = auto
 
-###############################################################################
-# Git Aliases (Modern Workflow)                                              #
-###############################################################################
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
 
-alias g="git"
-alias gs="git status"
-alias ga="git add"
-alias gc="git commit"
-alias gp="git push"
-alias gl="git log --oneline --graph --decorate"
-alias gd="git diff"
-alias gb="git branch"
-alias gco="git checkout"
-alias gcb="git checkout -b"
-alias gm="git merge"
-alias gr="git rebase"
-alias gf="git fetch"
-alias gpl="git pull"
-alias gst="git stash"
-alias gstp="git stash pop"
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold # line info
+	old = red # deletions
+	new = green # additions
 
-# Modern Git workflows
-alias gsync="git fetch origin && git rebase origin/main"
-alias gclean="git branch --merged | grep -v '\*\|main\|master' | xargs -n 1 git branch -d"
-alias gundo="git reset --soft HEAD~1"
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
 
-###############################################################################
-# Development Tools                                                           #
-###############################################################################
+[diff]
+	# Detect copies as well as renames
+	renames = copies
 
-# Container & Cloud
-alias d="docker"
-alias dc="docker compose"  # Modern compose command
-alias dps="docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'"
-alias k="kubectl"
-alias tf="terraform"
+[diff "bin"]
+	# Use `hexdump` to diff binary files
+	textconv = hexdump -v -C
 
-# Cloud providers
-alias aws="aws"
-alias az="azure-cli"
-alias gcp="gcloud"
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1
 
-# Modern development tools
-alias c="code"  # VS Code
-alias vim="nvim"  # Use Neovim if available
+[merge]
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
 
-###############################################################################
-# Node.js & Package Managers                                                  #
-###############################################################################
+[push]
+	# https://git-scm.com/docs/git-config#git-config-pushdefault
+	default = simple
+	# Make `git push` push relevant annotated tags when pushing branches out.
+	followTags = true
 
-# npm shortcuts
-alias ni="npm install"
-alias nid="npm install --save-dev"
-alias nr="npm run"
-alias ns="npm start"
-alias nt="npm test"
-alias nb="npm run build"
-alias nw="npm run dev"
+# URL shorthands
 
-# Package manager agnostic (auto-detect)
-alias install="[[ -f yarn.lock ]] && yarn || [[ -f pnpm-lock.yaml ]] && pnpm install || npm install"
-alias start="[[ -f yarn.lock ]] && yarn start || [[ -f pnpm-lock.yaml ]] && pnpm start || npm start"
-alias build="[[ -f yarn.lock ]] && yarn build || [[ -f pnpm-lock.yaml ]] && pnpm build || npm run build"
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
 
-# Cleanup
-alias clean-modules="rm -rf node_modules package-lock.json yarn.lock pnpm-lock.yaml && npm install"
+[url "git://github.com/"]
+	insteadOf = "github:"
 
-###############################################################################
-# Python Development                                                          #
-###############################################################################
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
 
-alias python="python3"
-alias pip="pip3"
-alias py="python3"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
 
-# Virtual environment shortcuts
-alias venv-create="python3 -m venv venv"
-alias venv-activate="source venv/bin/activate"
-alias venv-deactivate="deactivate"
-
-# Django shortcuts (if you use Django)
-alias dj="python manage.py"
-alias djrun="python manage.py runserver"
-alias djmig="python manage.py migrate"
-alias djmake="python manage.py makemigrations"
-
-###############################################################################
-# System Utilities                                                            #
-###############################################################################
-
-# Enhanced system commands
-alias df="df -h"
-alias du="du -h"
-alias free="top -l 1 -s 0 | grep PhysMem"  # macOS memory usage
-alias ps="ps aux"
-
-# Network
-alias myip="curl -s https://httpbin.org/ip | jq -r .origin"
-alias localip="ipconfig getifaddr en0"
-alias ports="lsof -iTCP -sTCP:LISTEN -n -P"
-
-# File operations
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -iv"
-alias mkdir="mkdir -pv"
-
-# Text processing
-alias grep="grep --color=auto"
-alias count="wc -l"
-
-###############################################################################
-# macOS Specific                                                              #
-###############################################################################
-
-# Finder shortcuts
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-alias desktop-hide="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias desktop-show="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-# Quick app launches
-alias safari="open -a Safari"
-alias chrome="open -a 'Google Chrome'"
-alias firefox="open -a Firefox"
-alias simulator="open -a Simulator"
-
-# System maintenance
-alias update-brew="brew update && brew upgrade && brew cleanup"
-alias update-system="sudo softwareupdate -i -a"
-alias update-all="update-system && update-brew"
-
-###############################################################################
-# Productivity & Quick Actions                                                #
-###############################################################################
-
-# Quick edits
-alias zshrc="code ~/.zshrc"
-alias aliases="code ~/.aliases"  # If you keep aliases in separate file
-alias hosts="sudo code /etc/hosts"
-
-# Clipboard (macOS)
-alias copy="pbcopy"
-alias paste="pbpaste"
-alias clip="tr -d '\n' | pbcopy"  # Copy without newline
-
-# Quick server
-alias serve="python3 -m http.server 8000"
-alias serve-php="php -S localhost:8000"
-
-# Date shortcuts
-alias now="date +'%Y-%m-%d %H:%M:%S'"
-alias today="date +'%Y-%m-%d'"
-alias week="date +%V"
-
-###############################################################################
-# Development Workflow                                                        #
-###############################################################################
-
-# Project shortcuts
-alias new-react="npx create-react-app"
-alias new-next="npx create-next-app@latest"
-alias new-vite="npm create vite@latest"
-
-# Testing
-alias test="npm test"
-alias test-watch="npm run test:watch"
-alias test-coverage="npm run test:coverage"
-
-# Linting & Formatting
-alias lint="npm run lint"
-alias format="npm run format"
-alias fix="npm run lint:fix"
-
-# Build & Deploy
-alias preview="npm run preview"
-alias deploy="npm run deploy"
-
-###############################################################################
-# Enhanced Modern Tools                                                       #
-###############################################################################
-
-# Modern CLI tools (if available)
-if command -v bat &> /dev/null; then
-    alias cat="bat"
-    alias catn="bat -n"
-fi
-
-if command -v fd &> /dev/null; then
-    alias find="fd"
-fi
-
-if command -v rg &> /dev/null; then
-    alias grep="rg"
-fi
-
-if command -v zoxide &> /dev/null; then
-    alias cd="z"
-fi
-
-if command -v htop &> /dev/null; then
-    alias top="htop"
-fi
-
-###############################################################################
-# Security & Certificates                                                     #
-###############################################################################
-
-# GPG shortcuts
-alias gpg-list="gpg --list-secret-keys --keyid-format=long"
-alias gpg-keygrip="gpg -K --with-keygrip"
-
-# SSL/TLS
-alias ssl-check="openssl s_client -connect"
-alias cert-info="openssl x509 -text -noout -in"
-
-###############################################################################
-# Shell Management                                                            #
-###############################################################################
-
-# Shell reloading
-alias reload="exec $SHELL -l"
-alias refresh="source ~/.zshrc"
-
-# Environment
-alias path='echo $PATH | tr ":" "\n"'
-alias env-clean="env | sort"
-
-###############################################################################
-# Fun & Miscellaneous                                                         #
-###############################################################################
-
-# Weather
-alias weather="curl -s 'wttr.in/?format=3'"
-alias forecast="curl -s 'wttr.in'"
-
-# System info
-alias sysinfo="uname -a && sw_vers"
-
-# Cleanup
-alias cleanup="brew cleanup && docker system prune -f && npm cache clean --force"
-
-###############################################################################
-# Conditional Aliases (Smart Detection)                                       #
-###############################################################################
-
-# Use better tools if available
-if command -v nvim &> /dev/null; then
-    alias vim="nvim"
-    alias vi="nvim"
-fi
-
-if command -v code &> /dev/null; then
-    alias edit="code"
-else
-    alias edit="vim"
-fi
-
-# Package manager detection
-if [[ -f "package.json" ]]; then
-    if [[ -f "yarn.lock" ]]; then
-        alias install="yarn"
-        alias add="yarn add"
-    elif [[ -f "pnpm-lock.yaml" ]]; then
-        alias install="pnpm install"
-        alias add="pnpm add"
-    else
-        alias install="npm install"
-        alias add="npm install"
-    fi
-fi
-
-###############################################################################
-# Help & Documentation                                                        #
-###############################################################################
-
-# Show available custom aliases
-alias aliases-help="alias | grep -E '^[a-zA-Z0-9_-]+=' | sort"
-alias shortcuts="aliases-help"
-
-echo "🚀 Modern aliases loaded! Type 'aliases-help' to see all available shortcuts."
+[init]
+	defaultBranch = master
