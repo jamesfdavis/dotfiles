@@ -9,8 +9,8 @@ set -euo pipefail  # Exit on error, undefined vars, pipe failures
 # Configuration & Variables
 #==============================================================================
 
-readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly DOTFILES_DIR="${HOME}/dotfiles"
+readonly SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+readonly DOTFILES_DIR="$SCRIPT_DIR"
 readonly BACKUP_DIR="${HOME}/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
 readonly LOG_FILE="${HOME}/.dotfiles-init.log"
 
@@ -322,9 +322,7 @@ main() {
     log "INFO" "Date: $(date)"
 
     # Ensure we're in the right directory
-    if [[ "$PWD" != "$DOTFILES_DIR" ]] && [[ -d "$DOTFILES_DIR" ]]; then
-        cd "$DOTFILES_DIR"
-    fi
+    cd "$DOTFILES_DIR"
 
     # Pre-flight checks
     if [[ ! -d "$DOTFILES_DIR" ]]; then
