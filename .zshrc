@@ -185,17 +185,20 @@ fi
 export GPG_TTY="$(tty)"
 export GNUPGHOME="$HOME/.gnupg"
 
-# GPG agent setup
-if command -v gpgconf &>/dev/null; then
-    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+# GPG agent setup (with error handling)
+if command -v gpgconf &>/dev/null && command -v gpg-agent &>/dev/null; then
+    # Only set up GPG if it's properly configured
+    if gpgconf --list-dirs &>/dev/null; then
+        export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null)"
 
-    # Start GPG agent if not running
-    if ! pgrep -x "gpg-agent" > /dev/null; then
-        gpgconf --launch gpg-agent
+        # Start GPG agent if not running
+        if ! pgrep -x "gpg-agent" > /dev/null; then
+            gpgconf --launch gpg-agent &>/dev/null || true
+        fi
+
+        # Update TTY for GPG
+        gpg-connect-agent updatestartuptty /bye &>/dev/null || true
     fi
-
-    # Update TTY for GPG
-    gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 fi
 
 #==============================================================================
@@ -272,10 +275,15 @@ if command -v kubectl &>/dev/null; then
     complete -F __start_kubectl k
 fi
 
-# Docker completion
+# Docker completion (zsh compatible)
 if command -v docker &>/dev/null; then
-    if [[ -f "${HOMEBREW_PREFIX}/etc/bash_completion.d/docker" ]]; then
-        source "${HOMEBREW_PREFIX}/etc/bash_completion.d/docker"
+    # Use docker's built-in completion for zsh
+    if [[ ! -f ~/.zcompdump ]] || [[ ~/.zcompdump -ot $(which docker) ]]; then
+        docker completion zsh > ~/.docker-completion.zsh 2>/dev/null || true
+    fi
+    
+    if [[ -f ~/.docker-completion.zsh ]]; then
+        source ~/.docker-completion.zsh
     fi
 fi
 
