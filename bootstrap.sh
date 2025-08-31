@@ -217,6 +217,35 @@ sync_dotfiles() {
     fi
 }
 
+sync_dotfiles_force() {
+    log "INFO" "Starting forced dotfile synchronization..."
+
+    # Build rsync exclude arguments
+    local exclude_args=()
+    for pattern in "${EXCLUDE_PATTERNS[@]}"; do
+        exclude_args+=(--exclude="$pattern")
+    done
+
+    # Check if rsync is available
+    if ! command_exists rsync; then
+        log "ERROR" "rsync not found. Install with: brew install rsync"
+        exit 1
+    fi
+
+    # Show what would be copied
+    log "INFO" "Files that will be synchronized:"
+    rsync "${exclude_args[@]}" --dry-run -avh --no-perms "$DOTFILES_DIR/" "$HOME/" | grep -E '^[^d]' | head -20
+    echo
+
+    # Actual sync without confirmation
+    if rsync "${exclude_args[@]}" -avh --no-perms "$DOTFILES_DIR/" "$HOME/"; then
+        log "INFO" "Dotfiles synchronized successfully"
+    else
+        log "ERROR" "Synchronization failed"
+        exit 1
+    fi
+}
+
 #==============================================================================
 # Post-Installation Tasks
 #==============================================================================
@@ -317,6 +346,13 @@ main() {
     log "INFO" "Home: $HOME"
     log "INFO" "Date: $(date)"
 
+    # Check for force flag
+    local force=false
+    if [[ "${1:-}" == "-f" ]] || [[ "${1:-}" == "--force" ]]; then
+        force=true
+        log "INFO" "Force mode enabled - skipping confirmations"
+    fi
+
     # Ensure we're in the right directory
     cd "$DOTFILES_DIR"
 
@@ -336,15 +372,26 @@ main() {
     echo "  • Run post-installation checks"
     echo
 
-    if ! confirm "Continue with dotfiles installation?"; then
+    if [[ "$force" != true ]] && ! confirm "Continue with dotfiles installation?"; then
         log "INFO" "Installation cancelled by user"
         exit 0
     fi
 
     # Execute main tasks
     create_backup
-    update_repository
-    sync_dotfiles
+    if [[ "$force" == true ]]; then
+        log "INFO" "Skipping repository update in force mode"
+    else
+        update_repository
+    fi
+    
+    # Pass force flag to sync_dotfiles
+    if [[ "$force" == true ]]; then
+        sync_dotfiles_force
+    else
+        sync_dotfiles
+    fi
+    
     reload_shell
     post_install_checks
     show_summary
