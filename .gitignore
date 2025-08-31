@@ -517,3 +517,4 @@ Icon?
 
 # Auto-generated documentation
 docs/_build/
+.claude/

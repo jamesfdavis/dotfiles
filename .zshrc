@@ -31,9 +31,8 @@ if [[ -n $SSH_CONNECTION ]]; then
 elif [[ -n $TMUX ]]; then
     ZSH_THEME="refined"      # Tmux sessions (minimal)
 else
-    ZSH_THEME="powerlevel10k/powerlevel10k"  # Local (modern theme)
-    # Fallback to built-in themes if p10k not installed
-    [[ ! -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ]] && ZSH_THEME="agnoster"
+    # Use a simpler theme that doesn't require special fonts
+    ZSH_THEME="robbyrussell"  # Default, clean theme
 fi
 
 # Oh My Zsh settings
