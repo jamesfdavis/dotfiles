@@ -1,4 +1,3 @@
-
 ## Installation
 
 **Warning:** If you want to give these dotfiles a try, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use my settings unless you know what that entails. Use at your own risk!
@@ -40,7 +39,7 @@ My `~/.extra` looks something like this:
 # Not in the repository, to prevent people from accidentally committing under my name
 GIT_AUTHOR_NAME="James Davis"
 GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-GIT_AUTHOR_EMAIL="ragingsmurf@gmail.com"
+GIT_AUTHOR_EMAIL="jim@penrose.dev"
 GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 git config --global user.name "$GIT_AUTHOR_NAME"
 git config --global user.email "$GIT_AUTHOR_EMAIL"

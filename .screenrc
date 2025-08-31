@@ -1,8 +1,381 @@
-# Disable the startup message
+# Modern .screenrc Configuration for 2025
+
+# Enhanced GNU Screen setup for development workflows
+
+#==============================================================================
+
+# Basic Settings
+
+#==============================================================================
+
+# Disable startup message for faster launch
+
 startup_message off
 
-# Set a large scrollback buffer
+# Large scrollback buffer for development logs
+
 defscrollback 32000
 
-# Always start `screen` with UTF-8 enabled (`screen -U`)
+# Always use UTF-8 encoding
+
 defutf8 on
+utf8 on
+
+# Set default shell
+
+shell -$SHELL
+
+#==============================================================================
+
+# Visual & Status Configuration
+
+#==============================================================================
+
+# Always show status line at bottom
+
+hardstatus alwayslastline
+
+# Modern status line with useful information
+
+hardstatus string '%{= kG}[%{G}%H%? %1`%?%{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%m/%d %{W}%c%{g}]'
+
+# Alternative simpler status line (uncomment to use instead)
+
+# hardstatus string '%{= kG}[ %{G}%H %{g}][ %{= kw}%?%-Lw%?%{r}(%{W}%n*%f %t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][ %{B}%m/%d %{W}%C%a %{g}]'
+
+# Window caption with colors
+
+caption always "%{= bw}%n %t%=%{-}"
+
+# Set terminal title
+
+shelltitle '$ |shell'
+
+#==============================================================================
+
+# Terminal & Display Settings
+
+#==============================================================================
+
+# Enable 256 color support
+
+term screen-256color
+
+# Better terminal compatibility
+
+termcapinfo xterm\* ti@:te@
+
+# Enable mouse scrolling
+
+termcapinfo xterm\* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+
+# Fix for modern terminals
+
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+# Enable alternate screen switching
+
+altscreen on
+
+#==============================================================================
+
+# Keybindings (Modern & Intuitive)
+
+#==============================================================================
+
+# Change default escape key from Ctrl-A to Ctrl-B (less conflict with bash)
+
+# Uncomment if you prefer Ctrl-B (like tmux):
+
+# escape ^Bb
+
+# Quick window switching
+
+bind -c demo 1 select 1
+bind -c demo 2 select 2
+bind -c demo 3 select 3
+bind -c demo 4 select 4
+bind -c demo 5 select 5
+bind -c demo 6 select 6
+bind -c demo 7 select 7
+bind -c demo 8 select 8
+bind -c demo 9 select 9
+
+# Window management
+
+bind c screen 1 # Create new window starting at 1
+bind 0 select 10 # Select window 10 with 0 key
+
+# Split management (similar to tmux)
+
+bind | split -v # Vertical split with |
+bind - split -h # Horizontal split with -
+bind x remove # Close current split
+bind tab focus # Switch between splits
+
+# Resize splits
+
+bind = resize = # Equalize splits
+bind + resize +5 # Increase by 5
+bind \_ resize -5 # Decrease by 5
+
+# Quick navigation
+
+bind h focus left
+bind j focus down
+bind k focus up
+bind l focus right
+
+# Copy mode enhancements
+
+bind y copy # Enter copy mode
+bind p paste . # Paste
+
+#==============================================================================
+
+# Session & Logging
+
+#==============================================================================
+
+# Automatic logging (uncomment to enable)
+
+# deflog on
+
+# logfile /tmp/screenlog*%t*%n
+
+# Log timestamps
+
+# logtstamp on
+
+# logtstamp string "\n-- SCREEN [%t] %Y-%m-%d %c:%s --\n"
+
+# Monitor activity in windows
+
+defmonitor on
+activity "Activity in window %n (%t) [%w:%s]"
+
+# Monitor silence (useful for long-running processes)
+
+# silence 30
+
+#==============================================================================
+
+# Security & Privacy
+
+#==============================================================================
+
+# Disable flow control (Ctrl-S/Ctrl-Q)
+
+defflow off
+
+# Secure multiuser settings
+
+multiuser off
+
+# acladd username # Add users if needed
+
+# Lock screen settings
+
+bind x lockscreen
+password crypt:abcdefghijklmn # Change this to your encrypted password
+
+#==============================================================================
+
+# Startup Configuration
+
+#==============================================================================
+
+# Create default windows with meaningful names
+
+screen -t "main" 1
+screen -t "edit" 2
+screen -t "logs" 3
+screen -t "test" 4
+
+# Set default window
+
+select 1
+
+#==============================================================================
+
+# Modern Development Workflow
+
+#==============================================================================
+
+# Automatic window naming based on running command
+
+# shelltitle '$ |bash'
+
+# bind r colon "screen -t ''^?2^?shell'"
+
+# Quick development shortcuts
+
+bind g colon "screen -t 'git' git status^M"
+bind n colon "screen -t 'node' node^M"
+bind P colon "screen -t 'python' python3^M"
+
+#==============================================================================
+
+# Performance & Compatibility
+
+#==============================================================================
+
+# Faster screen updates
+
+defnonblock on
+
+# Better scrolling
+
+termcapinfo xterm\* Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
+# Fix backspace
+
+bindkey -d -k kb stuff "\177"
+
+# Fix delete key
+
+bindkey -d -k kD stuff "\177"
+
+#==============================================================================
+
+# Window Behavior
+
+#==============================================================================
+
+# Start windows at 1 instead of 0
+
+bind c screen 1
+bind ^c screen 1
+
+# Automatically detach on logout
+
+autodetach on
+
+# Continue running when not attached
+
+defhstatus "^Et"
+
+# Window titles
+
+# windowlist title " Num Name%=Flags"
+
+# windowlist format " %3n %t%=%f"
+
+#==============================================================================
+
+# Notifications & Alerts
+
+#==============================================================================
+
+# Visual bell
+
+vbell on
+vbell_msg "Bell in window %n (%t) [%w:%s]"
+
+# Bell settings
+
+bell_msg "Activity -> %n"
+
+# Monitor for specific patterns (useful for CI/CD)
+
+# bind M monitor
+
+# bind m monitor 30 "Build Complete"
+
+#==============================================================================
+
+# Buffer & History
+
+#==============================================================================
+
+# Large command history
+
+defhistory 1000
+
+# Save buffer to file
+
+bind > colon "hardcopy -h /tmp/screen-hardcopy"
+
+#==============================================================================
+
+# Modern Alternatives Note
+
+#==============================================================================
+
+# Note: Consider migrating to tmux for new projects
+
+# tmux offers better features and active development
+
+#
+
+# Key tmux equivalents:
+
+# - screen -> tmux
+
+# - screen -r -> tmux attach
+
+# - Ctrl-A -> Ctrl-B (default)
+
+# - More intuitive split management
+
+# - Better mouse support
+
+# - Plugin ecosystem
+
+#
+
+# Migration command:
+
+# echo "alias screen='echo \"Consider using tmux instead: tmux new-session\"'" >> ~/.zshrc
+
+#==============================================================================
+
+# Debugging & Information
+
+#==============================================================================
+
+# Show current settings (useful for debugging)
+
+# bind i colon "info"
+
+# bind ? colon "help"
+
+# Display window list
+
+bind w windowlist -b
+
+# Show system information
+
+bind I colon "echo System: $(uname -a)^M"
+
+#==============================================================================
+
+# Custom Functions (Advanced)
+
+#==============================================================================
+
+# Development environment setup
+
+bind D colon "screen -t 'dev' 1^M screen -t 'server' 2^M screen -t 'logs' 3^M screen -t 'git' 4^M"
+
+# Quick SSH connections (customize as needed)
+
+# bind S colon "screen -t 'ssh' ssh user@server^M"
+
+# Docker shortcuts
+
+bind d colon "screen -t 'docker' docker ps^M"
+
+#==============================================================================
+
+# Final Configuration
+
+#==============================================================================
+
+# Set default window
+
+select 1
+
+# Welcome message (optional)
+
+# echo "Screen configured with modern settings. Press Ctrl-A ? for help."

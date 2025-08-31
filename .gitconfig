@@ -1,155 +1,314 @@
-# Easier navigation: .., ..., ...., ....., ~ and -
+#!/usr/bin/env zsh
+
+# Modern Shell Aliases for 2025
+# Updated for current tools and workflows
+
+###############################################################################
+# Navigation Aliases                                                          #
+###############################################################################
+
+# Enhanced directory navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
-## File shortcuts
+# Quick directory access
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
+alias dev="cd ~/Development"
+alias docs="cd ~/Documents"
 
-## GPG
-alias keys="gpg --list-secret-keys --keyid-format=long"
-alias keygrip="gpg -K --with-keygrip"
+# Better directory listing (use eza if available, fallback to ls)
+if command -v eza &> /dev/null; then
+    alias ls="eza --group-directories-first --icons"
+    alias ll="eza -la --group-directories-first --icons --git"
+    alias lt="eza --tree --level=2 --icons"
+else
+    alias ll="ls -la"
+    alias la="ls -A"
+    alias l="ls -CF"
+fi
 
-## Web Stuff
-alias stack="stackoverflow"
-alias duck="ddg"
-alias wolf="wolframalpha"
+###############################################################################
+# Git Aliases (Modern Workflow)                                              #
+###############################################################################
 
-## Environments
-alias compose="docker-compose"
-alias gcp=gcloud
-alias k=kubectl
-alias t=terraform
-alias v=vagrant
-alias vb="VBoxManage"
-alias g=git
-alias f=flutter
-alias fd="flutter doctor -v"
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git log --oneline --graph --decorate"
+alias gd="git diff"
+alias gb="git branch"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gm="git merge"
+alias gr="git rebase"
+alias gf="git fetch"
+alias gpl="git pull"
+alias gst="git stash"
+alias gstp="git stash pop"
 
-## IDE
-alias studio="open -a /Applications/Android\ Studio.app"
-alias xcode="open -a /Applications/XCode.app"
-alias iphone="open -a Simulator"
+# Modern Git workflows
+alias gsync="git fetch origin && git rebase origin/main"
+alias gclean="git branch --merged | grep -v '\*\|main\|master' | xargs -n 1 git branch -d"
+alias gundo="git reset --soft HEAD~1"
 
-## npm aliases
+###############################################################################
+# Development Tools                                                           #
+###############################################################################
+
+# Container & Cloud
+alias d="docker"
+alias dc="docker compose"  # Modern compose command
+alias dps="docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'"
+alias k="kubectl"
+alias tf="terraform"
+
+# Cloud providers
+alias aws="aws"
+alias az="azure-cli"
+alias gcp="gcloud"
+
+# Modern development tools
+alias c="code"  # VS Code
+alias vim="nvim"  # Use Neovim if available
+
+###############################################################################
+# Node.js & Package Managers                                                  #
+###############################################################################
+
+# npm shortcuts
 alias ni="npm install"
-alias nrs="npm run start -s --"
-alias nrb="npm run build -s --"
-alias nrd="npm run dev -s --"
-alias nrt="npm run test -s --"
-alias nrtw="npm run test:watch -s --"
-alias nrv="npm run validate -s --"
-alias rnm="rm -rf node_modules"
-alias flush-npm="rm -rf node_modules && npm i && echo NPM  is done"
+alias nid="npm install --save-dev"
+alias nr="npm run"
+alias ns="npm start"
+alias nt="npm test"
+alias nb="npm run build"
+alias nw="npm run dev"
 
-## Utilities
-alias c="tr -d '\n' | pbcopy"
+# Package manager agnostic (auto-detect)
+alias install="[[ -f yarn.lock ]] && yarn || [[ -f pnpm-lock.yaml ]] && pnpm install || npm install"
+alias start="[[ -f yarn.lock ]] && yarn start || [[ -f pnpm-lock.yaml ]] && pnpm start || npm start"
+alias build="[[ -f yarn.lock ]] && yarn build || [[ -f pnpm-lock.yaml ]] && pnpm build || npm run build"
+
+# Cleanup
+alias clean-modules="rm -rf node_modules package-lock.json yarn.lock pnpm-lock.yaml && npm install"
+
+###############################################################################
+# Python Development                                                          #
+###############################################################################
+
+alias python="python3"
+alias pip="pip3"
+alias py="python3"
+
+# Virtual environment shortcuts
+alias venv-create="python3 -m venv venv"
+alias venv-activate="source venv/bin/activate"
+alias venv-deactivate="deactivate"
+
+# Django shortcuts (if you use Django)
+alias dj="python manage.py"
+alias djrun="python manage.py runserver"
+alias djmig="python manage.py migrate"
+alias djmake="python manage.py makemigrations"
+
+###############################################################################
+# System Utilities                                                            #
+###############################################################################
+
+# Enhanced system commands
 alias df="df -h"
-alias du="du -hd1 | sort -h"
-alias usage="du -h -d1"
-alias runp="lsof -i"
-alias catn="nl -b a"
+alias du="du -h"
+alias free="top -l 1 -s 0 | grep PhysMem"  # macOS memory usage
+alias ps="ps aux"
 
-## Shell
-alias update="source ~/.zshrc" # Reload terminal profile. 
-alias bootstrap="source /Users/$USER/dotfiles/bootstrap.sh" # Regenerate dotfiles
-alias reload="exec ${SHELL} -l"
+# Network
+alias myip="curl -s https://httpbin.org/ip | jq -r .origin"
+alias localip="ipconfig getifaddr en0"
+alias ports="lsof -iTCP -sTCP:LISTEN -n -P"
 
-## Software
-alias upgrade='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update --system; sudo gem update --user-install; sudo gem cleanup'
-alias pip=pip3
-alias path='echo -e ${PATH//:/\\n}'
-alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf' # TODO - Research and test.
+# File operations
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias mkdir="mkdir -pv"
 
-## Network
-alias ip="ipconfig getifaddr en0"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)'"
-alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+# Text processing
+alias grep="grep --color=auto"
+alias count="wc -l"
 
-# Show/hide hidden files in Finder
+###############################################################################
+# macOS Specific                                                              #
+###############################################################################
+
+# Finder shortcuts
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias desktop-hide="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias desktop-show="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+# Quick app launches
+alias safari="open -a Safari"
+alias chrome="open -a 'Google Chrome'"
+alias firefox="open -a Firefox"
+alias simulator="open -a Simulator"
 
-# URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+# System maintenance
+alias update-brew="brew update && brew upgrade && brew cleanup"
+alias update-system="sudo softwareupdate -i -a"
+alias update-all="update-system && update-brew"
 
-# Always enable colored `grep` output
-# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+###############################################################################
+# Productivity & Quick Actions                                                #
+###############################################################################
 
-# Enable aliases to be sudo’ed
-alias sudo='sudo '
+# Quick edits
+alias zshrc="code ~/.zshrc"
+alias aliases="code ~/.aliases"  # If you keep aliases in separate file
+alias hosts="sudo code /etc/hosts"
 
-# Get week number
-alias week='date +%V'
+# Clipboard (macOS)
+alias copy="pbcopy"
+alias paste="pbpaste"
+alias clip="tr -d '\n' | pbcopy"  # Copy without newline
 
-# Cursor.AI specific aliases
-alias ai-commit="git smart-commit"
-alias ai-review="git review"
-alias ai-branch="git smart-branch"
+# Quick server
+alias serve="python3 -m http.server 8000"
+alias serve-php="php -S localhost:8000"
 
-# Enhanced development workflow
-alias analyze="cursor-ai analyze-code"
-alias suggest="cursor-ai suggest-improvement"
-alias doc="cursor-ai generate-docs"
+# Date shortcuts
+alias now="date +'%Y-%m-%d %H:%M:%S'"
+alias today="date +'%Y-%m-%d'"
+alias week="date +%V"
 
-# Context-aware git operations
-alias gc='f() { \
-    if [ -n "$CURSOR_AI_ACTIVE" ]; then \
-        git diff --cached | cursor-ai suggest-commit-message | git commit -F -; \
-    else \
-        git commit -m "$*"; \
-    fi \
-}; f'
+###############################################################################
+# Development Workflow                                                        #
+###############################################################################
 
-# File change analysis
-alias changes='f() { \
-    if [ -n "$CURSOR_AI_ACTIVE" ]; then \
-        git status --porcelain | cursor-ai analyze-changes; \
-    else \
-        git status --porcelain; \
-    fi \
-}; f'
+# Project shortcuts
+alias new-react="npx create-react-app"
+alias new-next="npx create-next-app@latest"
+alias new-vite="npm create vite@latest"
 
-# CURSOR AI INTEGRATION INSTRUCTIONS
-# -----------------------------------
-# Environment Detection:
-# - $CURSOR_AI_ACTIVE indicates Cursor.AI IDE presence
-# - Smart commands adapt based on environment
-#
-# Enhanced Git Operations:
-# 1. Commit Messages:
-#    - ai-commit: Generate context-aware commit messages
-#    - gc: Smart commit with LLM suggestions
-#
-# 2. Code Review:
-#    - ai-review: Get AI-powered code review
-#    - analyze: Deep code analysis
-#
-# 3. Branch Management:
-#    - ai-branch: Generate meaningful branch names
-#
-# 4. Documentation:
-#    - doc: Generate documentation based on code
-#    - suggest: Get code improvement suggestions
-#
-# Usage Examples:
-# - ai-commit              # Generate smart commit message
-# - ai-review HEAD~1       # Review changes since last commit
-# - changes               # Analyze current changes
-# - doc ./src/feature.js  # Generate documentation
-#
-# Note: Commands adapt to environment:
-# - In Cursor.AI: Full LLM capabilities
-# - Outside: Fallback to standard git operations
-# -----------------------------------
+# Testing
+alias test="npm test"
+alias test-watch="npm run test:watch"
+alias test-coverage="npm run test:coverage"
+
+# Linting & Formatting
+alias lint="npm run lint"
+alias format="npm run format"
+alias fix="npm run lint:fix"
+
+# Build & Deploy
+alias preview="npm run preview"
+alias deploy="npm run deploy"
+
+###############################################################################
+# Enhanced Modern Tools                                                       #
+###############################################################################
+
+# Modern CLI tools (if available)
+if command -v bat &> /dev/null; then
+    alias cat="bat"
+    alias catn="bat -n"
+fi
+
+if command -v fd &> /dev/null; then
+    alias find="fd"
+fi
+
+if command -v rg &> /dev/null; then
+    alias grep="rg"
+fi
+
+if command -v zoxide &> /dev/null; then
+    alias cd="z"
+fi
+
+if command -v htop &> /dev/null; then
+    alias top="htop"
+fi
+
+###############################################################################
+# Security & Certificates                                                     #
+###############################################################################
+
+# GPG shortcuts
+alias gpg-list="gpg --list-secret-keys --keyid-format=long"
+alias gpg-keygrip="gpg -K --with-keygrip"
+
+# SSL/TLS
+alias ssl-check="openssl s_client -connect"
+alias cert-info="openssl x509 -text -noout -in"
+
+###############################################################################
+# Shell Management                                                            #
+###############################################################################
+
+# Shell reloading
+alias reload="exec $SHELL -l"
+alias refresh="source ~/.zshrc"
+
+# Environment
+alias path='echo $PATH | tr ":" "\n"'
+alias env-clean="env | sort"
+
+###############################################################################
+# Fun & Miscellaneous                                                         #
+###############################################################################
+
+# Weather
+alias weather="curl -s 'wttr.in/?format=3'"
+alias forecast="curl -s 'wttr.in'"
+
+# System info
+alias sysinfo="uname -a && sw_vers"
+
+# Cleanup
+alias cleanup="brew cleanup && docker system prune -f && npm cache clean --force"
+
+###############################################################################
+# Conditional Aliases (Smart Detection)                                       #
+###############################################################################
+
+# Use better tools if available
+if command -v nvim &> /dev/null; then
+    alias vim="nvim"
+    alias vi="nvim"
+fi
+
+if command -v code &> /dev/null; then
+    alias edit="code"
+else
+    alias edit="vim"
+fi
+
+# Package manager detection
+if [[ -f "package.json" ]]; then
+    if [[ -f "yarn.lock" ]]; then
+        alias install="yarn"
+        alias add="yarn add"
+    elif [[ -f "pnpm-lock.yaml" ]]; then
+        alias install="pnpm install"
+        alias add="pnpm add"
+    else
+        alias install="npm install"
+        alias add="npm install"
+    fi
+fi
+
+###############################################################################
+# Help & Documentation                                                        #
+###############################################################################
+
+# Show available custom aliases
+alias aliases-help="alias | grep -E '^[a-zA-Z0-9_-]+=' | sort"
+alias shortcuts="aliases-help"
+
+echo "🚀 Modern aliases loaded! Type 'aliases-help' to see all available shortcuts."

@@ -1,40 +1,275 @@
-# Make Tab autocomplete regardless of filename case
+# Modern .inputrc Configuration for 2025
+# Enhanced readline configuration for better shell experience
+
+#==============================================================================
+# Basic Completion Settings
+#==============================================================================
+
+# Case-insensitive completion (essential for productivity)
 set completion-ignore-case on
 
-# List all matches in case multiple possible completions are possible
+# Treat hyphens and underscores as equivalent for completion
+set completion-map-case on
+
+# Show all matches immediately if multiple completions exist
 set show-all-if-ambiguous on
 
-# Immediately add a trailing slash when autocompleting symlinks to directories
+# Show completions immediately if there's only one partial match
+set show-all-if-unmodified on
+
+# Add trailing slash to symlinked directories
 set mark-symlinked-directories on
 
-# Use the text that has already been typed as the prefix for searching through
-# commands (i.e. more intelligent Up/Down behavior)
-"\e[B": history-search-forward
-"\e[A": history-search-backward
-
-# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+# Don't complete hidden files unless pattern starts with dot
 set match-hidden-files off
 
-# Show all autocomplete results at once
-set page-completions off
-
-# If there are more than 200 possible completions for a word, ask to show them all
-set completion-query-items 200
-
-# Show extra file information when completing, like `ls -F` does
+# Show file type indicators (like ls -F)
 set visible-stats on
 
-# Be more intelligent when autocompleting by also looking at the text after
-# the cursor. For example, when the current line is "cd ~/src/mozil", and
-# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
-# ~/src/mozillail", but to "cd ~/src/mozilla". (This is supported by the
-# Readline used by Bash 4.)
+# Use colors to indicate file types in completions (if supported)
+set colored-stats on
+
+# Add colors to completion prefix (the part that matches)
+set colored-completion-prefix on
+
+#==============================================================================
+# Completion Behavior
+#==============================================================================
+
+# Don't paginate completions - show all at once
+set page-completions off
+
+# Ask before showing completions if more than this number
+set completion-query-items 100
+
+# Complete names which are symbolic links to directories as if they were directories
+set mark-directories on
+
+# Intelligent completion - consider text after cursor
 set skip-completed-text on
 
-# Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
+# Don't ring bell on completion errors
+set bell-style none
+
+# Menu-complete: cycle through completions with Tab
+# Uncomment if you prefer cycling behavior:
+# set menu-complete-display-prefix on
+
+#==============================================================================
+# History Configuration
+#==============================================================================
+
+# Intelligent history search with up/down arrows
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# Alternative: use Ctrl+P/N for history search
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+# Enable history expansion with space (e.g., "!!<space>" expands)
+"\C-@": " "
+
+#==============================================================================
+# Character Encoding & Input
+#==============================================================================
+
+# Enable UTF-8 input/output
 set input-meta on
 set output-meta on
 set convert-meta off
 
-# Use Alt/Meta + Delete to delete the preceding word
-"\e[3;3~": kill-word
+# Enable 8-bit input
+set meta-flag on
+
+#==============================================================================
+# Modern Key Bindings
+#==============================================================================
+
+# Word movement and deletion (more intuitive)
+"\e[1;5C": forward-word        # Ctrl+Right Arrow
+"\e[1;5D": backward-word       # Ctrl+Left Arrow
+"\e[1;3C": forward-word        # Alt+Right Arrow (alternative)
+"\e[1;3D": backward-word       # Alt+Left Arrow (alternative)
+
+# Delete words
+"\e[3;3~": kill-word          # Alt+Delete (forward word delete)
+"\e\d": backward-kill-word    # Alt+Backspace (backward word delete)
+
+# Line editing
+"\C-u": backward-kill-line    # Ctrl+U (kill from cursor to beginning)
+"\C-k": kill-line            # Ctrl+K (kill from cursor to end)
+"\C-w": backward-kill-word    # Ctrl+W (kill previous word)
+
+# Home/End keys for different terminals
+"\e[H": beginning-of-line     # Home
+"\e[F": end-of-line          # End
+"\e[1~": beginning-of-line    # Home (alternative)
+"\e[4~": end-of-line         # End (alternative)
+
+#==============================================================================
+# Advanced Navigation
+#==============================================================================
+
+# Quick directory navigation
+"\e[1;2D": "\C-a\C-k cd ..\C-m"  # Shift+Left: cd up one directory
+"\e[1;2A": "\C-a\C-k cd -\C-m"   # Shift+Up: cd to previous directory
+
+# Quick file operations
+"\C-o": "\C-a\C-k ls -la\C-m"    # Ctrl+O: list directory
+"\C-x\C-f": "\C-a\C-k find . -name '\C-e'"  # Ctrl+X Ctrl+F: find file
+
+#==============================================================================
+# Productivity Shortcuts
+#==============================================================================
+
+# Undo last action
+"\C-x\C-u": undo
+
+# Complete hostname (useful for ssh)
+"\e/": complete-hostname
+
+# Complete variable names
+"\e$": complete-variable
+
+# Complete command names
+"\e!": complete-command
+
+# Insert last argument from previous command
+"\e.": yank-last-arg
+"\e_": yank-last-arg
+
+# Quote current word
+"\eq": "\eb\"\ef\""
+
+#==============================================================================
+# Search and Replace
+#==============================================================================
+
+# Incremental search
+"\C-r": reverse-search-history
+"\C-s": forward-search-history
+
+# Non-incremental search
+"\er": non-incremental-reverse-search-history
+"\es": non-incremental-forward-search-history
+
+#==============================================================================
+# Modern Terminal Features
+#==============================================================================
+
+# Enable keypad in application mode
+set enable-keypad on
+
+# Better handling of multi-line editing
+set horizontal-scroll-mode off
+
+# Show editing mode in prompt (if using vi mode)
+set show-mode-in-prompt on
+
+# Vi mode indicators (if using vi mode)
+set vi-ins-mode-string "\1\e[6 q\2"  # Cursor style for insert mode
+set vi-cmd-mode-string "\1\e[2 q\2"  # Cursor style for command mode
+
+#==============================================================================
+# FZF Integration (if available)
+#==============================================================================
+
+# These bindings work if you have fzf installed
+# Ctrl+R for fuzzy history search (overrides default if fzf is available)
+# "\C-r": "\C-x1\e[0n\C-x2"
+
+# Ctrl+T for fuzzy file search
+# "\C-t": "\C-x1\e[1n\C-x2"
+
+# Alt+C for fuzzy directory change
+# "\ec": "\C-x1\e[2n\C-x2"
+
+#==============================================================================
+# Conditional Settings
+#==============================================================================
+
+# Settings for different shells
+$if Bash
+    # Bash-specific settings
+    set expand-tilde on
+    set completion-prefix-display-length 2
+$endif
+
+$if zsh
+    # Zsh typically handles these itself, but just in case
+    set auto-name-directory on
+$endif
+
+#==============================================================================
+# Terminal-Specific Settings
+#==============================================================================
+
+# iTerm2 specific bindings
+$if term=xterm-256color
+    # Enhanced key bindings for iTerm2
+    "\e[1;9A": history-search-backward     # Cmd+Up
+    "\e[1;9B": history-search-forward      # Cmd+Down
+    "\e[1;9D": beginning-of-line           # Cmd+Left
+    "\e[1;9C": end-of-line                 # Cmd+Right
+$endif
+
+# VS Code integrated terminal
+$if term=vscode
+    # VS Code terminal specific settings
+    set bell-style visible
+$endif
+
+#==============================================================================
+# Debugging & Development
+#==============================================================================
+
+# Show readline version
+# Use: bind -V to see current settings
+# Use: bind -p to see current key bindings
+# Use: bind -l to list available functions
+
+# Uncomment for debugging readline issues:
+# set trace on
+
+#==============================================================================
+# Performance Settings
+#==============================================================================
+
+# Faster completion display
+set print-completions-horizontally on
+
+# Reduce completion timeout
+set completion-display-width 0
+
+# More responsive editing
+set keyseq-timeout 100
+
+#==============================================================================
+# Accessibility & Usability
+#==============================================================================
+
+# Visual bell instead of audio
+set bell-style visible
+
+# Echo control characters
+set echo-control-characters off
+
+# Disable flow control (Ctrl+S/Ctrl+Q)
+set disable-completion off
+
+# Enable bracketed paste mode (prevents issues when pasting code)
+set enable-bracketed-paste on
+
+#==============================================================================
+# Comments and Documentation
+#==============================================================================
+
+# Quick help: Ctrl+X Ctrl+H shows key bindings
+"\C-x\C-h": dump-functions
+
+# For more information:
+# - man readline(3)
+# - info readline
+# - bind -l (list all functions)
+# - bind -p (show current bindings)

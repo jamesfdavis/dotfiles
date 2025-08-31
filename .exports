@@ -1,52 +1,266 @@
 #!/usr/bin/env zsh
 
-# Make vim the default editor.
-export EDITOR='vim';
+# Modern macOS Development Environment Configuration
+# Updated for Apple Silicon and 2025 best practices
 
-# Brew
-export PATH="/usr/local/bin:$PATH";
+###############################################################################
+# Editor & Core Tools                                                         #
+###############################################################################
 
-# History Search Exclusions
-export HISTIGNORE="ls:pwd"
+# Default editor (consider: code, nvim, or vim)
+export EDITOR='code'  # or 'nvim' for modern vim, 'vim' for classic
+export VISUAL="$EDITOR"
 
-# Add GPG Plumbing
+###############################################################################
+# Homebrew Configuration                                                      #
+###############################################################################
+
+# Homebrew paths (Apple Silicon + Intel compatibility)
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    # Apple Silicon Macs
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+elif [[ -f "/usr/local/bin/brew" ]]; then
+    # Intel Macs
+    export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+fi
+
+# GNU tools take precedence over BSD versions (if installed via brew)
+if command -v brew &> /dev/null; then
+    BREW_PREFIX="$(brew --prefix)"
+    export PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH="${BREW_PREFIX}/opt/findutils/libexec/gnubin:$PATH"
+    export PATH="${BREW_PREFIX}/opt/gnu-sed/libexec/gnubin:$PATH"
+    export PATH="${BREW_PREFIX}/opt/grep/libexec/gnubin:$PATH"
+
+    # Update MANPATH for GNU tools
+    export MANPATH="${BREW_PREFIX}/opt/coreutils/libexec/gnuman:$MANPATH"
+    export MANPATH="${BREW_PREFIX}/opt/findutils/libexec/gnuman:$MANPATH"
+    export MANPATH="${BREW_PREFIX}/opt/gnu-sed/libexec/gnuman:$MANPATH"
+    export MANPATH="${BREW_PREFIX}/opt/grep/libexec/gnuman:$MANPATH"
+fi
+
+###############################################################################
+# Development Languages & Version Managers                                   #
+###############################################################################
+
+# Node.js configuration
+export NODE_REPL_HISTORY=~/.node_history
+export NODE_REPL_HISTORY_SIZE='32768'
+export NODE_REPL_MODE='sloppy'
+
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+if [[ -s "${BREW_PREFIX}/opt/nvm/nvm.sh" ]]; then
+    source "${BREW_PREFIX}/opt/nvm/nvm.sh"
+    source "${BREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm"
+fi
+
+# Python configuration
+export PYTHONIOENCODING='UTF-8'
+export PYTHONDONTWRITEBYTECODE=1  # Don't create .pyc files
+export PYTHONUNBUFFERED=1         # Force stdout/stderr to be unbuffered
+
+# pyenv (Python Version Manager)
+if command -v pyenv 1>/dev/null 2>&1; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
+# rbenv (Ruby Version Manager)
+if command -v rbenv 1>/dev/null 2>&1; then
+    eval "$(rbenv init - zsh)"
+fi
+
+# Go configuration
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
+# Rust configuration
+if [[ -f "$HOME/.cargo/env" ]]; then
+    source "$HOME/.cargo/env"
+fi
+
+# Java configuration (if using multiple Java versions)
+if [[ -f "/opt/homebrew/opt/openjdk/bin/java" ]]; then
+    export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+    export JAVA_HOME="/opt/homebrew/opt/openjdk"
+elif [[ -f "/usr/local/opt/openjdk/bin/java" ]]; then
+    export PATH="/usr/local/opt/openjdk/bin:$PATH"
+    export JAVA_HOME="/usr/local/opt/openjdk"
+fi
+
+###############################################################################
+# Shell History Configuration                                                 #
+###############################################################################
+
+# Zsh history settings
+export HISTSIZE=100000              # Increase history size significantly
+export SAVEHIST=100000              # Save more history to disk
+export HISTFILE="$HOME/.zsh_history"
+
+# History options (zsh specific)
+setopt HIST_EXPIRE_DUPS_FIRST      # Expire duplicate entries first
+setopt HIST_IGNORE_DUPS            # Don't record duplicates
+setopt HIST_IGNORE_ALL_DUPS        # Delete old duplicate entries
+setopt HIST_FIND_NO_DUPS           # Don't display duplicates during search
+setopt HIST_IGNORE_SPACE           # Ignore commands that start with space
+setopt HIST_SAVE_NO_DUPS           # Don't write duplicates to history file
+setopt HIST_VERIFY                 # Show command with history expansion before running
+setopt SHARE_HISTORY               # Share history between sessions
+
+# Commands to exclude from history
+export HISTIGNORE="ls:pwd:cd:cd -:clear:history:exit:date:* --help"
+
+###############################################################################
+# Locale & Language                                                           #
+###############################################################################
+
+# Prefer US English and use UTF-8
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+export LC_CTYPE='en_US.UTF-8'
+
+###############################################################################
+# Terminal & Display                                                          #
+###############################################################################
+
+# Terminal colors and pager configuration
+export TERM='xterm-256color'
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# Less pager configuration
+export LESS='-F -g -i -M -R -S -w -X -z-4'
+export MANPAGER='less -X'           # Don't clear screen after quitting man
+
+# Highlight section titles in manual pages
+export LESS_TERMCAP_mb=$'\e[1;32m'  # Begin blinking
+export LESS_TERMCAP_md=$'\e[1;32m'  # Begin bold
+export LESS_TERMCAP_me=$'\e[0m'     # End mode
+export LESS_TERMCAP_se=$'\e[0m'     # End standout-mode
+export LESS_TERMCAP_so=$'\e[01;33m' # Begin standout-mode
+export LESS_TERMCAP_ue=$'\e[0m'     # End underline
+export LESS_TERMCAP_us=$'\e[1;4;31m' # Begin underline
+
+###############################################################################
+# Security & GPG Configuration                                                #
+###############################################################################
+
+# GPG configuration
 export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export GNUPGHOME="$HOME/.gnupg"
 
-# Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY=~/.node_history;
-# Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768';
-# Use sloppy mode by default, matching web browsers.
-export NODE_REPL_MODE='sloppy';
+# Use GPG for SSH (if configured)
+if command -v gpgconf &> /dev/null; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
 
-# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
-export PYTHONIOENCODING='UTF-8';
+# SSH agent (fallback if not using GPG)
+if [[ -z "$SSH_AUTH_SOCK" ]] && [[ -S "$HOME/.ssh/ssh_auth_sock" ]]; then
+    export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+fi
 
-# Increase Bash history size. Allow 32³ entries; the default is 500.
-export HISTSIZE='32768';
-export HISTFILESIZE="${HISTSIZE}";
+###############################################################################
+# Cloud & Container Tools                                                     #
+###############################################################################
 
-# Omit duplicates and commands that begin with a space from history.
-export HISTCONTROL='ignoreboth';
+# Docker configuration
+export DOCKER_DEFAULT_PLATFORM=linux/amd64  # For cross-platform builds
 
-# Prefer US English and use UTF-8.
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
+# Kubernetes configuration
+export KUBE_EDITOR="$EDITOR"
 
-# Highlight section titles in manual pages.
-export LESS_TERMCAP_md="${yellow}";
+# Google Cloud SDK
+if [[ -f "${BREW_PREFIX}/share/google-cloud-sdk/path.zsh.inc" ]]; then
+    source "${BREW_PREFIX}/share/google-cloud-sdk/path.zsh.inc"
+    source "${BREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc"
+fi
 
-# Don’t clear the screen after quitting a manual page.
-export MANPAGER='less -X';
+# AWS CLI configuration
+export AWS_PAGER=""  # Disable pager for AWS CLI output
 
-# Avoid issues with `gpg` as installed via Homebrew.
-# https://stackoverflow.com/a/42265848/96656
-export GPG_TTY=$(tty);
-export GNUPGHOME=$HOME/.gnupg
+###############################################################################
+# Development Tools & Applications                                            #
+###############################################################################
 
-# Hide the “default interactive shell is now zsh” warning on macOS.
-export BASH_SILENCE_DEPRECATION_WARNING=1;
+# FZF configuration (fuzzy finder)
+if command -v fzf &> /dev/null; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+fi
 
-# N8N Env
+# Bat (better cat) configuration
+export BAT_THEME="TwoDark"
+
+# N8N configuration (workflow automation)
 export N8N_VERSION=1.16.0
+
+# Angular CLI disable analytics
+export NG_CLI_ANALYTICS=false
+
+# Next.js telemetry
+export NEXT_TELEMETRY_DISABLED=1
+
+# Gatsby telemetry
+export GATSBY_TELEMETRY_DISABLED=1
+
+###############################################################################
+# Local Development Paths                                                     #
+###############################################################################
+
+# Add local bin directories to PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="./node_modules/.bin:$PATH"  # Project-local npm binaries
+
+# Add development scripts directory if it exists
+if [[ -d "$HOME/Development/scripts" ]]; then
+    export PATH="$HOME/Development/scripts:$PATH"
+fi
+
+###############################################################################
+# macOS Specific                                                              #
+###############################################################################
+
+# Hide "default interactive shell is now zsh" warning
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Homebrew settings
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS="--require-sha"
+
+# Fix for Apple Silicon and Python/pip issues
+if [[ "$(uname -m)" == "arm64" ]]; then
+    export ARCHFLAGS="-arch arm64"
+fi
+
+###############################################################################
+# Performance & Convenience                                                   #
+###############################################################################
+
+# Disable Zsh correction prompts
+unsetopt correct_all
+
+# Speed up compinit by checking cache once per day
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+
+# Load zoxide (better cd) if available
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
+###############################################################################
+# Final PATH cleanup                                                          #
+###############################################################################
+
+# Remove duplicate PATH entries
+typeset -U PATH
