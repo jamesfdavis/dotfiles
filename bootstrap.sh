@@ -6,7 +6,8 @@
 set -eo pipefail
 
 # Enhanced error handling for stability
-set -u  # Treat unset variables as an error
+# Note: set -u commented out to avoid issues with nvm initialization
+# set -u  # Treat unset variables as an error
 export LC_ALL=C  # Ensure consistent behavior across locales
 
 #==============================================================================
@@ -229,6 +230,7 @@ dotfiles() {
 }
 
 # Run main function if executed directly (not sourced)
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+# Use zsh-compatible method to check if script is being sourced
+if [[ "${ZSH_EVAL_CONTEXT:-}" != *:file* ]]; then
     main "$@"
 fi
