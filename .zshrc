@@ -184,19 +184,22 @@ fi
 export GPG_TTY="$(tty)"
 export GNUPGHOME="$HOME/.gnupg"
 
-# GPG agent setup (with error handling)
+# GPG agent setup (with enhanced error handling)
 if command -v gpgconf &>/dev/null && command -v gpg-agent &>/dev/null; then
     # Only set up GPG if it's properly configured
     if gpgconf --list-dirs &>/dev/null; then
-        export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null)"
-
-        # Start GPG agent if not running
-        if ! pgrep -x "gpg-agent" > /dev/null; then
-            gpgconf --launch gpg-agent &>/dev/null || true
+        # Safely get SSH auth socket
+        if SSH_SOCKET="$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null)" && [[ -n "$SSH_SOCKET" ]]; then
+            export SSH_AUTH_SOCK="$SSH_SOCKET"
         fi
 
-        # Update TTY for GPG
-        gpg-connect-agent updatestartuptty /bye &>/dev/null || true
+        # Start GPG agent if not running (safer check)
+        if ! pgrep -x "gpg-agent" >/dev/null 2>&1; then
+            gpgconf --launch gpg-agent >/dev/null 2>&1 || true
+        fi
+
+        # Update TTY for GPG (with timeout protection)
+        timeout 5 gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1 || true
     fi
 fi
 
@@ -274,15 +277,18 @@ if command -v kubectl &>/dev/null; then
     complete -F __start_kubectl k
 fi
 
-# Docker completion (zsh compatible)
+# Docker completion (zsh compatible with safer checks)
 if command -v docker &>/dev/null; then
     # Use docker's built-in completion for zsh
-    if [[ ! -f ~/.zcompdump ]] || [[ ~/.zcompdump -ot $(which docker) ]]; then
-        docker completion zsh > ~/.docker-completion.zsh 2>/dev/null || true
+    if [[ ! -f ~/.docker-completion.zsh ]] || [[ ~/.docker-completion.zsh -ot $(command -v docker) ]]; then
+        # Only try to generate completion if docker daemon is accessible
+        if timeout 3 docker info >/dev/null 2>&1; then
+            docker completion zsh > ~/.docker-completion.zsh 2>/dev/null || true
+        fi
     fi
-    
+
     if [[ -f ~/.docker-completion.zsh ]]; then
-        source ~/.docker-completion.zsh
+        source ~/.docker-completion.zsh 2>/dev/null || true
     fi
 fi
 

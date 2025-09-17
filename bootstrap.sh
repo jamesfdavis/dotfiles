@@ -5,6 +5,10 @@
 
 set -eo pipefail
 
+# Enhanced error handling for stability
+set -u  # Treat unset variables as an error
+export LC_ALL=C  # Ensure consistent behavior across locales
+
 #==============================================================================
 # Configuration & Variables
 #==============================================================================

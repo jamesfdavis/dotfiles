@@ -178,24 +178,33 @@ function dns() {
     fi
 }
 
-# Get external IP
+# Get external IP (with fallbacks and timeout)
 function myip() {
     if command -v curl &> /dev/null; then
-        curl -s https://httpbin.org/ip | jq -r .origin
+        # Try multiple services for reliability
+        timeout 10 curl -s https://httpbin.org/ip 2>/dev/null | jq -r .origin 2>/dev/null ||
+        timeout 10 curl -s https://api.ipify.org 2>/dev/null ||
+        timeout 10 curl -s https://icanhazip.com 2>/dev/null | tr -d '\n' ||
+        echo "IP lookup services unavailable"
     else
         echo "curl not available"
         return 1
     fi
 }
 
-# Test website speed
+# Test website speed (with timeout and error handling)
 function speedtest() {
     if [[ -z "$1" ]]; then
         echo "Usage: speedtest <url>"
         return 1
     fi
 
-    curl -o /dev/null -s -w "Connect: %{time_connect}s\nTTFB: %{time_starttransfer}s\nTotal: %{time_total}s\nSize: %{size_download} bytes\n" "$1"
+    if command -v curl &> /dev/null; then
+        timeout 30 curl -o /dev/null -s -w "Connect: %{time_connect}s\nTTFB: %{time_starttransfer}s\nTotal: %{time_total}s\nSize: %{size_download} bytes\nResponse: %{response_code}\n" "$1" 2>/dev/null || echo "Speed test failed or timed out"
+    else
+        echo "curl not available for speed test"
+        return 1
+    fi
 }
 
 ###############################################################################
@@ -307,11 +316,13 @@ function venv() {
     fi
 }
 
-# Quick weather check
+# Quick weather check (with timeout and error handling)
 function weather() {
-    local location="${1:-$(curl -s https://ipapi.co/city 2>/dev/null)}"
+    local location="${1:-$(timeout 5 curl -s https://ipapi.co/city 2>/dev/null || echo "")}"
+    location="${location:-"New York"}"  # Fallback location
+
     if command -v curl &> /dev/null; then
-        curl -s "wttr.in/${location}?format=3"
+        timeout 10 curl -s "wttr.in/${location}?format=3" 2>/dev/null || echo "Weather service unavailable"
     else
         echo "curl not available for weather check"
     fi
