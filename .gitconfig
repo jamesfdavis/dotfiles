@@ -1,139 +1,249 @@
+# ------------------------------------------------------------------------------
+# .gitconfig - Git Configuration
+#
+# Note: User-specific settings (name, email) should be in ~/.extra
+# See: .extra.example
+# ------------------------------------------------------------------------------
+
+[include]
+    # Include user-specific config (name, email, signing key)
+    # This file is NOT committed to the repo
+    path = ~/.gitconfig.local
+
+# ------------------------------------------------------------------------------
+# User (set via ~/.extra or ~/.gitconfig.local)
+# These are placeholders - override in ~/.extra
+# ------------------------------------------------------------------------------
 [user]
-	name = localhost
-	email = user@localhost.local
+    name = James Davis
+    email = ragingsmurf@gmail.com
+
+# ------------------------------------------------------------------------------
+# SSH Commit Signing
+# See: docs/KEYS.md for full explanation
+# ------------------------------------------------------------------------------
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    # Signing key path - set by setup-ssh-signing.sh
+    # Override in ~/.gitconfig.local if different
+    defaultKeyCommand = ssh-add -L
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgsign = true
+
+# This will be set by setup-ssh-signing.sh:
+# [user]
+#     signingkey = ~/.ssh/id_ed25519_signing.pub
+
+# ------------------------------------------------------------------------------
+# Core Settings
+# ------------------------------------------------------------------------------
+[init]
+    defaultBranch = main
 
 [core]
-	editor = vim
-	autocrlf = input
-	trustctime = false
-	preloadindex = true
-	fscache = true
+    editor = code --wait
+    autocrlf = input
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    pager = delta    # If delta is installed, otherwise uses less
+    
+    # Performance
+    precomposeunicode = true
+    untrackedCache = true
 
-[alias]
-	# View abbreviated SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline -n 20 --graph --abbrev-commit
-	# View the current working tree status using the short format
-	s = status -s
-	# Show the diff between the latest commit and the current state
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
-	# Pull in remote changes for the current repository and all its submodules
-	p = !"git pull; git submodule foreach git pull origin master"
-	# Clone a repository including all submodules
-	c = clone --recursive
-	# Commit all changes
-	ca = !git add -A && git commit -av
-	# Switch to a branch, creating it if necessary
-	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
-	# List aliases
-	aliases = config --get-regexp alias
-	# Amend the currently staged files to the latest commit
-	amend = commit --amend --reuse-message=HEAD
-	# Credit an author on the latest commit
-	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-	# Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	# Remove the old tag with this name and tag the latest commit with it.
-	retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
-	# Find branches containing commit
-	fb = "!f() { git branch -a --contains $1; }; f"
-	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
-	# Find commits by source code
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-	# Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-	# Remove branches that have already been merged with master
-	# a.k.a. 'delete merged'
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
-	# List contributors with number of commits
-	contributors = shortlog --summary --numbered
-
-[apply]
-	# Detect whitespace errors when applying a patch
-	whitespace = fix
-
-[core]
-	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
-	# Treat spaces before tabs and all kinds of trailing whitespace as an error
-	# [default] trailing-space: looks for spaces at the end of a line
-	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
-	# Make `git rebase` safer on macOS
-	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-	trustctime = false
-	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
-	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
-	precomposeunicode = false
-	# Speed up commands involving untracked files such as `git status`.
-	# https://git-scm.com/docs/git-update-index#_untracked_cache
-	untrackedCache = true
-
-[color]
-	# Use colors in Git commands that are capable of colored output when
-	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-	ui = auto
-
-[color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
-
-[color "diff"]
-	meta = yellow bold
-	frag = magenta bold # line info
-	old = red # deletions
-	new = green # additions
-
-[color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-
-[diff]
-	# Detect copies as well as renames
-	renames = copies
-
-[diff "bin"]
-	# Use `hexdump` to diff binary files
-	textconv = hexdump -v -C
-
-[help]
-	# Automatically correct and execute mistyped commands
-	autocorrect = 1
-
-[merge]
-	# Include summaries of merged commits in newly created merge commit messages
-	log = true
+# ------------------------------------------------------------------------------
+# Pull / Push / Fetch
+# ------------------------------------------------------------------------------
+[pull]
+    rebase = true
 
 [push]
-	# https://git-scm.com/docs/git-config#git-config-pushdefault
-	default = simple
-	# Make `git push` push relevant annotated tags when pushing branches out.
-	followTags = true
+    default = current
+    autoSetupRemote = true
+    followTags = true
 
-# URL shorthands
+[fetch]
+    prune = true
+    pruneTags = true
 
+# ------------------------------------------------------------------------------
+# Diff & Merge
+# ------------------------------------------------------------------------------
+[diff]
+    algorithm = histogram
+    colorMoved = default
+    tool = vscode
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[merge]
+    conflictstyle = zdiff3
+    tool = vscode
+
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+
+[rerere]
+    enabled = true
+    autoUpdate = true
+
+# ------------------------------------------------------------------------------
+# Rebase
+# ------------------------------------------------------------------------------
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+
+# ------------------------------------------------------------------------------
+# Branch
+# ------------------------------------------------------------------------------
+[branch]
+    autoSetupMerge = always
+    autoSetupRebase = always
+    sort = -committerdate
+
+# ------------------------------------------------------------------------------
+# Aliases
+# ------------------------------------------------------------------------------
+[alias]
+    # Short status
+    s = status -sb
+    
+    # Commit
+    ci = commit
+    cm = commit -m
+    ca = commit --amend
+    can = commit --amend --no-edit
+    
+    # Checkout
+    co = checkout
+    cob = checkout -b
+    
+    # Branch
+    br = branch
+    bra = branch -a
+    brd = branch -d
+    brD = branch -D
+    
+    # Diff
+    df = diff
+    dfs = diff --staged
+    
+    # Log
+    lg = log --oneline --graph --decorate -20
+    lga = log --oneline --graph --decorate --all
+    last = log -1 HEAD --stat
+    
+    # Stash
+    sl = stash list
+    sp = stash pop
+    ss = stash save
+    
+    # Reset
+    unstage = reset HEAD --
+    uncommit = reset --soft HEAD~1
+    
+    # Cleanup
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d"
+    
+    # Show contributors
+    contributors = shortlog --summary --numbered
+    
+    # Find commits by message
+    find = "!f() { git log --oneline --all --grep=\"$1\"; }; f"
+    
+    # Show aliases
+    aliases = config --get-regexp alias
+    
+    # Interactive rebase on last N commits
+    reb = "!f() { git rebase -i HEAD~$1; }; f"
+    
+    # Create a fixup commit
+    fixup = "!f() { git commit --fixup=$1; }; f"
+    
+    # Push with force-with-lease (safer than --force)
+    pushf = push --force-with-lease
+    
+    # Show remote URLs
+    remotes = remote -v
+    
+    # WIP commit
+    wip = "!git add -A && git commit -m 'WIP'"
+    unwip = reset HEAD~1
+
+# ------------------------------------------------------------------------------
+# Color
+# ------------------------------------------------------------------------------
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = green
+    changed = yellow
+    untracked = red
+
+# ------------------------------------------------------------------------------
+# URL Shortcuts
+# ------------------------------------------------------------------------------
 [url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
+    insteadOf = gh:
+    pushInsteadOf = https://github.com/
+    pushInsteadOf = gh:
 
-[url "git://github.com/"]
-	insteadOf = "github:"
+[url "git@github.com:jamesfdavis/"]
+    insteadOf = me:
 
-[url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
+# ------------------------------------------------------------------------------
+# Delta (better diff viewer) - optional
+# Install: brew install git-delta
+# ------------------------------------------------------------------------------
+[delta]
+    navigate = true
+    light = false
+    line-numbers = true
+    side-by-side = false
 
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
+[interactive]
+    diffFilter = delta --color-only
 
-[init]
-	defaultBranch = master
+# ------------------------------------------------------------------------------
+# GitHub CLI integration
+# ------------------------------------------------------------------------------
+[credential "https://github.com"]
+    helper = 
+    helper = !/opt/homebrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+    helper = 
+    helper = !/opt/homebrew/bin/gh auth git-credential
+
+# ------------------------------------------------------------------------------
+# Performance (for large repos)
+# ------------------------------------------------------------------------------
+[feature]
+    manyFiles = true
+
+[pack]
+    threads = 0

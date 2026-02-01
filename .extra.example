@@ -1,0 +1,80 @@
+# ------------------------------------------------------------------------------
+# .extra - Personal Configuration (NOT COMMITTED TO REPO)
+#
+# Copy this file to ~/.extra and fill in your values:
+#   cp ~/.extra.example ~/.extra
+#
+# This file is sourced by .zshrc and contains:
+# - Git credentials
+# - API keys and tokens
+# - Work-specific configuration
+# - Personal overrides
+# ------------------------------------------------------------------------------
+
+# ==============================================================================
+# GIT CREDENTIALS
+# ==============================================================================
+
+# Your name and email for Git commits
+GIT_AUTHOR_NAME="James Davis"
+GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+
+GIT_AUTHOR_EMAIL="ragingsmurf@gmail.com"
+GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+
+# Apply to git config
+git config --global user.name "$GIT_AUTHOR_NAME"
+git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+# ==============================================================================
+# SSH SIGNING KEY
+# ==============================================================================
+
+# Path to your signing key (set by setup-ssh-signing.sh)
+# Uncomment and modify if using a different path
+# git config --global user.signingkey "$HOME/.ssh/id_ed25519_signing.pub"
+
+# ==============================================================================
+# API KEYS & TOKENS
+# ==============================================================================
+
+# Anthropic (Claude)
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Cloudflare
+export CLOUDFLARE_API_TOKEN="your-cloudflare-api-token"
+export CLOUDFLARE_ACCOUNT_ID="your-account-id"
+
+# GitHub (optional - gh CLI uses its own auth)
+# export GITHUB_TOKEN="ghp_..."
+
+# ==============================================================================
+# WORK CONFIGURATION
+# ==============================================================================
+
+# Set to "true" when on work machine to enable work-specific aliases
+# export WORK_HOST="true"
+
+# Azure (for CSI work)
+# export AZURE_TENANT_ID="your-tenant-id"
+# export AZURE_SUBSCRIPTION_ID="your-subscription-id"
+
+# ==============================================================================
+# PERSONAL OVERRIDES
+# ==============================================================================
+
+# Override any settings from other dotfiles here
+# Example: Different editor for work
+# export EDITOR="vim"
+
+# Example: Additional PATH entries
+# export PATH="$HOME/custom-tools:$PATH"
+
+# ==============================================================================
+# MACHINE-SPECIFIC
+# ==============================================================================
+
+# Example: Hostname-based configuration
+# if [[ "$(hostname)" == "work-laptop" ]]; then
+#     export WORK_HOST="true"
+# fi
