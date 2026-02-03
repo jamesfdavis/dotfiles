@@ -40,9 +40,9 @@ flowchart TD
     L --> N
     M --> N
     
-    style A fill:#ff6b6b,color:#fff
-    style N fill:#51cf66,color:#fff
-    style J fill:#ffd43b,color:#000
+    style A fill:#e03131,color:#fff,stroke:#c92a2a
+    style N fill:#2f9e44,color:#fff,stroke:#237032
+    style J fill:#f08c00,color:#fff,stroke:#e67700
 ```
 
 ---
@@ -110,9 +110,12 @@ flowchart LR
     GA -->|Enables| P[git push/pull]
     GS -->|Enables| V[✓ Verified Badge]
     
-    style A fill:#339af0,color:#fff
-    style S fill:#f783ac,color:#fff
-    style V fill:#51cf66,color:#fff
+    style A fill:#1c7ed6,color:#fff,stroke:#1864ab
+    style S fill:#d6336c,color:#fff,stroke:#a61e4d
+    style V fill:#2f9e44,color:#fff,stroke:#237032
+    style GA fill:#495057,color:#fff,stroke:#343a40
+    style GS fill:#495057,color:#fff,stroke:#343a40
+    style P fill:#495057,color:#fff,stroke:#343a40
 ```
 
 **Why two keys?**
@@ -312,13 +315,13 @@ Settings are managed via dotfiles, not VS Code's built-in sync:
 ```mermaid
 flowchart TB
     subgraph Development
-        CC[Claude Code<br/><code>cc</code>]
-        VS[VS Code<br/><code>code .</code>]
-        GH[GitHub CLI<br/><code>gh</code>]
+        CC[Claude Code<br/>cc]
+        VS[VS Code<br/>code .]
+        GH[GitHub CLI<br/>gh]
     end
     
     subgraph Deployment
-        WR[Wrangler<br/><code>wr</code>]
+        WR[Wrangler<br/>wr]
         CF[Cloudflare Workers]
     end
     
@@ -337,6 +340,15 @@ flowchart TB
     ZSH --> VS
     NVM --> WR
     UV --> CC
+    
+    style CC fill:#7c3aed,color:#fff,stroke:#6d28d9
+    style VS fill:#1c7ed6,color:#fff,stroke:#1864ab
+    style GH fill:#495057,color:#fff,stroke:#343a40
+    style WR fill:#f76707,color:#fff,stroke:#d9480f
+    style CF fill:#f76707,color:#fff,stroke:#d9480f
+    style ZSH fill:#2f9e44,color:#fff,stroke:#237032
+    style NVM fill:#2f9e44,color:#fff,stroke:#237032
+    style UV fill:#2f9e44,color:#fff,stroke:#237032
 ```
 
 ---
