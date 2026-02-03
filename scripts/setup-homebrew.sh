@@ -2,11 +2,8 @@
 # ------------------------------------------------------------------------------
 # setup-homebrew.sh - Install Homebrew and packages from Brewfile
 # ------------------------------------------------------------------------------
-
 set -e
-
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-
 # Install Homebrew if not present
 if ! command -v brew &>/dev/null; then
     echo "  Installing Homebrew..."
@@ -21,13 +18,10 @@ if ! command -v brew &>/dev/null; then
 else
     echo "  ✓ Homebrew already installed"
 fi
-
 # Update Homebrew
 echo "  Updating Homebrew..."
 brew update
-
 # Install packages from Brewfile
 echo "  Installing packages from Brewfile..."
-brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock
-
+brew bundle --file="$DOTFILES_DIR/Brewfile"
 echo "  ✓ Homebrew setup complete"
