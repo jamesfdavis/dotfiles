@@ -50,6 +50,7 @@ flowchart TD
 ## What Gets Installed
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#4c6ef5', 'primaryTextColor': '#fff', 'primaryBorderColor': '#364fc7', 'lineColor': '#868e96', 'secondaryColor': '#ae3ec9', 'tertiaryColor': '#0ca678' }}}%%
 mindmap
   root((dotfiles))
     CLI Tools
