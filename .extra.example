@@ -55,10 +55,6 @@ export CLOUDFLARE_ACCOUNT_ID="your-account-id"
 # Set to "true" when on work machine to enable work-specific aliases
 # export WORK_HOST="true"
 
-# Azure (for CSI work)
-# export AZURE_TENANT_ID="your-tenant-id"
-# export AZURE_SUBSCRIPTION_ID="your-subscription-id"
-
 # ==============================================================================
 # PERSONAL OVERRIDES
 # ==============================================================================

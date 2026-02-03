@@ -285,5 +285,5 @@ alias df="df -h"
 
 if [ "$WORK_HOST" = "true" ]; then
     # Add work-specific aliases here
-    alias azlogin="az login --tenant CSI_TENANT_ID"
+    :  # placeholder - add your work aliases below
 fi

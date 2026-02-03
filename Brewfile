@@ -46,7 +46,6 @@ brew "python@3.12"              # System Python for tooling
 # ------------------------------------------------------------------------------
 brew "cloudflare/cloudflare/cloudflared"  # Cloudflare Tunnel
 brew "wrangler"                 # Cloudflare Workers CLI
-brew "azure-cli"                # Azure CLI (for CSI work)
 
 # ------------------------------------------------------------------------------
 # Shell Enhancement
