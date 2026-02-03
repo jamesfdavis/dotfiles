@@ -149,12 +149,6 @@ if command -v wrangler &>/dev/null; then
     eval "$(wrangler completions zsh 2>/dev/null)" || true
 fi
 
-# Azure CLI completions
-if command -v az &>/dev/null; then
-    autoload -U +X bashcompinit && bashcompinit
-    source "$HOMEBREW_PREFIX/etc/bash_completion.d/az" 2>/dev/null || true
-fi
-
 # ------------------------------------------------------------------------------
 # History Configuration
 # ------------------------------------------------------------------------------

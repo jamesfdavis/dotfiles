@@ -92,7 +92,6 @@ brew install ansible
 
 # Cloud CLI tools
 brew install awscli
-brew install azure-cli
 brew install google-cloud-sdk
 
 # Performance testing
@@ -252,7 +251,6 @@ code --install-extension ms-vscode.vscode-eslint
 code --install-extension bradlc.vscode-tailwindcss
 code --install-extension ms-vscode.vscode-git
 code --install-extension ms-vscode-remote.remote-containers
-code --install-extension ms-azuretools.vscode-docker
 code --install-extension hashicorp.terraform
 code --install-extension ms-kubernetes-tools.vscode-kubernetes-tools
 code --install-extension golang.go
@@ -307,7 +305,7 @@ echo "📦 Installed Categories:"
 echo "   • GNU/System utilities (coreutils, findutils, gnu-sed)"
 echo "   • Development CLI tools (git, gh, node, python, go, rust, java)"
 echo "   • Container tools (Docker, Kubernetes, Helm, k9s)"
-echo "   • Cloud tools (AWS, Azure, GCP CLIs)"
+echo "   • Cloud tools (AWS, GCP CLIs)"
 echo "   • Infrastructure as Code (Terraform, Ansible, Vault)"
 echo "   • Database tools (PostgreSQL, Redis, MongoDB)"
 echo "   • Performance testing (vegeta, jaggr, jplot)"
@@ -327,7 +325,7 @@ echo "      • pyenv install 3.12.0 (Python)"
 echo "   3. Configure Git:"
 echo "      • git config --global user.name 'Your Name'"
 echo "      • git config --global user.email 'your@email.com'"
-echo "   4. Set up cloud CLIs (aws configure, az login, gcloud init)"
+echo "   4. Set up cloud CLIs (aws configure, gcloud init)"
 echo "   5. Configure data science environment (see conda commands above)"
 echo "   6. Set up local development certificates: mkcert -install"
 echo ""

@@ -64,7 +64,6 @@ mindmap
       VS Code
     Cloud
       Cloudflare Wrangler
-      Azure CLI
       cloudflared
     Shell
       Oh My Zsh
@@ -82,7 +81,7 @@ mindmap
 | **CLI Essentials** | git, gh, jq, yq, ripgrep, fzf, bat, eza, fd, tree, htop |
 | **Node.js** | nvm (then `nvm install --lts`) |
 | **Python** | uv, python@3.12 |
-| **Cloud/Deploy** | wrangler, cloudflared, azure-cli |
+| **Cloud/Deploy** | wrangler, cloudflared |
 | **Shell** | zsh-autosuggestions, zsh-syntax-highlighting |
 | **Apps** | iTerm2, VS Code, Claude |
 | **Fonts** | Fira Code Nerd Font |
