@@ -31,6 +31,53 @@ eval "$(starship init zsh)"
     source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # ------------------------------------------------------------------------------
+# NVM - Lazy loading for fast shell startup
+# ------------------------------------------------------------------------------
+export NVM_DIR="$HOME/.nvm"
+
+# Lazy load NVM: only initialize when first called
+nvm() {
+    unset -f nvm node npm npx
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+    nvm "$@"
+}
+node() {
+    unset -f nvm node npm npx
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+    node "$@"
+}
+npm() {
+    unset -f nvm node npm npx
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+    npm "$@"
+}
+npx() {
+    unset -f nvm node npm npx
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+    npx "$@"
+}
+
+# Auto-switch Node version when entering a directory with .nvmrc
+_nvm_auto_use() {
+    if [ -f ".nvmrc" ]; then
+        # Ensure NVM is loaded
+        if ! command -v nvm &>/dev/null || [ "$(type -w nvm)" = "nvm: function" ] && [ -z "$NVM_BIN" ]; then
+            unset -f nvm node npm npx 2>/dev/null
+            [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+        fi
+        local nvmrc_node_version=$(cat .nvmrc)
+        local current_node_version=$(node -v 2>/dev/null)
+        if [ "$current_node_version" != "$nvmrc_node_version" ] && [ "$current_node_version" != "v${nvmrc_node_version}" ]; then
+            nvm use 2>/dev/null || nvm install
+        fi
+    fi
+}
+autoload -U add-zsh-hook
+add-zsh-hook chpwd _nvm_auto_use
+# Run once on shell start if .nvmrc exists in cwd
+_nvm_auto_use
+
+# ------------------------------------------------------------------------------
 # FZF
 # ------------------------------------------------------------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

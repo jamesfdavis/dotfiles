@@ -6,6 +6,7 @@ $directory\
 $git_branch\
 $git_status\
 $nodejs\
+$python\
 $docker_context\
 $cmd_duration\
 $line_break\
@@ -62,9 +63,14 @@ min_time = 3_000
 format = "[$duration]($style) "
 style = "bold yellow"
 
-# Disabled modules (keep prompt fast)
+# Python - only show when venv is active
 [python]
-disabled = true
+format = "[$symbol$virtualenv]($style) "
+symbol = " "
+style = "bold yellow"
+detect_extensions = []
+detect_files = []
+detect_folders = []
 
 [rust]
 disabled = true

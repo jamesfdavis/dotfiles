@@ -11,9 +11,15 @@ brew "zsh-syntax-highlighting"          # Real-time syntax coloring
 cask "font-fira-code-nerd-font"         # Nerd Font (icons for starship)
 
 # ------------------------------------------------------------------------------
-# Node.js (needed for claude-code & wrangler globals)
+# Node.js
 # ------------------------------------------------------------------------------
-brew "node"
+brew "nvm"                              # Node version manager (.nvmrc support)
+
+# ------------------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------------------
+brew "uv"                               # Fast Python package manager
+brew "python@3.12"                      # System Python for tooling
 
 # ------------------------------------------------------------------------------
 # Git & GitHub

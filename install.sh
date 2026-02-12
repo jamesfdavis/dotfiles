@@ -57,8 +57,29 @@ echo -e "${YELLOW}  Step 3/4: SSH commit signing...${NC}"
 "$DOTFILES_DIR/scripts/setup-ssh-signing.sh"
 echo ""
 
-# Step 4: npm globals
-echo -e "${YELLOW}  Step 4/4: Installing npm globals...${NC}"
+# Step 4: Node.js + npm globals
+echo -e "${YELLOW}  Step 4/5: Installing Node.js LTS via NVM...${NC}"
+
+# Determine HOMEBREW_PREFIX for NVM
+if [[ $(uname -m) == "arm64" ]]; then
+    _HP="/opt/homebrew"
+else
+    _HP="/usr/local"
+fi
+
+export NVM_DIR="$HOME/.nvm"
+mkdir -p "$NVM_DIR"
+if [ -s "$_HP/opt/nvm/nvm.sh" ]; then
+    \. "$_HP/opt/nvm/nvm.sh"
+    nvm install --lts 2>/dev/null && \
+        echo -e "${GREEN}  Node.js LTS installed$(node -v 2>/dev/null && echo " ($(node -v))")${NC}" || \
+        echo -e "${YELLOW}  NVM install failed (can retry: nvm install --lts)${NC}"
+else
+    echo -e "${YELLOW}  NVM not found -- run 'nvm install --lts' after restart${NC}"
+fi
+
+# Step 5: npm globals
+echo -e "${YELLOW}  Step 5/5: Installing npm globals...${NC}"
 if command -v npm &>/dev/null; then
     npm install -g @anthropic-ai/claude-code 2>/dev/null && \
         echo -e "${GREEN}  Installed claude-code${NC}" || \
@@ -68,7 +89,7 @@ if command -v npm &>/dev/null; then
         echo -e "${GREEN}  Installed wrangler${NC}" || \
         echo -e "${YELLOW}  wrangler install failed (can retry later)${NC}"
 else
-    echo -e "${RED}  npm not found - install Node first${NC}"
+    echo -e "${RED}  npm not found - restart terminal and run: nvm install --lts${NC}"
 fi
 echo ""
 
@@ -79,16 +100,18 @@ echo -e "${YELLOW}  Next steps:${NC}"
 echo ""
 echo "  1. Restart your terminal (or: source ~/.zshrc)"
 echo ""
-echo "  2. Register SSH keys on GitHub (https://github.com/settings/keys):"
+echo "  2. If Node install was skipped: nvm install --lts"
+echo ""
+echo "  3. Register SSH keys on GitHub (https://github.com/settings/keys):"
 echo "     Auth key:    cat ~/.ssh/id_ed25519.pub"
 echo "     Signing key: cat ~/.ssh/id_ed25519_signing.pub"
 echo ""
-echo "  3. Set up secrets:"
+echo "  4. Set up secrets:"
 echo "     cp ~/.extra.example ~/.extra && nvim ~/.extra"
 echo ""
-echo "  4. Start Colima for Docker:"
+echo "  5. Start Colima for Docker:"
 echo "     colima start"
 echo ""
-echo "  5. Authenticate GitHub CLI:"
+echo "  6. Authenticate GitHub CLI:"
 echo "     gh auth login"
 echo ""

@@ -136,6 +136,24 @@ alias nrb="npm run build"
 alias nrt="npm run test"
 
 # ==============================================================================
+# PYTHON / UV
+# ==============================================================================
+
+alias py="python3"
+alias python="python3"
+alias pip="pip3"
+
+alias uvv="uv venv"
+alias uva="source .venv/bin/activate"
+alias uvd="deactivate"
+alias uvp="uv pip"
+alias uvi="uv pip install"
+alias uvir="uv pip install -r requirements.txt"
+
+alias jn="jupyter notebook"
+alias jl="jupyter lab"
+
+# ==============================================================================
 # DOCKER (via Colima)
 # ==============================================================================
 
