@@ -1,103 +1,15 @@
 #!/usr/bin/env zsh
+# .functions - Shell functions for agent-first Cloudflare development
 
-# Modern Shell Functions for 2025
-# Streamlined and updated for current workflows
-
-###############################################################################
-# Development Functions                                                       #
-###############################################################################
-
-# Create a new directory and enter it
+# Create directory and cd into it
 function mkd() {
     mkdir -p "$@" && cd "$_"
 }
 
-# Quick project setup
-function newproject() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: newproject <project-name> [type]"
-        echo "Types: node, python, go, rust, next, react"
-        return 1
-    fi
-
-    local name="$1"
-    local type="${2:-node}"
-
-    mkdir -p "$name" && cd "$name"
-
-    case "$type" in
-        "node"|"js")
-            npm init -y
-            echo "node_modules/" > .gitignore
-            ;;
-        "python"|"py")
-            python -m venv venv
-            echo "venv/" > .gitignore
-            echo "__pycache__/" >> .gitignore
-            echo "*.pyc" >> .gitignore
-            touch requirements.txt
-            ;;
-        "go")
-            go mod init "$name"
-            echo "# $name" > README.md
-            ;;
-        "rust")
-            cargo init .
-            ;;
-        "next")
-            npx create-next-app@latest . --typescript --tailwind --app --src-dir
-            ;;
-        "react")
-            npx create-react-app . --template typescript
-            ;;
-        *)
-            echo "Unknown project type: $type"
-            ;;
-    esac
-
-    git init
-    echo "Project '$name' created successfully!"
-}
-
-# Quick Git commit with message
-function gc() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: gc <commit-message>"
-        return 1
-    fi
-    git add . && git commit -m "$1"
-}
-
-# Git push with upstream
-function gp() {
-    local branch=$(git branch --show-current)
-    git push -u origin "$branch"
-}
-
-# Better tree with sensible defaults (replaces tre function)
-function tre() {
-    if command -v eza &> /dev/null; then
-        eza --tree --level=3 --ignore-glob=".git|node_modules|venv|__pycache__|.next|dist|build" "$@"
-    elif command -v tree &> /dev/null; then
-        tree -aC -L 3 -I '.git|node_modules|venv|__pycache__|.next|dist|build' --dirsfirst "$@" | less -FRNX
-    else
-        ls -la "$@"
-    fi
-}
-
-###############################################################################
-# File & Directory Operations                                                 #
-###############################################################################
-
 # Extract any archive
 function extract() {
-    if [[ -z "$1" ]]; then
+    if [[ -z "$1" ]] || [[ ! -f "$1" ]]; then
         echo "Usage: extract <archive-file>"
-        return 1
-    fi
-
-    if [[ ! -f "$1" ]]; then
-        echo "Error: '$1' is not a valid file"
         return 1
     fi
 
@@ -105,310 +17,76 @@ function extract() {
         *.tar.bz2)   tar xjf "$1"     ;;
         *.tar.gz)    tar xzf "$1"     ;;
         *.bz2)       bunzip2 "$1"     ;;
-        *.rar)       unrar x "$1"     ;;
         *.gz)        gunzip "$1"      ;;
         *.tar)       tar xf "$1"      ;;
         *.tbz2)      tar xjf "$1"     ;;
         *.tgz)       tar xzf "$1"     ;;
         *.zip)       unzip "$1"       ;;
-        *.Z)         uncompress "$1"  ;;
         *.7z)        7z x "$1"        ;;
-        *)           echo "Error: '$1' cannot be extracted" ;;
+        *)           echo "Cannot extract: $1" ;;
     esac
 }
 
-# Get file size (replaces fs function)
-function fsize() {
-    if [[ -z "$1" ]]; then
-        # Show current directory size
-        if command -v du &> /dev/null; then
-            du -sh .
-        fi
+# Better tree with sensible defaults
+function tre() {
+    if command -v eza &>/dev/null; then
+        eza --tree --level=3 --ignore-glob=".git|node_modules|.wrangler|dist" "$@"
     else
-        if command -v du &> /dev/null; then
-            du -sh "$@"
-        fi
-    fi
-}
-
-# Change to Finder directory (improved cdf)
-function cdf() {
-    cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" 2>/dev/null || {
-        echo "Error: Could not get Finder location"
-        return 1
-    }
-}
-
-###############################################################################
-# Network & Web Functions                                                     #
-###############################################################################
-
-# Modern HTTP server (replaces server and phpserver functions)
-function serve() {
-    local port="${1:-8000}"
-
-    if command -v python3 &> /dev/null; then
-        echo "Starting server at http://localhost:${port}"
-        python3 -m http.server "$port"
-    elif command -v python &> /dev/null; then
-        echo "Starting server at http://localhost:${port}"
-        python -m SimpleHTTPServer "$port"
-    elif command -v node &> /dev/null; then
-        echo "Starting server at http://localhost:${port}"
-        npx serve -p "$port"
-    else
-        echo "Error: No suitable HTTP server found (need python3, python, or node)"
-        return 1
-    fi
-}
-
-# Quick DNS lookup (replaces digga function)
-function dns() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: dns <domain>"
-        return 1
-    fi
-
-    if command -v dig &> /dev/null; then
-        dig +short "$1" A
-        dig +short "$1" AAAA
-        dig +short "$1" MX
-    else
-        nslookup "$1"
-    fi
-}
-
-# Get external IP (with fallbacks and timeout)
-function myip() {
-    if command -v curl &> /dev/null; then
-        # Try multiple services for reliability
-        timeout 10 curl -s https://httpbin.org/ip 2>/dev/null | jq -r .origin 2>/dev/null ||
-        timeout 10 curl -s https://api.ipify.org 2>/dev/null ||
-        timeout 10 curl -s https://icanhazip.com 2>/dev/null | tr -d '\n' ||
-        echo "IP lookup services unavailable"
-    else
-        echo "curl not available"
-        return 1
-    fi
-}
-
-# Test website speed (with timeout and error handling)
-function speedtest() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: speedtest <url>"
-        return 1
-    fi
-
-    if command -v curl &> /dev/null; then
-        timeout 30 curl -o /dev/null -s -w "Connect: %{time_connect}s\nTTFB: %{time_starttransfer}s\nTotal: %{time_total}s\nSize: %{size_download} bytes\nResponse: %{response_code}\n" "$1" 2>/dev/null || echo "Speed test failed or timed out"
-    else
-        echo "curl not available for speed test"
-        return 1
-    fi
-}
-
-###############################################################################
-# System & Utility Functions                                                  #
-###############################################################################
-
-# Open current directory or specified path
-function o() {
-    if [[ $# -eq 0 ]]; then
-        open .
-    else
-        open "$@"
+        ls -la "$@"
     fi
 }
 
 # Find processes by name
 function psgrep() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: psgrep <process-name>"
-        return 1
-    fi
+    [[ -z "$1" ]] && { echo "Usage: psgrep <name>"; return 1; }
     ps aux | grep -i "$1" | grep -v grep
 }
 
 # Kill processes by name
 function killnamed() {
-    if [[ -z "$1" ]]; then
-        echo "Usage: killnamed <process-name>"
-        return 1
-    fi
+    [[ -z "$1" ]] && { echo "Usage: killnamed <name>"; return 1; }
     pkill -f "$1"
 }
 
-# System information
-function sysinfo() {
-    echo "System Information:"
-    echo "==================="
-    echo "OS: $(uname -s)"
-    echo "Kernel: $(uname -r)"
-    echo "Architecture: $(uname -m)"
-    echo "Hostname: $(hostname)"
-    echo "Uptime: $(uptime | cut -d',' -f1 | cut -d' ' -f4-)"
-    echo "Shell: $SHELL"
-    echo "User: $USER"
-    echo "Home: $HOME"
-
-    if command -v sw_vers &> /dev/null; then
-        echo "macOS Version: $(sw_vers -productVersion)"
-    fi
+# Get external IP
+function myip() {
+    timeout 10 curl -s https://api.ipify.org 2>/dev/null ||
+    timeout 10 curl -s https://icanhazip.com 2>/dev/null | tr -d '\n' ||
+    echo "IP lookup unavailable"
 }
 
-###############################################################################
-# Docker & Container Functions                                                #
-###############################################################################
-
-# Docker shortcuts
-function dps() {
-    docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+# Quick HTTP server
+function serve() {
+    local port="${1:-8000}"
+    echo "Serving at http://localhost:${port}"
+    python3 -m http.server "$port"
 }
 
-function dclean() {
-    echo "Cleaning up Docker..."
-    docker system prune -f
-    docker volume prune -f
-    docker image prune -a -f
+# Open in Finder
+function o() {
+    if [[ $# -eq 0 ]]; then open .; else open "$@"; fi
 }
 
-function dstop() {
-    if [[ -z "$1" ]]; then
-        # Stop all containers
-        docker stop $(docker ps -q) 2>/dev/null || echo "No containers to stop"
-    else
-        docker stop "$1"
-    fi
+# cd to Finder directory
+function cdf() {
+    cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" 2>/dev/null || {
+        echo "Could not get Finder location"
+        return 1
+    }
 }
 
-###############################################################################
-# Modern Development Workflows                                                #
-###############################################################################
-
-# Install and save npm package
-function ni() {
-    if [[ -z "$1" ]]; then
-        npm install
-    else
-        npm install "$@"
-    fi
-}
-
-function nid() {
-    npm install --save-dev "$@"
-}
-
-# Python virtual environment shortcut
-function venv() {
-    if [[ "$1" == "create" ]]; then
-        python3 -m venv venv
-        echo "Virtual environment created. Run 'venv activate' to use it."
-    elif [[ "$1" == "activate" ]]; then
-        if [[ -f "venv/bin/activate" ]]; then
-            source venv/bin/activate
-        else
-            echo "No virtual environment found. Run 'venv create' first."
-        fi
-    elif [[ "$1" == "deactivate" ]]; then
-        deactivate 2>/dev/null || echo "No virtual environment active"
-    else
-        echo "Usage: venv {create|activate|deactivate}"
-    fi
-}
-
-# Quick weather check (with timeout and error handling)
-function weather() {
-    local location="${1:-$(timeout 5 curl -s https://ipapi.co/city 2>/dev/null || echo "")}"
-    location="${location:-"New York"}"  # Fallback location
-
-    if command -v curl &> /dev/null; then
-        timeout 10 curl -s "wttr.in/${location}?format=3" 2>/dev/null || echo "Weather service unavailable"
-    else
-        echo "curl not available for weather check"
-    fi
+# Clean development artifacts in current tree
+function cleanup() {
+    echo "Cleaning development artifacts..."
+    find . -name "node_modules" -type d -prune -exec rm -rf '{}' + 2>/dev/null
+    find . -name ".wrangler" -type d -prune -exec rm -rf '{}' + 2>/dev/null
+    find . -name "dist" -type d -prune -exec rm -rf '{}' + 2>/dev/null
+    find . -name ".DS_Store" -delete 2>/dev/null
+    echo "Done."
 }
 
 # Generate a secure password
 function genpass() {
-    local length="${1:-16}"
-    if command -v openssl &> /dev/null; then
-        openssl rand -base64 "$length" | tr -d "=+/" | cut -c1-"$length"
-    else
-        echo "openssl not available for password generation"
-    fi
+    local length="${1:-24}"
+    openssl rand -base64 "$length" | tr -d "=+/" | cut -c1-"$length"
 }
-
-###############################################################################
-# Cleanup Functions                                                           #
-###############################################################################
-
-# Clean common development artifacts
-function cleanup() {
-    echo "Cleaning development artifacts..."
-
-    # Node.js
-    find . -name "node_modules" -type d -prune -exec rm -rf '{}' + 2>/dev/null
-
-    # Python
-    find . -name "__pycache__" -type d -prune -exec rm -rf '{}' + 2>/dev/null
-    find . -name "*.pyc" -delete 2>/dev/null
-
-    # macOS
-    find . -name ".DS_Store" -delete 2>/dev/null
-
-    # Build artifacts
-    find . -name "dist" -type d -prune -exec rm -rf '{}' + 2>/dev/null
-    find . -name "build" -type d -prune -exec rm -rf '{}' + 2>/dev/null
-    find . -name ".next" -type d -prune -exec rm -rf '{}' + 2>/dev/null
-
-    echo "Cleanup complete!"
-}
-
-###############################################################################
-# Help Function                                                               #
-###############################################################################
-
-# Show available custom functions
-function funcs() {
-    echo "Available Custom Functions:"
-    echo "=========================="
-    echo "Development:"
-    echo "  mkd <dir>           - Create directory and cd into it"
-    echo "  newproject <name>   - Create new project (node|python|go|rust|next|react)"
-    echo "  gc <message>        - Git add all and commit with message"
-    echo "  gp                  - Git push with upstream"
-    echo "  tre                 - Better tree view"
-    echo ""
-    echo "Files & Directories:"
-    echo "  extract <file>      - Extract any archive"
-    echo "  fsize [file]        - Show file/directory size"
-    echo "  cdf                 - cd to current Finder directory"
-    echo "  o [path]            - Open in Finder"
-    echo ""
-    echo "Network & Web:"
-    echo "  serve [port]        - Start HTTP server (default: 8000)"
-    echo "  dns <domain>        - Quick DNS lookup"
-    echo "  myip                - Get external IP address"
-    echo "  speedtest <url>     - Test website response time"
-    echo ""
-    echo "System & Utilities:"
-    echo "  psgrep <name>       - Find processes by name"
-    echo "  killnamed <name>    - Kill processes by name"
-    echo "  sysinfo             - Show system information"
-    echo "  weather [city]      - Get weather information"
-    echo "  genpass [length]    - Generate secure password"
-    echo ""
-    echo "Docker:"
-    echo "  dps                 - Pretty docker ps"
-    echo "  dclean              - Clean up Docker"
-    echo "  dstop [container]   - Stop container(s)"
-    echo ""
-    echo "Development:"
-    echo "  ni [package]        - npm install (with package)"
-    echo "  nid <package>       - npm install --save-dev"
-    echo "  venv <action>       - Python venv management"
-    echo "  cleanup             - Clean dev artifacts"
-}
-
-# Load custom functions message
-echo "🚀 Custom shell functions loaded! Type 'funcs' to see available commands."

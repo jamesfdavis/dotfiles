@@ -398,28 +398,12 @@ secrets.json
 # Cloud & Deployment                                                          #
 ###############################################################################
 
-# Serverless
-.serverless/
-
-# Terraform
-*.tfstate
-*.tfstate.*
-*.tfvars
-.terraform/
-.terraform.lock.hcl
+# Cloudflare
+.wrangler/
+.dev.vars
 
 # Docker
 .dockerignore.bak
-
-# AWS
-.aws-sam/
-
-# Google Cloud
-.gcloudignore
-
-# Kubernetes
-*.yaml.bak
-*.yml.bak
 
 ###############################################################################
 # Documentation & Assets                                                      #

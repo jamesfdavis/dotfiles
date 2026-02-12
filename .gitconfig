@@ -1,33 +1,18 @@
-# ------------------------------------------------------------------------------
 # .gitconfig - Git Configuration
-#
-# Note: User-specific settings (name, email) should be in ~/.extra
-# See: .extra.example
-# ------------------------------------------------------------------------------
+# User-specific settings (name, email) in ~/.extra or ~/.gitconfig.local
 
 [include]
-    # Include user-specific config (name, email, signing key)
-    # This file is NOT committed to the repo
     path = ~/.gitconfig.local
 
-# ------------------------------------------------------------------------------
-# User (set via ~/.extra or ~/.gitconfig.local)
-# These are placeholders - override in ~/.extra
-# ------------------------------------------------------------------------------
 [user]
     name = James Davis
     email = ragingsmurf@gmail.com
 
-# ------------------------------------------------------------------------------
-# SSH Commit Signing
-# See: docs/KEYS.md for full explanation
-# ------------------------------------------------------------------------------
+# SSH Commit Signing (docs/KEYS.md)
 [gpg]
     format = ssh
 
 [gpg "ssh"]
-    # Signing key path - set by setup-ssh-signing.sh
-    # Override in ~/.gitconfig.local if different
     defaultKeyCommand = ssh-add -L
 
 [commit]
@@ -36,30 +21,19 @@
 [tag]
     gpgsign = true
 
-# This will be set by setup-ssh-signing.sh:
-# [user]
-#     signingkey = ~/.ssh/id_ed25519_signing.pub
-
-# ------------------------------------------------------------------------------
-# Core Settings
-# ------------------------------------------------------------------------------
+# Core
 [init]
     defaultBranch = main
 
 [core]
-    editor = code --wait
+    editor = nvim
     autocrlf = input
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
-    pager = delta    # If delta is installed, otherwise uses less
-    
-    # Performance
     precomposeunicode = true
     untrackedCache = true
 
-# ------------------------------------------------------------------------------
 # Pull / Push / Fetch
-# ------------------------------------------------------------------------------
 [pull]
     rebase = true
 
@@ -72,121 +46,67 @@
     prune = true
     pruneTags = true
 
-# ------------------------------------------------------------------------------
 # Diff & Merge
-# ------------------------------------------------------------------------------
 [diff]
     algorithm = histogram
     colorMoved = default
-    tool = vscode
-
-[difftool "vscode"]
-    cmd = code --wait --diff $LOCAL $REMOTE
+    tool = nvimdiff
 
 [merge]
     conflictstyle = zdiff3
-    tool = vscode
-
-[mergetool "vscode"]
-    cmd = code --wait $MERGED
+    tool = nvimdiff
 
 [rerere]
     enabled = true
     autoUpdate = true
 
-# ------------------------------------------------------------------------------
 # Rebase
-# ------------------------------------------------------------------------------
 [rebase]
     autoSquash = true
     autoStash = true
     updateRefs = true
 
-# ------------------------------------------------------------------------------
 # Branch
-# ------------------------------------------------------------------------------
 [branch]
     autoSetupMerge = always
     autoSetupRebase = always
     sort = -committerdate
 
-# ------------------------------------------------------------------------------
 # Aliases
-# ------------------------------------------------------------------------------
 [alias]
-    # Short status
     s = status -sb
-    
-    # Commit
     ci = commit
     cm = commit -m
     ca = commit --amend
     can = commit --amend --no-edit
-    
-    # Checkout
     co = checkout
     cob = checkout -b
-    
-    # Branch
     br = branch
     bra = branch -a
     brd = branch -d
     brD = branch -D
-    
-    # Diff
     df = diff
     dfs = diff --staged
-    
-    # Log
     lg = log --oneline --graph --decorate -20
     lga = log --oneline --graph --decorate --all
     last = log -1 HEAD --stat
-    
-    # Stash
     sl = stash list
     sp = stash pop
-    ss = stash save
-    
-    # Reset
     unstage = reset HEAD --
     uncommit = reset --soft HEAD~1
-    
-    # Cleanup
     cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d"
-    
-    # Show contributors
-    contributors = shortlog --summary --numbered
-    
-    # Find commits by message
     find = "!f() { git log --oneline --all --grep=\"$1\"; }; f"
-    
-    # Show aliases
     aliases = config --get-regexp alias
-    
-    # Interactive rebase on last N commits
     reb = "!f() { git rebase -i HEAD~$1; }; f"
-    
-    # Create a fixup commit
     fixup = "!f() { git commit --fixup=$1; }; f"
-    
-    # Push with force-with-lease (safer than --force)
     pushf = push --force-with-lease
-    
-    # Show remote URLs
     remotes = remote -v
-    
-    # WIP commit
     wip = "!git add -A && git commit -m 'WIP'"
     unwip = reset HEAD~1
 
-# ------------------------------------------------------------------------------
 # Color
-# ------------------------------------------------------------------------------
 [color]
     ui = auto
-    diff = auto
-    status = auto
-    branch = auto
 
 [color "branch"]
     current = yellow reverse
@@ -204,44 +124,24 @@
     changed = yellow
     untracked = red
 
-# ------------------------------------------------------------------------------
 # URL Shortcuts
-# ------------------------------------------------------------------------------
 [url "git@github.com:"]
     insteadOf = gh:
     pushInsteadOf = https://github.com/
-    pushInsteadOf = gh:
 
 [url "git@github.com:jamesfdavis/"]
     insteadOf = me:
 
-# ------------------------------------------------------------------------------
-# Delta (better diff viewer) - optional
-# Install: brew install git-delta
-# ------------------------------------------------------------------------------
-[delta]
-    navigate = true
-    light = false
-    line-numbers = true
-    side-by-side = false
-
-[interactive]
-    diffFilter = delta --color-only
-
-# ------------------------------------------------------------------------------
-# GitHub CLI integration
-# ------------------------------------------------------------------------------
+# GitHub CLI credential helper
 [credential "https://github.com"]
-    helper = 
+    helper =
     helper = !/opt/homebrew/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
-    helper = 
+    helper =
     helper = !/opt/homebrew/bin/gh auth git-credential
 
-# ------------------------------------------------------------------------------
-# Performance (for large repos)
-# ------------------------------------------------------------------------------
+# Performance
 [feature]
     manyFiles = true
 
