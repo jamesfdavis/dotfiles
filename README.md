@@ -23,7 +23,7 @@ Five steps run automatically:
 
 | Category | Packages |
 |----------|----------|
-| **Terminal** | Ghostty, Starship, zsh-autosuggestions, zsh-syntax-highlighting, Fira Code Nerd Font |
+| **Terminal** | Ghostty, Starship, zsh-autosuggestions, zsh-syntax-highlighting, zsh-history-substring-search, Fira Code Nerd Font |
 | **Agent** | Claude Code (npm global) |
 | **Platform** | Wrangler (npm global) |
 | **Node.js** | NVM (with .nvmrc auto-switching) |
@@ -50,14 +50,21 @@ dotfiles/
 │   ├── setup-homebrew.sh   # Brew + bundle
 │   └── setup-ssh-signing.sh# SSH keys + Keychain persistence
 │
-├── obsidian/               # Developer workflow docs
+├── obsidian/               # Developer workflow docs (open as Obsidian vault)
 │   ├── 00-stack.md         # Tool stack overview
 │   ├── 01-ghostty-starship.md
 │   ├── 02-claude-code.md
 │   ├── 03-cloudflare.md
 │   ├── 04-docker.md
 │   ├── 05-git-workflow.md
-│   └── 06-python-uv.md
+│   ├── 06-python-uv.md
+│   ├── 07-neovim.md
+│   ├── 08-fzf-ripgrep-fd.md
+│   ├── 09-cli-utilities.md
+│   ├── 10-node-nvm.md
+│   ├── 11-lazygit.md
+│   ├── 12-github-cli.md
+│   └── 13-zsh-shell.md
 │
 ├── docs/
 │   └── KEYS.md             # SSH key docs
@@ -137,7 +144,24 @@ Keys persist in macOS Keychain across reboots (no re-entering passphrases). All 
 
 ## Obsidian docs
 
-The `obsidian/` folder contains developer workflow notes. Open it as a vault in Obsidian or read the markdown directly. Covers the full stack, Claude Code patterns, Cloudflare development, Python/uv, and git workflow.
+The `obsidian/` folder contains developer workflow notes for every tool in the stack. Open it as a vault in Obsidian or read the markdown directly.
+
+| Doc | Covers |
+|-----|--------|
+| [00-stack](obsidian/00-stack.md) | Full stack overview and principles |
+| [01-ghostty-starship](obsidian/01-ghostty-starship.md) | Terminal + prompt config and keybindings |
+| [02-claude-code](obsidian/02-claude-code.md) | Agent workflow, aliases, project setup |
+| [03-cloudflare](obsidian/03-cloudflare.md) | Workers, D1, KV, R2, Wrangler aliases |
+| [04-docker](obsidian/04-docker.md) | Colima, Docker Compose, cleanup |
+| [05-git-workflow](obsidian/05-git-workflow.md) | Aliases, commit signing, branch strategy |
+| [06-python-uv](obsidian/06-python-uv.md) | uv, venvs, Jupyter |
+| [07-neovim](obsidian/07-neovim.md) | Keybindings, motions, telescope, plugins |
+| [08-fzf-ripgrep-fd](obsidian/08-fzf-ripgrep-fd.md) | Fuzzy finding, code search, file finding |
+| [09-cli-utilities](obsidian/09-cli-utilities.md) | bat, eza, zoxide, jq |
+| [10-node-nvm](obsidian/10-node-nvm.md) | NVM lazy loading, .nvmrc, npm aliases |
+| [11-lazygit](obsidian/11-lazygit.md) | TUI for staging, rebasing, conflicts |
+| [12-github-cli](obsidian/12-github-cli.md) | PRs, issues, API, completions |
+| [13-zsh-shell](obsidian/13-zsh-shell.md) | Plugins, history, functions, shell options |
 
 ## Maintenance
 

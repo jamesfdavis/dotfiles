@@ -40,11 +40,13 @@ Everything else is disabled to keep the prompt fast.
 
 ## Why not Oh My Zsh?
 
-Oh My Zsh loads hundreds of completions and aliases on every shell startup. We only need two plugins:
+Oh My Zsh loads hundreds of completions and aliases on every shell startup. We only need four plugins:
 - `zsh-autosuggestions` -- fish-like inline suggestions
 - `zsh-syntax-highlighting` -- colors commands as you type
+- `zsh-history-substring-search` -- type + Up arrow to cycle matching history
+- `sudo` widget -- double-tap Esc to prepend sudo
 
-Both installed via Homebrew and sourced directly in `.zshrc`. Shell startup is instant.
+All installed via Homebrew (or inline in `.zshrc`) and sourced directly. Shell startup is instant. See [[13-zsh-shell]] for full details.
 
 ## Key aliases
 

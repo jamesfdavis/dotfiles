@@ -8,6 +8,7 @@ cask "ghostty"                          # GPU-accelerated terminal
 brew "starship"                         # Cross-shell prompt
 brew "zsh-autosuggestions"              # Fish-like command suggestions
 brew "zsh-syntax-highlighting"          # Real-time syntax coloring
+brew "zsh-history-substring-search"    # Type + Up arrow to search history
 cask "font-fira-code-nerd-font"         # Nerd Font (icons for starship)
 
 # ------------------------------------------------------------------------------
