@@ -1,0 +1,85 @@
+# Starship Prompt Configuration
+# Location: ~/.config/starship.toml
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Prompt character
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+# Directory - show 2 levels deep
+[directory]
+truncation_length = 2
+truncate_to_repo = true
+style = "bold blue"
+
+# Git branch
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "bold purple"
+
+# Git status - minimal indicators
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "bold yellow"
+conflicted = "="
+ahead = "↑"
+behind = "↓"
+diverged = "↕"
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+deleted = "x"
+
+# Node.js - only show in projects with package.json
+[nodejs]
+format = "[$symbol$version]($style) "
+symbol = " "
+style = "bold green"
+detect_files = ["package.json"]
+
+# Docker - only show when context is active
+[docker_context]
+format = "[$symbol$context]($style) "
+symbol = " "
+style = "bold cyan"
+only_with_files = false
+
+# Command duration - only show for slow commands
+[cmd_duration]
+min_time = 3_000
+format = "[$duration]($style) "
+style = "bold yellow"
+
+# Python - only show when venv is active
+[python]
+format = "[$symbol$virtualenv]($style) "
+symbol = " "
+style = "bold yellow"
+detect_extensions = []
+detect_files = []
+detect_folders = []
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[java]
+disabled = true
+
+[package]
+disabled = true

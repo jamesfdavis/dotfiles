@@ -1,0 +1,19 @@
+
+
+# ── Subject ──────────────────────────────── 50 chars ──┤
+#
+# ── Body (optional) ──────────────────────────────────── 72 chars ──┤
+# Explain *what* changed and *why* (not how).
+#
+# ── Type ─────────────────────────────────────────────────────────────
+#   feat:     new feature
+#   fix:      bug fix
+#   refactor: code change (no new feature or fix)
+#   docs:     documentation only
+#   test:     adding or updating tests
+#   chore:    build, CI, dependencies, tooling
+#
+# ── Reminders ────────────────────────────────────────────────────────
+#   - Subject: imperative mood ("Add X" not "Added X"), no period
+#   - Blank line between subject and body
+#   - Reference issues: Closes #123, Fixes #456

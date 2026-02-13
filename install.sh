@@ -1,137 +1,118 @@
 #!/bin/bash
-# ------------------------------------------------------------------------------
-# install.sh - Main dotfiles installation orchestrator
-# 
+# install.sh - Dotfiles installer for agent-first Cloudflare development
+#
 # Usage: ./install.sh
-# 
-# This script runs all setup scripts in order:
+#
+# Steps:
 # 1. Homebrew + packages (Brewfile)
-# 2. Oh My Zsh + plugins
-# 3. Symlink dotfiles
-# 4. SSH signing key setup
-# 5. VS Code configuration
-# 6. macOS defaults (optional)
-# ------------------------------------------------------------------------------
+# 2. Symlink dotfiles + config files
+# 3. SSH signing key setup + Keychain persistence
+# 4. Node.js LTS via NVM
+# 5. npm globals (claude-code, wrangler)
 
-set -e  # Exit on error
+set -e
 
-# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Get the directory where this script lives
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo ""
-echo -e "${BLUE}╔══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║           🚀 Dotfiles Installation - 2026 Refresh            ║${NC}"
-echo -e "${BLUE}╚══════════════════════════════════════════════════════════════╝${NC}"
-echo ""
-echo -e "Dotfiles location: ${GREEN}$DOTFILES_DIR${NC}"
+echo -e "${BLUE}  Dotfiles - Agent-first Cloudflare Development${NC}"
+echo -e "  Location: ${GREEN}$DOTFILES_DIR${NC}"
 echo ""
 
-# ------------------------------------------------------------------------------
-# Pre-flight checks
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Running pre-flight checks...${NC}"
+# Pre-flight
+echo -e "${YELLOW}  Pre-flight checks...${NC}"
 
-# Check for Xcode Command Line Tools
 if ! xcode-select -p &>/dev/null; then
     echo -e "${YELLOW}  Installing Xcode Command Line Tools...${NC}"
     xcode-select --install
-    echo -e "${YELLOW}  Please wait for installation to complete, then re-run this script.${NC}"
+    echo -e "${YELLOW}  Wait for install to complete, then re-run this script.${NC}"
     exit 1
 fi
-echo -e "${GREEN}  ✓ Xcode Command Line Tools installed${NC}"
+echo -e "${GREEN}  Xcode CLT installed${NC}"
 
-# Check if running on macOS
 if [[ "$OSTYPE" != "darwin"* ]]; then
-    echo -e "${RED}  ✗ This script is designed for macOS${NC}"
+    echo -e "${RED}  This script is designed for macOS${NC}"
     exit 1
 fi
-echo -e "${GREEN}  ✓ Running on macOS${NC}"
-
+echo -e "${GREEN}  Running on macOS${NC}"
 echo ""
 
-# ------------------------------------------------------------------------------
 # Step 1: Homebrew
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Step 1/6: Setting up Homebrew...${NC}"
+echo -e "${YELLOW}  Step 1/5: Homebrew...${NC}"
 "$DOTFILES_DIR/scripts/setup-homebrew.sh"
 echo ""
 
-# ------------------------------------------------------------------------------
-# Step 2: Oh My Zsh
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Step 2/6: Setting up Oh My Zsh...${NC}"
-"$DOTFILES_DIR/scripts/setup-oh-my-zsh.sh"
-echo ""
-
-# ------------------------------------------------------------------------------
-# Step 3: Symlink dotfiles
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Step 3/6: Symlinking dotfiles...${NC}"
+# Step 2: Symlink dotfiles + config
+echo -e "${YELLOW}  Step 2/5: Symlinking dotfiles...${NC}"
 "$DOTFILES_DIR/bootstrap.sh"
 echo ""
 
-# ------------------------------------------------------------------------------
-# Step 4: SSH Signing Key
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Step 4/6: Setting up SSH commit signing...${NC}"
+# Step 3: SSH Signing Key
+echo -e "${YELLOW}  Step 3/5: SSH commit signing + Keychain persistence...${NC}"
 "$DOTFILES_DIR/scripts/setup-ssh-signing.sh"
 echo ""
 
-# ------------------------------------------------------------------------------
-# Step 5: VS Code
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Step 5/6: Setting up VS Code...${NC}"
-"$DOTFILES_DIR/scripts/setup-vscode.sh"
-echo ""
+# Step 4: Node.js + npm globals
+echo -e "${YELLOW}  Step 4/5: Installing Node.js LTS via NVM...${NC}"
 
-# ------------------------------------------------------------------------------
-# Step 6: macOS Defaults (optional)
-# ------------------------------------------------------------------------------
-echo -e "${YELLOW}▶ Step 6/6: macOS Defaults${NC}"
-echo ""
-read -p "  Apply sensible macOS defaults? (y/n) " -n 1
-echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    "$DOTFILES_DIR/.macos"
-    echo -e "${GREEN}  ✓ macOS defaults applied${NC}"
+# Determine HOMEBREW_PREFIX for NVM
+if [[ $(uname -m) == "arm64" ]]; then
+    _HP="/opt/homebrew"
 else
-    echo -e "${BLUE}  ⊘ Skipped macOS defaults${NC}"
+    _HP="/usr/local"
 fi
 
+export NVM_DIR="$HOME/.nvm"
+mkdir -p "$NVM_DIR"
+if [ -s "$_HP/opt/nvm/nvm.sh" ]; then
+    \. "$_HP/opt/nvm/nvm.sh"
+    nvm install --lts 2>/dev/null && \
+        echo -e "${GREEN}  Node.js LTS installed$(node -v 2>/dev/null && echo " ($(node -v))")${NC}" || \
+        echo -e "${YELLOW}  NVM install failed (can retry: nvm install --lts)${NC}"
+else
+    echo -e "${YELLOW}  NVM not found -- run 'nvm install --lts' after restart${NC}"
+fi
+
+# Step 5: npm globals
+echo -e "${YELLOW}  Step 5/5: Installing npm globals...${NC}"
+if command -v npm &>/dev/null; then
+    npm install -g @anthropic-ai/claude-code 2>/dev/null && \
+        echo -e "${GREEN}  Installed claude-code${NC}" || \
+        echo -e "${YELLOW}  claude-code install failed (can retry later)${NC}"
+
+    npm install -g wrangler 2>/dev/null && \
+        echo -e "${GREEN}  Installed wrangler${NC}" || \
+        echo -e "${YELLOW}  wrangler install failed (can retry later)${NC}"
+else
+    echo -e "${RED}  npm not found - restart terminal and run: nvm install --lts${NC}"
+fi
 echo ""
 
-# ------------------------------------------------------------------------------
-# Complete
-# ------------------------------------------------------------------------------
-echo -e "${GREEN}╔══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║                    ✅ Installation Complete!                  ║${NC}"
-echo -e "${GREEN}╚══════════════════════════════════════════════════════════════╝${NC}"
+# Done
+echo -e "${GREEN}  Installation complete.${NC}"
 echo ""
-echo -e "${YELLOW}Next steps:${NC}"
+echo -e "${YELLOW}  Next steps:${NC}"
 echo ""
-echo "  1. Restart your terminal (or run: source ~/.zshrc)"
+echo "  1. Restart your terminal (or: source ~/.zshrc)"
 echo ""
-echo "  2. Install Node.js LTS:"
-echo "     nvm install --lts"
+echo "  2. If Node install was skipped: nvm install --lts"
 echo ""
-echo "  3. Register SSH keys on GitHub:"
-echo "     - Auth key:    ~/.ssh/id_ed25519.pub → 'Authentication Key'"
-echo "     - Signing key: ~/.ssh/id_ed25519_signing.pub → 'Signing Key'"
-echo "     See: docs/KEYS.md for detailed instructions"
+echo "  3. Register SSH keys on GitHub (https://github.com/settings/keys):"
+echo "     Auth key:    cat ~/.ssh/id_ed25519.pub"
+echo "     Signing key: cat ~/.ssh/id_ed25519_signing.pub"
 echo ""
-echo "  4. Set up ~/.extra with your personal credentials:"
-echo "     cp ~/.extra.example ~/.extra"
-echo "     # Edit with your details"
+echo "  4. Set up secrets:"
+echo "     cp ~/.extra.example ~/.extra && nvim ~/.extra"
 echo ""
-echo "  5. Disable VS Code Settings Sync (we manage via dotfiles now):"
-echo "     VS Code → Settings → Search 'sync' → Turn off Settings Sync"
+echo "  5. Start Colima for Docker:"
+echo "     colima start"
 echo ""
-echo -e "${BLUE}Happy coding! 🎉${NC}"
+echo "  6. Authenticate GitHub CLI:"
+echo "     gh auth login"
 echo ""

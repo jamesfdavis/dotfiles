@@ -1,0 +1,20 @@
+# .ripgreprc - ripgrep configuration
+# Pointed to by RIPGREP_CONFIG_PATH in .exports
+
+# Search hidden files but respect .gitignore
+--hidden
+--follow
+--glob=!.git/
+
+# Smart case (case insensitive unless uppercase used)
+--smart-case
+
+# Line numbers
+--line-number
+
+# Sort by path for consistent output
+--sort=path
+
+# Truncate long lines
+--max-columns=200
+--max-columns-preview

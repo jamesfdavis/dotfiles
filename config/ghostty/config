@@ -1,0 +1,80 @@
+# Ghostty Configuration
+# Location: ~/.config/ghostty/config
+
+# Font
+font-family = FiraCode Nerd Font
+font-size = 14
+font-thicken = true
+
+# Window
+window-padding-x = 8
+window-padding-y = 4
+window-decoration = true
+macos-titlebar-style = hidden
+confirm-close-surface = false
+
+# Theme - Catppuccin Mocha
+background = #1e1e2e
+foreground = #cdd6f4
+
+palette = 0=#45475a
+palette = 1=#f38ba8
+palette = 2=#a6e3a1
+palette = 3=#f9e2af
+palette = 4=#89b4fa
+palette = 5=#f5c2e7
+palette = 6=#94e2d5
+palette = 7=#bac2de
+palette = 8=#585b70
+palette = 9=#f38ba8
+palette = 10=#a6e3a1
+palette = 11=#f9e2af
+palette = 12=#89b4fa
+palette = 13=#f5c2e7
+palette = 14=#94e2d5
+palette = 15=#a6adc8
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+
+# Scrollback
+scrollback-limit = 50000
+
+# Clipboard
+copy-on-select = clipboard
+clipboard-paste-protection = false
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Shell
+shell-integration = zsh
+
+# ── Keybindings ──────────────────────────────────────────────────────
+
+# Navigate splits with Cmd+Alt+Arrows
+keybind = super+alt+left=goto_split:left
+keybind = super+alt+right=goto_split:right
+keybind = super+alt+up=goto_split:up
+keybind = super+alt+down=goto_split:down
+
+# Resize splits with Cmd+Ctrl+Arrows
+keybind = super+ctrl+left=resize_split:left,40
+keybind = super+ctrl+right=resize_split:right,40
+keybind = super+ctrl+up=resize_split:up,20
+keybind = super+ctrl+down=resize_split:down,20
+
+# Zoom current split / equalize
+keybind = super+shift+enter=toggle_split_zoom
+keybind = super+shift+e=equalize_splits
+
+# Jump to tab by number
+keybind = super+one=goto_tab:1
+keybind = super+two=goto_tab:2
+keybind = super+three=goto_tab:3
+keybind = super+four=goto_tab:4
+keybind = super+five=goto_tab:5
+
+# Reload config
+keybind = super+shift+comma=reload_config

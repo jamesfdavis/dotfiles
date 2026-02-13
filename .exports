@@ -1,89 +1,43 @@
-# ------------------------------------------------------------------------------
 # .exports - Environment Variables
-#
-# Note: Sensitive values (API keys, tokens) should go in ~/.extra (not committed)
-# ------------------------------------------------------------------------------
+# Sensitive values (API keys, tokens) go in ~/.extra (not committed)
 
-# ------------------------------------------------------------------------------
 # Editor
-# ------------------------------------------------------------------------------
-export EDITOR="code --wait"
+export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
 
-# ------------------------------------------------------------------------------
-# Language & Locale
-# ------------------------------------------------------------------------------
+# Locale
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-# ------------------------------------------------------------------------------
-# History
-# ------------------------------------------------------------------------------
+# History (values also set in .zshrc for zsh; kept here for bash compat)
 export HISTSIZE=50000
 export SAVEHIST=50000
-export HISTCONTROL="ignoreboth:erasedups"
 
-# ------------------------------------------------------------------------------
 # Pager
-# ------------------------------------------------------------------------------
 export PAGER="less"
-export LESS="-R -F -X"  # Raw colors, quit if fits, no init
+export LESS="-R -F -X"
 
-# Use bat as man pager if available
+# Use bat as man pager
 if command -v bat &>/dev/null; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
-# ------------------------------------------------------------------------------
 # Homebrew
-# ------------------------------------------------------------------------------
 export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_AUTO_UPDATE=1  # Manual updates only
+export HOMEBREW_NO_AUTO_UPDATE=1
 
-# ------------------------------------------------------------------------------
-# Node.js / NVM
-# ------------------------------------------------------------------------------
+# NVM
 export NVM_DIR="$HOME/.nvm"
-# NVM is lazy-loaded in .zshrc for faster shell startup
 
-# ------------------------------------------------------------------------------
 # Python
-# ------------------------------------------------------------------------------
-# Prevent Python from writing .pyc files
 export PYTHONDONTWRITEBYTECODE=1
-
-# UV (Python package manager)
 export UV_CACHE_DIR="$HOME/.cache/uv"
 
-# ------------------------------------------------------------------------------
-# Development
-# ------------------------------------------------------------------------------
-# Make development servers visible on local network
-export HOST="0.0.0.0"
-
-# Default Node.js server port
-export PORT=3000
-
-# ------------------------------------------------------------------------------
 # Cloudflare
-# ------------------------------------------------------------------------------
-# Wrangler settings
 export WRANGLER_SEND_METRICS=false
 
-# API tokens should be in ~/.extra:
-# export CLOUDFLARE_API_TOKEN="your-token"
-# export CLOUDFLARE_ACCOUNT_ID="your-account-id"
-
-# ------------------------------------------------------------------------------
-# Claude
-# ------------------------------------------------------------------------------
-# API key should be in ~/.extra:
-# export ANTHROPIC_API_KEY="your-key"
-
-# ------------------------------------------------------------------------------
-# FZF (Fuzzy Finder)
-# ------------------------------------------------------------------------------
+# FZF
 export FZF_DEFAULT_OPTS="
   --height 40%
   --layout=reverse
@@ -95,17 +49,5 @@ export FZF_DEFAULT_OPTS="
   --color=marker:#e5c07b,spinner:#61afef,header:#61afef
 "
 
-# ------------------------------------------------------------------------------
 # Ripgrep
-# ------------------------------------------------------------------------------
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
-
-# ------------------------------------------------------------------------------
-# GPG (if using GPG instead of SSH for signing)
-# ------------------------------------------------------------------------------
-# export GPG_TTY=$(tty)
-
-# ------------------------------------------------------------------------------
-# Work-specific (loaded from ~/.extra if WORK_HOST is set)
-# ------------------------------------------------------------------------------
-# See ~/.extra for WORK_HOST configuration

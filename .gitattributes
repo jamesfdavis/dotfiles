@@ -1,3 +1,32 @@
-# Automatically normalize line endings for all text-based files
-#* text=auto
-# Disabled because of https://github.com/mathiasbynens/dotfiles/issues/149 :(
+# Auto detect text files and normalize line endings
+* text=auto
+
+# Explicitly declare text files
+*.md text diff=markdown
+*.txt text
+*.js text
+*.ts text
+*.json text
+*.toml text
+*.yaml text
+*.yml text
+*.css text
+*.html text
+
+# Shell scripts must use LF
+*.sh text eol=lf
+*.zsh text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.pdf binary
+*.sqlite binary
+*.sqlite3 binary

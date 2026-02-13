@@ -73,7 +73,31 @@ git config --global tag.gpgsign true
 echo -e "${GREEN}  ✓ Git configured to sign all commits and tags${NC}"
 
 # ------------------------------------------------------------------------------
-# Step 4: Add to SSH agent
+# Step 4: SSH config for Keychain persistence
+# ------------------------------------------------------------------------------
+SSH_CONFIG="$HOME/.ssh/config"
+echo ""
+echo "  Configuring SSH agent persistence..."
+
+if [ ! -f "$SSH_CONFIG" ] || ! grep -q "UseKeychain" "$SSH_CONFIG" 2>/dev/null; then
+    mkdir -p "$HOME/.ssh"
+    cat >> "$SSH_CONFIG" <<'SSHEOF'
+
+# ── Auto-added by dotfiles/setup-ssh-signing.sh ─────────────────────
+Host *
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/id_ed25519_signing
+SSHEOF
+    chmod 600 "$SSH_CONFIG"
+    echo -e "${GREEN}  ✓ SSH config: keys persist in macOS Keychain across reboots${NC}"
+else
+    echo -e "${GREEN}  ✓ SSH config already has Keychain persistence${NC}"
+fi
+
+# ------------------------------------------------------------------------------
+# Step 5: Add to SSH agent
 # ------------------------------------------------------------------------------
 echo ""
 echo "  Adding keys to SSH agent..."
