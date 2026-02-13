@@ -10,10 +10,9 @@ export GIT_EDITOR="$EDITOR"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-# History
+# History (values also set in .zshrc for zsh; kept here for bash compat)
 export HISTSIZE=50000
 export SAVEHIST=50000
-export HISTCONTROL="ignoreboth:erasedups"
 
 # Pager
 export PAGER="less"

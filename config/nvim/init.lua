@@ -1,7 +1,8 @@
--- Neovim configuration for quick edits
--- Claude Code is the primary development tool; this is for fast file tweaks.
+-- Neovim configuration - fast edits + git commit authoring
+-- Claude Code is the primary development tool; this adds comfort for direct use.
 
--- Basics
+-- ── Options ─────────────────────────────────────────────────────────
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"
@@ -46,7 +47,8 @@ end
 -- Leader key
 vim.g.mapleader = " "
 
--- Keymaps
+-- ── Keymaps ─────────────────────────────────────────────────────────
+
 local map = vim.keymap.set
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
@@ -74,7 +76,24 @@ map("n", "<leader>ss", function()
   vim.api.nvim_win_set_cursor(0, pos)
 end, { desc = "Strip whitespace" })
 
--- File type settings
+-- ── Git commit authoring ────────────────────────────────────────────
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.textwidth = 72
+    vim.opt_local.spell = true
+    vim.opt_local.colorcolumn = "50,72"
+    -- Start in insert mode on first line if empty
+    if vim.fn.line("$") == 1 or vim.fn.getline(1) == "" then
+      vim.cmd("startinsert")
+    end
+  end,
+})
+
+-- ── File type settings ──────────────────────────────────────────────
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "javascript", "typescript", "json", "yaml", "toml", "lua" },
   callback = function()
@@ -82,3 +101,66 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.shiftwidth = 2
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+  end,
+})
+
+-- ── Bootstrap lazy.nvim ─────────────────────────────────────────────
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git", "clone", "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- ── Plugins ─────────────────────────────────────────────────────────
+
+require("lazy").setup({
+  -- Theme (match Ghostty)
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("catppuccin-mocha")
+    end,
+  },
+
+  -- Fuzzy finder
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>f", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+      { "<leader>g", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
+      { "<leader>b", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Search buffer" },
+    },
+  },
+
+  -- Syntax highlighting
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        ensure_installed = {
+          "javascript", "typescript", "json", "yaml", "toml",
+          "lua", "python", "markdown", "bash", "html", "css",
+        },
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end,
+  },
+}, { ui = { border = "rounded" } })

@@ -38,6 +38,7 @@ declare -a DOTFILES=(
     ".gitattributes"
     ".gitconfig"
     ".gitignore"
+    ".gitmessage"
     ".hushlogin"
     ".inputrc"
     ".zshrc"

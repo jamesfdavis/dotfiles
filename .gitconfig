@@ -15,15 +15,16 @@
 [gpg "ssh"]
     defaultKeyCommand = ssh-add -L
 
-[commit]
-    gpgsign = true
-
 [tag]
     gpgsign = true
 
 # Core
 [init]
     defaultBranch = main
+
+[commit]
+    gpgsign = true
+    template = ~/.gitmessage
 
 [core]
     editor = nvim
@@ -132,14 +133,14 @@
 [url "git@github.com:jamesfdavis/"]
     insteadOf = me:
 
-# GitHub CLI credential helper
+# GitHub CLI credential helper (uses PATH, works on both Apple Silicon and Intel)
 [credential "https://github.com"]
     helper =
-    helper = !/opt/homebrew/bin/gh auth git-credential
+    helper = !/usr/bin/env gh auth git-credential
 
 [credential "https://gist.github.com"]
     helper =
-    helper = !/opt/homebrew/bin/gh auth git-credential
+    helper = !/usr/bin/env gh auth git-credential
 
 # Performance
 [feature]

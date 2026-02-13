@@ -60,14 +60,15 @@ npx() {
 # Auto-switch Node version when entering a directory with .nvmrc
 _nvm_auto_use() {
     if [ -f ".nvmrc" ]; then
-        # Ensure NVM is loaded
-        if ! command -v nvm &>/dev/null || [ "$(type -w nvm)" = "nvm: function" ] && [ -z "$NVM_BIN" ]; then
+        # If NVM_BIN is empty, NVM hasn't been fully loaded yet
+        if [ -z "$NVM_BIN" ]; then
             unset -f nvm node npm npx 2>/dev/null
             [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
         fi
         local nvmrc_node_version=$(cat .nvmrc)
         local current_node_version=$(node -v 2>/dev/null)
-        if [ "$current_node_version" != "$nvmrc_node_version" ] && [ "$current_node_version" != "v${nvmrc_node_version}" ]; then
+        if [ "$current_node_version" != "$nvmrc_node_version" ] && \
+           [ "$current_node_version" != "v${nvmrc_node_version}" ]; then
             nvm use 2>/dev/null || nvm install
         fi
     fi
@@ -80,10 +81,15 @@ _nvm_auto_use
 # ------------------------------------------------------------------------------
 # FZF
 # ------------------------------------------------------------------------------
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh 2>/dev/null)" || [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+# ------------------------------------------------------------------------------
+# Zoxide (smart cd)
+# ------------------------------------------------------------------------------
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # ------------------------------------------------------------------------------
 # Load custom config
@@ -94,14 +100,18 @@ export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 [ -f ~/.extra ] && source ~/.extra        # Personal secrets, not committed
 
 # ------------------------------------------------------------------------------
-# Completions
+# Completions (cached - regenerates once per day)
 # ------------------------------------------------------------------------------
 if type brew &>/dev/null; then
     FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 fi
 
 autoload -Uz compinit
-compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 command -v gh &>/dev/null && eval "$(gh completion -s zsh)"
 command -v wrangler &>/dev/null && eval "$(wrangler completions zsh 2>/dev/null)" || true

@@ -6,8 +6,9 @@
 # Steps:
 # 1. Homebrew + packages (Brewfile)
 # 2. Symlink dotfiles + config files
-# 3. SSH signing key setup
-# 4. npm globals (claude-code, wrangler)
+# 3. SSH signing key setup + Keychain persistence
+# 4. Node.js LTS via NVM
+# 5. npm globals (claude-code, wrangler)
 
 set -e
 
@@ -43,17 +44,17 @@ echo -e "${GREEN}  Running on macOS${NC}"
 echo ""
 
 # Step 1: Homebrew
-echo -e "${YELLOW}  Step 1/4: Homebrew...${NC}"
+echo -e "${YELLOW}  Step 1/5: Homebrew...${NC}"
 "$DOTFILES_DIR/scripts/setup-homebrew.sh"
 echo ""
 
 # Step 2: Symlink dotfiles + config
-echo -e "${YELLOW}  Step 2/4: Symlinking dotfiles...${NC}"
+echo -e "${YELLOW}  Step 2/5: Symlinking dotfiles...${NC}"
 "$DOTFILES_DIR/bootstrap.sh"
 echo ""
 
 # Step 3: SSH Signing Key
-echo -e "${YELLOW}  Step 3/4: SSH commit signing...${NC}"
+echo -e "${YELLOW}  Step 3/5: SSH commit signing + Keychain persistence...${NC}"
 "$DOTFILES_DIR/scripts/setup-ssh-signing.sh"
 echo ""
 

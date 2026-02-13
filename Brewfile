@@ -44,6 +44,7 @@ brew "fzf"                              # Fuzzy finder
 brew "jq"                               # JSON processing
 brew "bat"                              # Syntax-highlighted cat
 brew "eza"                              # Modern ls
+brew "zoxide"                           # Smart directory jumping (z)
 
 # ------------------------------------------------------------------------------
 # Editors
