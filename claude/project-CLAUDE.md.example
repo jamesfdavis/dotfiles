@@ -1,0 +1,43 @@
+# Project Name
+
+Brief description of what this project does and why it exists.
+
+## Packages / Structure
+
+| Path | Purpose |
+|------|---------|
+| `src/` | Main application source |
+| `tests/` | Test suite |
+
+## Quick Start
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run dev server
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Type check
+pnpm check
+```
+
+## Architecture
+
+<!-- Use Mermaid for any architecture diagrams -->
+<!-- Point to files, don't paste code: see src/index.ts:15 -->
+
+## Testing
+
+Describe the testing strategy: what framework, how to run individual tests, any fixtures or mocks.
+
+## Deployment
+
+How changes get deployed (e.g., auto-deploy on push to main via Cloudflare Pages).
+
+## Conventions
+
+Any project-specific conventions not covered by linters (e.g., naming patterns, file organization).

@@ -79,6 +79,21 @@ if [ -f "$DOTFILES_DIR/.ripgreprc" ]; then
     create_symlink "$DOTFILES_DIR/.ripgreprc" "$HOME/.ripgreprc"
 fi
 
+# Claude Code config (~/.claude/)
+echo ""
+echo "  Symlinking Claude Code config..."
+echo ""
+
+mkdir -p "$HOME/.claude"
+
+if [ -f "$DOTFILES_DIR/claude/CLAUDE.md" ]; then
+    create_symlink "$DOTFILES_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+fi
+
+if [ -d "$DOTFILES_DIR/claude/commands" ]; then
+    create_symlink "$DOTFILES_DIR/claude/commands" "$HOME/.claude/commands"
+fi
+
 echo ""
 echo -e "  ${GREEN}Dotfiles symlinked.${NC}"
 echo ""
