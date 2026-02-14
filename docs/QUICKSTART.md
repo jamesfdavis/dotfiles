@@ -39,14 +39,17 @@ This runs five automated steps: Homebrew packages, config symlinks, SSH key gene
 
 Agent writes code, you steer. Everything runs in the terminal.
 
-Features follow: **Plan → Milestones → Issues → TDD → Implementation**
+Features follow: **Scaffold → Plan → Issues → Build → Verify**
 
 In Claude Code, use the slash commands:
 
-- `/plan` — research codebase, draft design, get approval
-- `/milestone` — break the plan into milestones with acceptance criteria
-- `/issues` — create GitHub issues from milestones via `gh` CLI
-- `/tdd` — write failing tests first, then implement
+- `/scaffold` — generate a new SvelteKit PWA + Cloudflare project
+- `/plan` — research codebase, draft stack-aware design, get approval
+- `/issues` — break plan into sized GitHub issues with dependency links
+- `/build` — layered TDD: unit → component → E2E, then commit
+- `/verify` — browser-based UI verification via `claude --chrome`
+
+Skip steps when appropriate: existing project? skip `/scaffold`. Small fix? skip to `/build`. No UI? skip `/verify`.
 
 ## Day-one commands
 

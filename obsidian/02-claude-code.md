@@ -18,33 +18,64 @@ Claude Code reads config from `~/.claude/`, which is symlinked from the dotfiles
 
 ```
 ~/.claude/
-├── CLAUDE.md              # Global preferences (Mermaid, workflow, stack context)
+├── CLAUDE.md              # Global preferences (stack, workflow, conventions)
 └── commands/              # Slash commands available in every session
-    ├── plan.md            # /plan — Research & design doc
-    ├── milestone.md       # /milestone — Break plan into phases
-    ├── issues.md          # /issues — Create GitHub issues
-    └── tdd.md             # /tdd — Test-driven development
+    ├── scaffold.md        # /scaffold — Generate SvelteKit PWA + Cloudflare project
+    ├── plan.md            # /plan — Stack-aware research & design doc
+    ├── issues.md          # /issues — Break plan into sized GitHub issues
+    ├── build.md           # /build — Layered TDD: unit → component → E2E
+    └── verify.md          # /verify — Browser-based UI verification
 ```
 
-The global `CLAUDE.md` is intentionally lean (~35 lines). Per [context engineering best practices](https://www.humanlayer.dev/blog/writing-a-good-claude-md), fewer instructions means better instruction-following. Workflow details live in slash commands that only enter context when invoked.
+The global `CLAUDE.md` is intentionally lean. Per [context engineering best practices](https://www.humanlayer.dev/blog/writing-a-good-claude-md), fewer instructions means better instruction-following. Workflow details live in slash commands that only enter context when invoked.
 
 ## Developer Workflow
 
 ```mermaid
 graph LR
-    A[/plan] --> B[/milestone]
+    A[/scaffold] --> B[/plan]
     B --> C[/issues]
-    C --> D[/tdd]
-    D --> E[Commit & PR]
+    C --> D[/build]
+    D --> E[/verify]
+    E --> F[Commit & PR]
+
+    B -.->|small task| D
+    D -.->|no UI| F
 ```
 
-1. **Plan** — Research the codebase, draft a design doc, get approval
-2. **Milestone** — Break the approved plan into testable increments
-3. **Issues** — Create GitHub issues from milestones using `gh` CLI
-4. **TDD** — Write failing tests, implement until green, refactor
-5. **Commit** — Conventional commits, PR via `gh pr create`
+1. **Scaffold** — Generate a new SvelteKit PWA + Cloudflare project (skip for existing projects)
+2. **Plan** — Research the codebase, evaluate Svelte 5 / Workers / PWA constraints, draft design doc
+3. **Issues** — Break the plan into sized, ordered GitHub issues with dependency links
+4. **Build** — Layered TDD: unit tests (vitest) → component tests (testing-library) → E2E (playwright/browser)
+5. **Verify** — Open in Chrome (`claude --chrome`), visually verify, check console, test interactions
+6. **Commit** — Conventional commits, PR via `gh pr create`
 
-For small tasks, skip straight to `/tdd`. The workflow is composable, not rigid.
+For small tasks, skip straight to `/build`. For non-UI changes, skip `/verify`. The workflow is composable, not rigid.
+
+## Browser Feedback Loop
+
+Enable Chrome access for visual UI verification:
+
+```bash
+claude --chrome          # Launch with Chrome integration
+# Or inside a session: /chrome → "Enabled by default"
+```
+
+This lets Claude see the actual rendered UI, check console errors, test interactions, and verify responsive behavior autonomously. Add this to your project CLAUDE.md:
+
+```markdown
+After making any frontend changes, visually verify in Chrome before reporting completion.
+```
+
+## Testing Layers
+
+| Layer | Tool | What it tests |
+|-------|------|---------------|
+| Unit | vitest | Stores, utils, API handlers |
+| Component | testing-library/svelte | Render, interaction, reactive state |
+| E2E | playwright or Chrome | User flows, navigation, offline |
+
+The `/build` command drives all three layers in sequence.
 
 ## Project Setup
 
@@ -54,7 +85,7 @@ Each project gets its own `CLAUDE.md` at the root. Use the template:
 cp ~/.dotfiles/claude/project-CLAUDE.md.example ./CLAUDE.md
 ```
 
-A good project CLAUDE.md covers the **WHAT** (structure, stack), **WHY** (purpose), and **HOW** (build, test, deploy). Keep it under 60 lines. Use progressive disclosure — point to docs instead of inlining content.
+A good project CLAUDE.md covers the **WHAT** (structure, stack), **WHY** (purpose), and **HOW** (build, test, deploy). Keep it under 80 lines. Use progressive disclosure — point to docs instead of inlining content.
 
 ## PKM Integration
 

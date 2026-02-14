@@ -2,42 +2,78 @@
 
 Brief description of what this project does and why it exists.
 
-## Packages / Structure
+## Structure
 
 | Path | Purpose |
 |------|---------|
-| `src/` | Main application source |
-| `tests/` | Test suite |
+| `src/lib/components/` | Reusable Svelte components |
+| `src/lib/server/` | Server-only code (Workers runtime) |
+| `src/lib/stores/` | Svelte 5 runes-based state |
+| `src/lib/utils/` | Pure functions, shared types |
+| `src/routes/` | SvelteKit pages and API routes |
+| `tests/unit/` | Vitest unit tests |
+| `tests/component/` | Testing-library component tests |
+| `tests/e2e/` | Playwright E2E tests |
 
 ## Quick Start
 
 ```bash
-# Install dependencies
-pnpm install
+pnpm install         # Install dependencies
+pnpm dev             # Dev server (localhost:5173)
+pnpm test            # Unit + component tests (vitest)
+pnpm test:e2e        # E2E tests (playwright)
+pnpm check           # TypeScript / Svelte type check
+pnpm build           # Production build
+```
 
-# Run dev server
-pnpm dev
+## Cloudflare Bindings
 
-# Run tests
-pnpm test
+| Binding | Type | Purpose |
+|---------|------|---------|
+| `DB` | D1 | Primary database |
+| <!-- Add KV, R2, etc. as needed --> | | |
 
-# Type check
-pnpm check
+Access in server routes via `platform.env`:
+```typescript
+// src/routes/api/example/+server.ts
+export async function GET({ platform }) {
+  const db = platform.env.DB;
+}
 ```
 
 ## Architecture
 
 <!-- Use Mermaid for any architecture diagrams -->
-<!-- Point to files, don't paste code: see src/index.ts:15 -->
+<!-- Point to files, don't paste code: see src/lib/server/db.ts:15 -->
+
+## PWA
+
+- Manifest: `static/manifest.json`
+- Service worker: managed by `@vite-pwa/sveltekit`
+- Offline strategy: <!-- describe caching strategy -->
+- Update prompt: <!-- describe how users are notified of updates -->
 
 ## Testing
 
-Describe the testing strategy: what framework, how to run individual tests, any fixtures or mocks.
+- **Unit** (vitest): Stores, utils, API handlers in `tests/unit/`
+- **Component** (testing-library): Render + interaction in `tests/component/`
+- **E2E** (playwright): Full user flows in `tests/e2e/`
+
+Run individual test files: `pnpm vitest tests/unit/cart.test.ts`
 
 ## Deployment
 
-How changes get deployed (e.g., auto-deploy on push to main via Cloudflare Pages).
+Auto-deploy on push to `main` via Cloudflare Pages.
+Preview deploys on pull requests.
+
+```bash
+wrangler d1 migrations apply DB    # Run D1 migrations
+wrangler pages deploy              # Manual deploy (if needed)
+```
 
 ## Conventions
 
-Any project-specific conventions not covered by linters (e.g., naming patterns, file organization).
+- Svelte 5 runes only (`$state`, `$derived`, `$effect`) — no legacy `$:` syntax
+- Server code in `src/lib/server/` — enforces the Workers boundary
+- Conventional commits: `<type>(<scope>): <description>`
+- Test before commit
