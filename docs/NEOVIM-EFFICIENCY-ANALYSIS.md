@@ -184,7 +184,7 @@ to lualine).
 
 ---
 
-### 7. Session & Project Management — 2.0 / 5
+### 7. Session & Project Management — N/A (intentionally omitted)
 
 | Feature | Present |
 |---------|---------|
@@ -194,71 +194,72 @@ to lualine).
 | Auto-session | No |
 | File bookmarks (Harpoon) | No |
 
-**Assessment:** This is the weakest area. There is no session persistence,
-project switching, or file bookmarking. Every Neovim restart starts fresh.
-Given the repo comment that "Claude Code is the primary development tool,"
-this may be a deliberate choice — sessions matter less if the editor is used
-for quick targeted edits rather than long-lived sessions.
+**Assessment:** Intentionally omitted. The config header states Claude Code is
+the primary development tool — Neovim is used for targeted edits, not
+long-lived IDE sessions. Session persistence, project switching, and file
+bookmarking add complexity without value in this workflow. Telescope's recent
+files (`<leader>s.`) and buffer picker (`<leader><leader>`) cover the
+navigation that session plugins would otherwise provide.
 
 ---
 
-### 8. Terminal & External Tool Integration — 2.5 / 5
+### 8. Terminal & External Tool Integration — N/A (delegated to Ghostty)
 
 | Feature | Detail |
 |---------|--------|
 | Terminal exit | `<Esc><Esc>` exits terminal mode |
-| Dedicated terminal plugin | None |
-| Task runner | None |
+| Dedicated terminal plugin | None — Ghostty handles splits/tabs |
+| Task runner | None — Claude Code and shell |
 | REPL integration | None |
-| Test runner | None |
+| Test runner | None — run from terminal or Claude Code |
 
-**Assessment:** Basic terminal mode support only. No toggleterm, no
-project-specific task runner, no test integration (neotest). The Ghostty
-terminal config with split navigation suggests terminal multiplexing happens
-at the terminal emulator level rather than inside Neovim, which is a valid
-approach.
+**Assessment:** Terminal multiplexing is handled at the Ghostty level (split
+navigation, tab switching, zoom). This avoids duplicating window management
+inside Neovim. Claude Code handles test running and task execution. The only
+Neovim-side terminal feature is `<Esc><Esc>` to exit terminal mode, which is
+sufficient for occasional `:terminal` use.
 
 ---
 
 ## Composite Efficiency Rating
 
+Session management and terminal integration are excluded from the composite
+score — they are intentionally delegated to Ghostty and Claude Code rather
+than absent due to oversight. Scoring a config against features it
+deliberately chose not to include produces a misleading number.
+
 | Category | Weight | Score | Weighted |
 |----------|--------|-------|----------|
-| Navigation & File Switching | 20% | 4.5 | 0.90 |
-| LSP Intelligence | 20% | 4.0 | 0.80 |
+| Navigation & File Switching | 25% | 4.5 | 1.13 |
+| LSP Intelligence | 25% | 4.0 | 1.00 |
 | Autocompletion & Snippets | 15% | 4.0 | 0.60 |
 | Editing Primitives | 15% | 3.5 | 0.53 |
 | Git Workflow | 10% | 4.5 | 0.45 |
 | UI & Visual Feedback | 10% | 4.0 | 0.40 |
-| Session & Project Management | 5% | 2.0 | 0.10 |
-| Terminal & External Tools | 5% | 2.5 | 0.13 |
-| | | **Total** | **3.91 / 5.0** |
+| | | **Total** | **4.1 / 5.0** |
 
-### Overall: 3.9 / 5.0 — Strong
+### Overall: 4.1 / 5.0 (82%) — Strong
 
-This configuration achieves approximately **78% of maximum editing efficiency**
-for a Neovim setup. It covers the high-impact areas (navigation, LSP, git)
-exceptionally well while leaving some mid-tier productivity features
-unconfigured.
+Every feature that is configured is configured well. The plugin set is
+conservative (20 plugins, no redundancy), keymaps are mnemonic and
+discoverable via which-key, and Mason + lazy.nvim keep the maintenance
+burden near zero. The 0.9 points lost come from missing editing primitives
+(comment toggling, autopairs, motion plugin) — not from architectural gaps.
 
 ---
 
-## Context: Agent-First Workflow
+## Agent-First Workflow Context
 
 The `init.lua` header states: *"Claude Code is the primary development tool;
-this adds comfort for direct use."* This context is critical for interpreting
-the scores:
+this adds comfort for direct use."* This shapes three design decisions:
 
-- **Session management (2.0)** matters less when the editor is opened for
-  quick targeted edits rather than all-day sessions
-- **Terminal integration (2.5)** matters less when Ghostty handles
-  multiplexing and Claude Code runs in a separate terminal
-- **No AI completion** is intentional — Claude Code operates at a higher
-  abstraction level than line-by-line copilot suggestions
-
-Adjusting for this intended use case, the **effective efficiency for its
-purpose is closer to 4.2 / 5.0** — the missing features are precisely the
-ones that matter least in an agent-assisted workflow.
+- **No session management** — Neovim is opened for targeted edits, not
+  all-day sessions. Telescope recent files and buffer switching are sufficient.
+- **No terminal multiplexing** — Ghostty handles splits and tabs. Duplicating
+  window management inside Neovim would add complexity without value.
+- **No AI completion** — Claude Code operates at a higher abstraction level
+  than line-by-line copilot suggestions. The two tools complement rather than
+  overlap.
 
 ---
 
