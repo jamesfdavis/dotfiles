@@ -16,13 +16,34 @@ Generate a new SvelteKit PWA project with Cloudflare Workers, fully wired.
    pnpm add -D vitest @testing-library/svelte @testing-library/jest-dom jsdom
    pnpm add -D @playwright/test
    pnpm add -D vite-plugin-pwa @vite-pwa/sveltekit workbox-precaching
+   pnpm add -D tailwindcss @tailwindcss/vite
    ```
 
 3. **Configure adapter** — Update `svelte.config.js`:
    - Replace default adapter with `adapter-cloudflare`
    - Set `platform: 'browser'` for client-side PWA support
 
-4. **Wire Cloudflare bindings** — Create `wrangler.toml`:
+4. **Configure Tailwind CSS** — Add `@tailwindcss/vite` to `vite.config.ts`:
+   ```typescript
+   import tailwindcss from '@tailwindcss/vite';
+
+   export default defineConfig({
+     plugins: [tailwindcss(), sveltekit(), SvelteKitPWA(/* ... */)],
+   });
+   ```
+   Then set `src/app.css` as the global stylesheet:
+   ```css
+   @import 'tailwindcss';
+   ```
+   Import `app.css` in `src/routes/+layout.svelte`:
+   ```svelte
+   <script>
+     import '../app.css';
+     let { children } = $props();
+   </script>
+   ```
+
+5. **Wire Cloudflare bindings** — Create `wrangler.toml`:
    ```toml
    name = "$PROJECT_NAME"
    compatibility_date = "2025-01-01"
@@ -37,12 +58,12 @@ Generate a new SvelteKit PWA project with Cloudflare Workers, fully wired.
    ENVIRONMENT = "development"
    ```
 
-5. **Set up PWA manifest** — Create `static/manifest.json`:
+6. **Set up PWA manifest** — Create `static/manifest.json`:
    - App name, short name, theme color, background color
    - Icons at 192x192 and 512x512
    - `display: standalone`, `start_url: /`
 
-6. **Configure testing layers**:
+7. **Configure testing layers**:
    - `vitest.config.ts` — Unit tests for logic (lib/, utils/)
    - `vitest.config.ts` — Component tests with jsdom + testing-library
    - `playwright.config.ts` — E2E tests against `pnpm preview`
@@ -54,7 +75,7 @@ Generate a new SvelteKit PWA project with Cloudflare Workers, fully wired.
      "test:all": "vitest run && playwright test"
      ```
 
-7. **Create project structure**:
+8. **Create project structure**:
    ```
    src/
    ├── lib/
@@ -68,18 +89,18 @@ Generate a new SvelteKit PWA project with Cloudflare Workers, fully wired.
    │   ├── +page.svelte    # Home page
    │   └── api/            # API routes (Workers)
    ├── app.html            # Shell with PWA meta tags
-   └── app.css             # Global styles
+   └── app.css             # Tailwind entry point (@import 'tailwindcss')
    tests/
    ├── unit/               # Vitest unit tests
    ├── component/          # Testing-library component tests
    └── e2e/                # Playwright E2E tests
    ```
 
-8. **Generate project CLAUDE.md** — Copy and fill `project-CLAUDE.md.example` with the actual structure, commands, and conventions.
+9. **Generate project CLAUDE.md** — Copy and fill `project-CLAUDE.md.example` with the actual structure, commands, and conventions.
 
-9. **Initialize git** — `git init`, initial commit, create GitHub repo with `gh repo create`.
+10. **Initialize git** — `git init`, initial commit, create GitHub repo with `gh repo create`.
 
-10. **Verify** — Run `pnpm dev` and confirm the app loads. Run `pnpm test` and confirm the test harness works.
+11. **Verify** — Run `pnpm dev` and confirm the app loads. Run `pnpm test` and confirm the test harness works.
 
 ## Rules
 

@@ -365,6 +365,7 @@ require("lazy").setup({
         pyright = {},
         eslint = {},
         svelte = {},
+        tailwindcss = {},
       }
 
       -- Ensure servers + tools are installed via Mason
@@ -438,6 +439,7 @@ require("lazy").setup({
         yaml = { "prettierd", "prettier", stop_after_first = true },
         html = { "prettierd", "prettier", stop_after_first = true },
         css = { "prettierd", "prettier", stop_after_first = true },
+        svelte = { "prettierd", "prettier", stop_after_first = true },
         markdown = { "prettierd", "prettier", stop_after_first = true },
         python = { "black" },
       },

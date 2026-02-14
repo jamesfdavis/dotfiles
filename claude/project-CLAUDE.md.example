@@ -71,6 +71,13 @@ wrangler d1 migrations apply DB    # Run D1 migrations
 wrangler pages deploy              # Manual deploy (if needed)
 ```
 
+## CSS
+
+- Tailwind CSS v4 via `@tailwindcss/vite` — no PostCSS config or `tailwind.config` needed
+- Global entry point: `src/app.css` (`@import 'tailwindcss'`)
+- Use Tailwind utility classes in Svelte templates; avoid `<style>` blocks for layout/spacing
+- Custom theme tokens (colors, fonts, spacing) go in `src/app.css` using `@theme`
+
 ## Conventions
 
 - Svelte 5 runes only (`$state`, `$derived`, `$effect`) — no legacy `$:` syntax
