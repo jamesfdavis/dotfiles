@@ -238,37 +238,137 @@ Diagnostics show inline as virtual text. Errors are underlined. Use `[d` / `]d` 
 | **nvim-web-devicons** | File type icons (Nerd Font) |
 | **lazy.nvim** | Plugin manager (auto-bootstraps on first run) |
 
-## Reviewing Claude-generated code
+## How to review Claude-generated code
 
-Typical workflow after Claude makes changes:
+This is the core workflow for steering Claude and reviewing its output as fast as possible. The goal: see exactly what changed, verify correctness with LSP, accept or reject at the hunk level, and commit only what you approve.
+
+### Step 1: See everything that changed
 
 ```
-Space gd            Open side-by-side diff of all working changes
-Tab / Shift+Tab     Cycle through changed files
-]h / [h             Jump between changed hunks
-Space hp            Preview a hunk inline
-]d / [d             Jump between diagnostics (errors/warnings)
-Space sd            Search ALL diagnostics across the project
-grd                 Jump into a definition to verify it exists
-grr                 Find all references to check nothing was missed
-Space sg            Grep for a pattern Claude might have missed
-Space gc            Close diff view when done
+Space gd
 ```
 
-Accepting or rejecting changes at the hunk level:
-- `Space hs` — stage this hunk (accept it)
-- `Space hr` — reset this hunk (discard it)
-- Select lines in visual mode, then `Space hs` / `Space hr` for partial hunks
-- `Space hS` — accept the entire file
-- `Space hR` — discard the entire file
+Opens diffview — a side-by-side diff of every file Claude modified. The left panel lists changed files, the right shows the diff. This is your starting point for every review.
 
-Quick audit checklist:
-1. `Space gd` — scan the full diff, file by file
-2. `]h` to walk through hunks, `Space hp` to preview each
-3. `]d` in each file — check for LSP errors/warnings
-4. `grr` on key symbols — confirm all call sites were updated
-5. `Space sg` — search for old names/patterns that should have been replaced
-6. `Space hs` / `Space hr` — accept or reject each hunk
+**Navigate between files:**
+
+| Key | Action |
+|-----|--------|
+| `Tab` | Next changed file |
+| `Shift+Tab` | Previous changed file |
+| `Enter` | Open diff for selected file |
+| `Space gc` | Close diffview when done |
+
+### Step 2: Walk through hunks
+
+Inside a file, hunks are the individual blocks of changed code. Jump between them instead of scrolling:
+
+| Key | Action |
+|-----|--------|
+| `]h` | Jump to next hunk |
+| `[h` | Jump to previous hunk |
+| `Space hp` | Preview hunk as an inline popup (quick glance without leaving your position) |
+
+### Step 3: Check for errors
+
+LSP catches problems Claude introduced — type errors, missing imports, bad references, ESLint violations — without running anything:
+
+| Key | Action |
+|-----|--------|
+| `]d` | Jump to next diagnostic (error/warning) |
+| `[d` | Jump to previous diagnostic |
+| `Space sd` | Search ALL diagnostics across every file in the project |
+| `gra` | Apply a quick fix (ESLint auto-fix, add missing import, etc.) |
+
+### Step 4: Verify correctness
+
+When something looks suspicious, dig deeper:
+
+| Key | Action |
+|-----|--------|
+| `grd` | Go to definition — verify the function/variable Claude referenced actually exists |
+| `grr` | Find all references — check if Claude missed updating a call site |
+| `gri` | Go to implementation — see the actual code behind an interface |
+| `Space sw` | Search for the word under cursor across the entire project |
+| `Space sg` | Grep for any pattern — find old names that should have been renamed |
+
+### Step 5: Accept or reject each change
+
+This is the key to a tight feedback loop. You don't have to accept or reject an entire file — you work at the **hunk level**:
+
+**Accept a change (stage it):**
+```
+Space hs        Stage this hunk — you're keeping it
+```
+
+**Reject a change (discard it):**
+```
+Space hr        Reset this hunk — reverts it to what was there before
+```
+
+**Partial hunks — accept or reject specific lines within a hunk:**
+1. Enter visual mode: `V` then `j`/`k` to select lines
+2. `Space hs` to stage just those lines
+3. Or `Space hr` to reset just those lines
+
+**Whole file shortcuts:**
+
+| Key | Action |
+|-----|--------|
+| `Space hS` | Stage entire buffer (accept all changes in this file) |
+| `Space hR` | Reset entire buffer (discard all changes in this file) |
+| `Space hu` | Undo last stage (if you staged a hunk by mistake) |
+
+### Step 6: Verify what you staged
+
+Before committing, confirm you only staged what you intended:
+
+```
+Space hd        Diff this file against the index — see what's staged vs not
+Space gd        Re-open diffview to scan remaining unstaged changes
+```
+
+### Step 7: Commit only approved changes
+
+After staging the hunks you want, commit from the terminal or lazygit:
+
+```bash
+# From terminal
+git commit
+
+# Or use lazygit (alias: lg) for a visual staging/commit interface
+lg
+```
+
+Neovim opens for the commit message with spell check, 72-char wrapping, and auto-insert mode.
+
+### Quick reference card
+
+The full review loop in one block:
+
+```
+Space gd            1. Open side-by-side diff
+Tab / Shift+Tab     2. Cycle through changed files
+]h / [h             3. Walk through hunks
+Space hp            4. Preview a hunk inline
+]d / [d             5. Check for LSP errors
+grd / grr           6. Verify definitions and references
+Space hs            7. Stage hunk (accept)
+Space hr            8. Reset hunk (reject)
+V + j/k + Space hs  9. Stage partial hunk (accept specific lines)
+V + j/k + Space hr  10. Reset partial hunk (reject specific lines)
+Space gc            11. Close diffview
+git commit          12. Commit what you staged
+```
+
+### Tips for speed
+
+- **Don't read every line.** Use `]h` to hop between hunks — the gutter signs (`+`/`~`/`_`) show you where to look.
+- **Trust the LSP.** If there are zero diagnostics after `Space sd`, type-level correctness is confirmed. Focus your eyeballs on logic, not syntax.
+- **Use `grr` on anything Claude renamed.** If references count matches what you expect, the rename was complete.
+- **Reject first, ask later.** If a hunk looks wrong, `Space hr` immediately. You can always ask Claude to redo just that part. Faster than trying to manually fix it.
+- **Partial hunks for mixed changes.** Claude often adds something good and something unnecessary in the same block. `V` select the good lines, `Space hs`, then `Space hr` the rest.
+- **`Space sg` is your safety net.** After Claude does a rename or refactor, grep for the old name. If it shows up anywhere, Claude missed a spot.
 
 ## Git commit authoring
 
