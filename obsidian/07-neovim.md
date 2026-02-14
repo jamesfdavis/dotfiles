@@ -201,11 +201,14 @@ Formatters are auto-installed by Mason on first launch.
 
 LSP provides go-to-definition, references, rename, diagnostics, and more. Servers are auto-installed by Mason:
 
-| Language | Server |
-|----------|--------|
-| JavaScript/TypeScript | ts_ls |
-| Python | pyright |
-| Lua | lua_ls (Neovim-aware) |
+| Language | Server | What it catches |
+|----------|--------|-----------------|
+| JavaScript/TypeScript | ts_ls | Type errors, missing imports, bad references |
+| JavaScript/TypeScript | eslint | Lint rules, unused vars, React hooks, style |
+| Python | pyright | Type errors, missing imports |
+| Lua | lua_ls (Neovim-aware) | Lua/Neovim API errors |
+
+All servers are auto-installed by Mason on first launch. ESLint reads your project's `.eslintrc.*` or `eslint.config.*` — no extra setup needed. Use `gra` on any ESLint diagnostic to apply the suggested fix.
 
 Diagnostics show inline as virtual text. Errors are underlined. Use `[d` / `]d` to jump between diagnostics (auto-opens float).
 

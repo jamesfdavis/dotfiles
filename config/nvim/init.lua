@@ -363,6 +363,7 @@ require("lazy").setup({
       local servers = {
         ts_ls = {},
         pyright = {},
+        eslint = {},
       }
 
       -- Ensure servers + tools are installed via Mason
