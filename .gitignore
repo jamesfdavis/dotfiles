@@ -24,6 +24,9 @@
 *.swo
 config/nvim/lazy-lock.json
 
+# Obsidian
+obsidian/.obsidian/
+
 # Cursor
 .cursor/
 

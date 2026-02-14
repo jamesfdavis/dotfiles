@@ -6,9 +6,10 @@
 # Steps:
 # 1. Homebrew + packages (Brewfile)
 # 2. Symlink dotfiles + config files
-# 3. SSH signing key setup + Keychain persistence
-# 4. Node.js LTS via NVM
-# 5. npm globals (claude-code, wrangler)
+# 3. macOS defaults (keyboard, trackpad, Finder, Dock)
+# 4. SSH signing key setup + Keychain persistence
+# 5. Node.js LTS via NVM
+# 6. npm globals (claude-code, wrangler)
 
 set -e
 
@@ -44,22 +45,27 @@ echo -e "${GREEN}  Running on macOS${NC}"
 echo ""
 
 # Step 1: Homebrew
-echo -e "${YELLOW}  Step 1/5: Homebrew...${NC}"
+echo -e "${YELLOW}  Step 1/6: Homebrew...${NC}"
 "$DOTFILES_DIR/scripts/setup-homebrew.sh"
 echo ""
 
 # Step 2: Symlink dotfiles + config
-echo -e "${YELLOW}  Step 2/5: Symlinking dotfiles...${NC}"
+echo -e "${YELLOW}  Step 2/6: Symlinking dotfiles...${NC}"
 "$DOTFILES_DIR/bootstrap.sh"
 echo ""
 
-# Step 3: SSH Signing Key
-echo -e "${YELLOW}  Step 3/5: SSH commit signing + Keychain persistence...${NC}"
+# Step 3: macOS defaults
+echo -e "${YELLOW}  Step 3/6: Applying macOS defaults...${NC}"
+"$DOTFILES_DIR/scripts/setup-macos.sh"
+echo ""
+
+# Step 4: SSH Signing Key
+echo -e "${YELLOW}  Step 4/6: SSH commit signing + Keychain persistence...${NC}"
 "$DOTFILES_DIR/scripts/setup-ssh-signing.sh"
 echo ""
 
-# Step 4: Node.js + npm globals
-echo -e "${YELLOW}  Step 4/5: Installing Node.js LTS via NVM...${NC}"
+# Step 5: Node.js + npm globals
+echo -e "${YELLOW}  Step 5/6: Installing Node.js LTS via NVM...${NC}"
 
 # Determine HOMEBREW_PREFIX for NVM
 if [[ $(uname -m) == "arm64" ]]; then
@@ -79,8 +85,8 @@ else
     echo -e "${YELLOW}  NVM not found -- run 'nvm install --lts' after restart${NC}"
 fi
 
-# Step 5: npm globals
-echo -e "${YELLOW}  Step 5/5: Installing npm globals...${NC}"
+# Step 6: npm globals
+echo -e "${YELLOW}  Step 6/6: Installing npm globals...${NC}"
 if command -v npm &>/dev/null; then
     npm install -g @anthropic-ai/claude-code 2>/dev/null && \
         echo -e "${GREEN}  Installed claude-code${NC}" || \

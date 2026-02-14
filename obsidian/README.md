@@ -16,7 +16,7 @@ cd ~/dotfiles && ./install.sh
 The agent writes the code, you steer. Everything runs in the terminal.
 
 ```mermaid
-graph LR
+graph TD
     S["/scaffold"] --> P["/plan"]
     P --> I["/issues"]
     I --> B["/build"]
