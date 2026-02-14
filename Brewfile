@@ -54,7 +54,8 @@ cask "1password"                        # Password manager
 cask "1password-cli"                    # 1Password CLI (op)
 
 # ------------------------------------------------------------------------------
-# Editors
+# Editors & Notes
 # ------------------------------------------------------------------------------
 brew "neovim"                           # Quick terminal edits
 cask "visual-studio-code"               # Code review & diff viewer
+cask "obsidian"                         # Markdown knowledge base
