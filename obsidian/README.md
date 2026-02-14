@@ -42,24 +42,22 @@ Skip steps when appropriate -- existing project? skip `/scaffold`. Small fix? st
 
 Every tool in the stack has a dedicated reference doc.
 
-| Doc | Covers |
-|-----|--------|
-| [[00-stack|The Stack]] | Full stack overview and principles |
-| [[01-ghostty-starship|Ghostty + Starship]] | Terminal config, keybindings, prompt |
-| [[02-claude-code|Claude Code]] | Agent workflow, aliases, slash commands, browser loop |
-| [[03-cloudflare|Cloudflare]] | Workers, D1, KV, R2, Wrangler aliases |
-| [[04-docker|Docker]] | Colima, Docker Compose, cleanup |
-| [[05-git-workflow|Git Workflow]] | Aliases, commit signing, branch strategy |
-| [[06-python-uv|Python + uv]] | Fast venvs, pip installs, Jupyter |
-| [[07-neovim|Neovim]] | Keybindings, motions, Telescope, LSP, plugins |
-| [[08-fzf-ripgrep-fd|FZF + ripgrep + fd]] | Fuzzy finding, code search, file discovery |
-| [[09-cli-utilities|CLI Utilities]] | bat, eza, zoxide, jq |
-| [[10-node-nvm|Node + NVM]] | Lazy loading, .nvmrc auto-switch, npm aliases |
-| [[11-lazygit|Lazygit]] | TUI for staging, rebasing, conflict resolution |
-| [[12-github-cli|GitHub CLI]] | PRs, issues, API calls, completions |
-| [[13-zsh-shell|Zsh Shell]] | Plugins, history, functions, shell options |
-| [[14-claude-pkm|Claude PKM]] | Private Obsidian vault for persistent knowledge |
-| [[15-quickstart|Quickstart]] | Install, post-install checklist, day-one commands |
+- [[00-stack|The Stack]] — Full stack overview and principles
+- [[01-ghostty-starship|Ghostty + Starship]] — Terminal config, keybindings, prompt
+- [[02-claude-code|Claude Code]] — Agent workflow, aliases, slash commands, browser loop
+- [[03-cloudflare|Cloudflare]] — Workers, D1, KV, R2, Wrangler aliases
+- [[04-docker|Docker]] — Colima, Docker Compose, cleanup
+- [[05-git-workflow|Git Workflow]] — Aliases, commit signing, branch strategy
+- [[06-python-uv|Python + uv]] — Fast venvs, pip installs, Jupyter
+- [[07-neovim|Neovim]] — Keybindings, motions, Telescope, LSP, plugins
+- [[08-fzf-ripgrep-fd|FZF + ripgrep + fd]] — Fuzzy finding, code search, file discovery
+- [[09-cli-utilities|CLI Utilities]] — bat, eza, zoxide, jq
+- [[10-node-nvm|Node + NVM]] — Lazy loading, .nvmrc auto-switch, npm aliases
+- [[11-lazygit|Lazygit]] — TUI for staging, rebasing, conflict resolution
+- [[12-github-cli|GitHub CLI]] — PRs, issues, API calls, completions
+- [[13-zsh-shell|Zsh Shell]] — Plugins, history, functions, shell options
+- [[14-claude-pkm|Claude PKM]] — Private Obsidian vault for persistent knowledge
+- [[15-quickstart|Quickstart]] — Install, post-install checklist, day-one commands
 
 ## External Docs
 
