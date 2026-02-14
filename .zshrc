@@ -100,7 +100,7 @@ _nvm_auto_use
 # ------------------------------------------------------------------------------
 # FZF
 # ------------------------------------------------------------------------------
-eval "$(fzf --zsh 2>/dev/null)" || [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh 2>/dev/null)" || { [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh; }
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
