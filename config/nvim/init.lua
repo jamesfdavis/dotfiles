@@ -197,6 +197,7 @@ require("lazy").setup({
         { "<leader>s", group = "Search", mode = { "n", "v" } },
         { "<leader>t", group = "Toggle" },
         { "<leader>h", group = "Git Hunk", mode = { "n", "v" } },
+        { "<leader>g", group = "Git" },
         { "<leader>x", group = "Diagnostics/Extras" },
       },
     },
@@ -457,6 +458,19 @@ require("lazy").setup({
       })
       vim.cmd.colorscheme("catppuccin-mocha")
     end,
+  },
+
+  -- Side-by-side diff viewer and file history
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose" },
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diff view (working changes)" },
+      { "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", desc = "File history (current file)" },
+      { "<leader>gH", "<cmd>DiffviewFileHistory<CR>", desc = "File history (repo)" },
+      { "<leader>gc", "<cmd>DiffviewClose<CR>", desc = "Close diff view" },
+    },
+    opts = {},
   },
 
   -- Highlight TODO/FIXME/HACK in comments

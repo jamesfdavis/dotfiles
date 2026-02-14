@@ -72,6 +72,17 @@ These keymaps activate when an LSP server attaches to a buffer:
 | `gO` | Document symbols |
 | `gW` | Workspace symbols |
 
+### Git (Space g)
+
+| Shortcut | Action |
+|----------|--------|
+| `Space gd` | Open diff view (all working changes, side-by-side) |
+| `Space gh` | File history for current file |
+| `Space gH` | File history for entire repo |
+| `Space gc` | Close diff view |
+
+Inside diffview: `Tab`/`Shift+Tab` to cycle files, `Enter` to open a diff, `Space e` to focus file panel, `Space b` to toggle file panel.
+
 ### Toggle (Space t)
 
 | Shortcut | Action |
@@ -195,6 +206,7 @@ Diagnostics show inline as virtual text. Errors are underlined. Use `[d` / `]d` 
 | **blink.cmp** | Autocompletion with LSP + snippets |
 | **LuaSnip** | Snippet engine |
 | **conform.nvim** | Auto-format on save |
+| **diffview.nvim** | Side-by-side diff viewer and file history |
 | **gitsigns.nvim** | Git change indicators in the gutter (+, ~, _) |
 | **which-key.nvim** | Shows available keybindings after pressing a key |
 | **todo-comments.nvim** | Highlights TODO/FIXME/HACK in comments |
@@ -204,6 +216,28 @@ Diagnostics show inline as virtual text. Errors are underlined. Use `[d` / `]d` 
 | **guess-indent.nvim** | Auto-detects file indentation |
 | **nvim-web-devicons** | File type icons (Nerd Font) |
 | **lazy.nvim** | Plugin manager (auto-bootstraps on first run) |
+
+## Reviewing Claude-generated code
+
+Typical workflow after Claude makes changes:
+
+```
+Space gd            Open side-by-side diff of all working changes
+Tab / Shift+Tab     Cycle through changed files
+]d / [d             Jump between diagnostics (errors/warnings)
+Space sd            Search ALL diagnostics across the project
+grd                 Jump into a definition to verify it exists
+grr                 Find all references to check nothing was missed
+Space sg            Grep for a pattern Claude might have missed
+Space gc            Close diff view when done
+```
+
+Quick audit checklist:
+1. `Space gd` — scan the full diff, file by file
+2. `]d` in each file — check for LSP errors/warnings
+3. `grr` on key symbols — confirm all call sites were updated
+4. `Space sg` — search for old names/patterns that should have been replaced
+5. `:ConformInfo` — verify formatting is clean
 
 ## Git commit authoring
 
