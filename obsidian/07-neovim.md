@@ -25,17 +25,65 @@ The golden rule: **press `Esc` when confused**. It always returns to Normal mode
 
 ## Leader key
 
-The leader key is **Space**. All custom shortcuts start with it.
+The leader key is **Space**. All custom shortcuts start with it. Press Space and wait to see all available keybindings via which-key.
+
+### Quick actions
 
 | Shortcut | Action |
 |----------|--------|
 | `Space w` | Save file |
 | `Space q` | Quit |
-| `Space f` | Find files (telescope) |
-| `Space g` | Live grep across project (telescope) |
-| `Space b` | Switch between open buffers |
+| `Space f` | Format buffer (LSP/formatter) |
 | `Space /` | Fuzzy search current file |
-| `Space ss` | Strip trailing whitespace |
+| `Space Space` | Switch between open buffers |
+
+### Search (Space s)
+
+All search commands use Telescope and are grouped under `Space s`:
+
+| Shortcut | Action |
+|----------|--------|
+| `Space sf` | Search files (respects .gitignore) |
+| `Space sg` | Search by grep across project (ripgrep) |
+| `Space sh` | Search help tags |
+| `Space sk` | Search keymaps |
+| `Space ss` | Search select (Telescope builtins) |
+| `Space sw` | Search current word under cursor |
+| `Space sd` | Search diagnostics |
+| `Space sr` | Resume last search |
+| `Space s.` | Search recent files |
+| `Space sc` | Search commands |
+| `Space s/` | Live grep in open files |
+| `Space sn` | Search neovim config files |
+
+### LSP navigation (g prefix)
+
+These keymaps activate when an LSP server attaches to a buffer:
+
+| Shortcut | Action |
+|----------|--------|
+| `grd` | Go to definition |
+| `grr` | Find references |
+| `gri` | Go to implementation |
+| `grt` | Go to type definition |
+| `grn` | Rename symbol |
+| `gra` | Code action |
+| `grD` | Go to declaration |
+| `gO` | Document symbols |
+| `gW` | Workspace symbols |
+
+### Toggle (Space t)
+
+| Shortcut | Action |
+|----------|--------|
+| `Space th` | Toggle inlay hints |
+
+### Diagnostics/Extras (Space x)
+
+| Shortcut | Action |
+|----------|--------|
+| `Space xq` | Open diagnostic quickfix list |
+| `Space xw` | Strip trailing whitespace |
 
 ## Essential motions
 
@@ -60,12 +108,21 @@ The leader key is **Space**. All custom shortcuts start with it.
 | `o` / `O` | New line below / above |
 | `dd` | Delete line |
 | `yy` | Copy (yank) line |
+| `Y` | Yank to end of line |
 | `p` | Paste after cursor |
 | `u` | Undo |
 | `Ctrl+r` | Redo |
 | `ciw` | Change inner word (delete word + enter insert mode) |
 | `ci"` | Change inside quotes |
 | `di(` | Delete inside parentheses |
+
+### Surround (mini.surround)
+
+| Key | Action |
+|-----|--------|
+| `saiw)` | Surround add inner word with parens |
+| `sd'` | Surround delete quotes |
+| `sr)"` | Surround replace parens with quotes |
 
 ### Search
 
@@ -84,30 +141,68 @@ The leader key is **Space**. All custom shortcuts start with it.
 | `:vs` | Vertical split |
 | `:sp` | Horizontal split |
 
-## Telescope (fuzzy finder)
+## Autocompletion
 
-Telescope is the primary way to navigate files and code. All searches are fuzzy.
+Autocompletion is powered by blink.cmp with LSP integration:
 
-```
-Space f     → find files (respects .gitignore)
-Space g     → grep across all files (uses ripgrep)
-Space b     → switch buffers
-Space /     → search within current file
-```
+| Key | Action |
+|-----|--------|
+| `Ctrl+y` | Accept completion |
+| `Ctrl+n` / `Ctrl+p` | Next / previous suggestion |
+| `Ctrl+space` | Open completion menu / docs |
+| `Ctrl+e` | Dismiss completion |
+| `Ctrl+k` | Toggle signature help |
+| `Tab` / `Shift+Tab` | Navigate snippet fields |
 
-Inside telescope:
-- Type to filter results
-- `Ctrl+n` / `Ctrl+p` to move up/down
-- `Enter` to open
-- `Esc` to close
+Documentation auto-shows after 250ms when a completion is highlighted.
+
+## Auto-formatting
+
+Files are auto-formatted on save using conform.nvim. Manual format with `Space f`.
+
+| Language | Formatter |
+|----------|-----------|
+| Lua | stylua |
+| JS/TS/JSON/YAML/HTML/CSS/Markdown | prettierd (falls back to prettier) |
+| Python | black |
+
+Formatters are auto-installed by Mason on first launch.
+
+## LSP (Language Server Protocol)
+
+LSP provides go-to-definition, references, rename, diagnostics, and more. Servers are auto-installed by Mason:
+
+| Language | Server |
+|----------|--------|
+| JavaScript/TypeScript | ts_ls |
+| Python | pyright |
+| Lua | lua_ls (Neovim-aware) |
+
+Diagnostics show inline as virtual text. Errors are underlined. Use `[d` / `]d` to jump between diagnostics (auto-opens float).
 
 ## Plugins installed
 
 | Plugin | What it does |
 |--------|-------------|
 | **catppuccin** | Color theme matching Ghostty |
-| **telescope.nvim** | Fuzzy finder for files, grep, buffers |
-| **nvim-treesitter** | Syntax highlighting for JS/TS/JSON/YAML/Python/Lua/Markdown/Bash/HTML/CSS |
+| **telescope.nvim** | Fuzzy finder for files, grep, LSP, buffers, help |
+| **telescope-fzf-native** | Faster fuzzy matching in Telescope |
+| **telescope-ui-select** | Telescope-powered selection menus |
+| **nvim-treesitter** | Syntax highlighting for JS/TS/JSON/YAML/Python/Lua/Markdown/Bash/HTML/CSS and more |
+| **nvim-lspconfig** | Language server configuration |
+| **mason.nvim** | Auto-installs LSP servers and formatters |
+| **fidget.nvim** | LSP progress notifications |
+| **blink.cmp** | Autocompletion with LSP + snippets |
+| **LuaSnip** | Snippet engine |
+| **conform.nvim** | Auto-format on save |
+| **gitsigns.nvim** | Git change indicators in the gutter (+, ~, _) |
+| **which-key.nvim** | Shows available keybindings after pressing a key |
+| **todo-comments.nvim** | Highlights TODO/FIXME/HACK in comments |
+| **mini.ai** | Better around/inside text objects |
+| **mini.surround** | Add/delete/replace surrounding brackets, quotes |
+| **mini.statusline** | Lightweight status bar |
+| **guess-indent.nvim** | Auto-detects file indentation |
+| **nvim-web-devicons** | File type icons (Nerd Font) |
 | **lazy.nvim** | Plugin manager (auto-bootstraps on first run) |
 
 ## Git commit authoring
@@ -127,6 +222,8 @@ This matches the conventional commit format in `.gitmessage`.
 | JS/TS/JSON/YAML/TOML/Lua | 2 spaces |
 | Python | 4 spaces |
 
+guess-indent.nvim also auto-detects indentation from existing files.
+
 ## Config location
 
 ```
@@ -134,6 +231,10 @@ This matches the conventional commit format in `.gitmessage`.
 ```
 
 Single-file config. Everything in one place -- no plugin directory sprawl.
+
+## First launch
+
+On first launch, lazy.nvim will auto-install all plugins and Mason will download LSP servers + formatters. This may take a minute. Run `:checkhealth` to verify everything is working.
 
 ## Common operations cheat sheet
 
@@ -143,12 +244,21 @@ v file.js           Open a file
 :q                  Quit
 :wq                 Save and quit
 :q!                 Quit without saving
-Space f             Find and open a file
-Space g             Search for text across files
+Space sf            Find and open a file
+Space sg            Search for text across files
+Space f             Format current buffer
+Space Space         Switch buffers
+grd                 Go to definition
+grr                 Find references
+grn                 Rename symbol
 dd                  Delete a line
 yy p                Copy a line, paste it
 u                   Undo
 ciw                 Replace a word
+saiw"               Surround word with quotes
 /search             Find text in file
 :%s/old/new/g       Find and replace in file
+:Lazy               Open plugin manager
+:Mason              Open LSP/tool installer
+:ConformInfo        Check formatter status
 ```
