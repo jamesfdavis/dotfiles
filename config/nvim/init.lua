@@ -519,12 +519,29 @@ require("lazy").setup({
       -- Add/delete/replace surroundings (saiw), sd', sr)')
       require("mini.surround").setup()
 
+      -- Toggle comments (gcc, gc + motion)
+      require("mini.comment").setup()
+
+      -- Auto-close brackets and quotes
+      require("mini.pairs").setup()
+
       -- Statusline
       local statusline = require("mini.statusline")
       statusline.setup({ use_icons = vim.g.have_nerd_font })
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function() return "%2l:%-2v" end
     end,
+  },
+
+  -- Jump anywhere with s + 2 chars
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    },
+    opts = {},
   },
 
   -- Syntax highlighting + code navigation
