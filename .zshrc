@@ -55,33 +55,22 @@ bindkey "\e\e" sudo-command-line
 export NVM_DIR="$HOME/.nvm"
 
 # Lazy load NVM: only initialize when first called
-nvm() {
-    unset -f nvm node npm npx
+_nvm_lazy_init() {
+    unset -f nvm node npm npx claude _nvm_lazy_init
     [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
-    nvm "$@"
 }
-node() {
-    unset -f nvm node npm npx
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
-    node "$@"
-}
-npm() {
-    unset -f nvm node npm npx
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
-    npm "$@"
-}
-npx() {
-    unset -f nvm node npm npx
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
-    npx "$@"
-}
+nvm() { _nvm_lazy_init; nvm "$@"; }
+node() { _nvm_lazy_init; node "$@"; }
+npm() { _nvm_lazy_init; npm "$@"; }
+npx() { _nvm_lazy_init; npx "$@"; }
+claude() { _nvm_lazy_init; claude "$@"; }
 
 # Auto-switch Node version when entering a directory with .nvmrc
 _nvm_auto_use() {
     if [ -f ".nvmrc" ]; then
         # If NVM_BIN is empty, NVM hasn't been fully loaded yet
         if [ -z "$NVM_BIN" ]; then
-            unset -f nvm node npm npx 2>/dev/null
+            unset -f nvm node npm npx claude _nvm_lazy_init 2>/dev/null
             [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
         fi
         local nvmrc_node_version=$(cat .nvmrc)
