@@ -29,6 +29,7 @@ Skip steps when appropriate:
 |-------|------|
 | Platform | Cloudflare Workers, D1, KV, R2, Pages |
 | Frontend | SvelteKit, Svelte 5 (runes only) |
+| CSS | Tailwind CSS v4 via `@tailwindcss/vite` |
 | PWA | vite-plugin-pwa, workbox, service workers |
 | Backend | TypeScript on Workers |
 | Testing | vitest (unit), testing-library (component), playwright (E2E) |
