@@ -54,6 +54,11 @@ bindkey "\e\e" sudo-command-line
 # ------------------------------------------------------------------------------
 export NVM_DIR="$HOME/.nvm"
 
+# Eagerly add default node to PATH (child processes like Neovim Mason need npm)
+_nvm_default="$NVM_DIR/versions/node/$(ls "$NVM_DIR/versions/node" 2>/dev/null | sort -V | tail -1)/bin"
+[[ -d "$_nvm_default" ]] && export PATH="$_nvm_default:$PATH"
+unset _nvm_default
+
 # Lazy load NVM: only initialize when first called
 _nvm_lazy_init() {
     unset -f nvm node npm npx claude _nvm_lazy_init
