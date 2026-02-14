@@ -369,12 +369,23 @@ require("lazy").setup({
       }
 
       -- Ensure servers + tools are installed via Mason
-      local ensure_installed = vim.tbl_keys(servers or {})
+      -- Mason package names differ from LSP names for some servers
+      local mason_renames = {
+        ts_ls = "typescript-language-server",
+        svelte = "svelte-language-server",
+        tailwindcss = "tailwindcss-language-server",
+        eslint = "eslint-lsp",
+        lua_ls = "lua-language-server",
+      }
+      local ensure_installed = {}
+      for _, name in ipairs(vim.tbl_keys(servers or {})) do
+        table.insert(ensure_installed, mason_renames[name] or name)
+      end
       vim.list_extend(ensure_installed, {
-        "lua_ls",    -- Lua language server
-        "stylua",    -- Lua formatter
-        "prettierd", -- JS/TS formatter
-        "black",     -- Python formatter
+        "lua-language-server",  -- Lua language server
+        "stylua",     -- Lua formatter
+        "prettierd",  -- JS/TS formatter
+        "black",      -- Python formatter
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -549,16 +560,27 @@ require("lazy").setup({
   -- Syntax highlighting + code navigation
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "javascript", "typescript", "tsx", "svelte", "json", "yaml", "toml",
-          "lua", "luadoc", "python", "markdown", "markdown_inline",
-          "bash", "html", "css", "diff", "vim", "vimdoc", "query",
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
+      local ts = require("nvim-treesitter")
+      ts.setup()
+
+      local langs = {
+        "javascript", "typescript", "tsx", "svelte", "json", "yaml", "toml",
+        "lua", "luadoc", "python", "markdown", "markdown_inline",
+        "bash", "html", "css", "diff", "vim", "vimdoc", "query",
+      }
+
+      ts.install(langs)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = langs,
+        callback = function()
+          vim.treesitter.start()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
     end,
   },
