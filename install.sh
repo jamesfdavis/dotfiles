@@ -94,6 +94,32 @@ else
 fi
 echo ""
 
+# Post-install verification
+echo -e "${YELLOW}  Verifying installation...${NC}"
+_fail=0
+
+command -v claude &>/dev/null && \
+    echo -e "${GREEN}  claude-code $(claude --version 2>/dev/null)${NC}" || \
+    { echo -e "${RED}  claude-code not found${NC}"; _fail=1; }
+
+command -v wrangler &>/dev/null && \
+    echo -e "${GREEN}  wrangler $(wrangler --version 2>/dev/null)${NC}" || \
+    { echo -e "${RED}  wrangler not found${NC}"; _fail=1; }
+
+command -v node &>/dev/null && \
+    echo -e "${GREEN}  node $(node --version 2>/dev/null)${NC}" || \
+    { echo -e "${RED}  node not found${NC}"; _fail=1; }
+
+command -v gh &>/dev/null && \
+    echo -e "${GREEN}  gh $(gh --version 2>/dev/null | head -1)${NC}" || \
+    { echo -e "${RED}  gh not found${NC}"; _fail=1; }
+
+if [ "$_fail" -eq 1 ]; then
+    echo ""
+    echo -e "${YELLOW}  Some tools missing. Restart your terminal and re-run failed steps.${NC}"
+fi
+echo ""
+
 # Done
 echo -e "${GREEN}  Installation complete.${NC}"
 echo ""
