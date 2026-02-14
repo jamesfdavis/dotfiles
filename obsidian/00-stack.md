@@ -1,5 +1,7 @@
 # The Stack
 
+> Back to [[README|Dev Home]] | New here? See [[15-quickstart|Quickstart]]
+
 The entire development environment fits in one idea: **the agent writes the code, you steer**.
 
 ## Tools

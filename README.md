@@ -170,6 +170,7 @@ The `obsidian/` folder contains developer workflow notes for every tool in the s
 
 | Doc | Covers |
 |-----|--------|
+| [README](obsidian/README.md) | **Dev Home -- start here** |
 | [00-stack](obsidian/00-stack.md) | Full stack overview and principles |
 | [01-ghostty-starship](obsidian/01-ghostty-starship.md) | Terminal + prompt config and keybindings |
 | [02-claude-code](obsidian/02-claude-code.md) | Agent workflow, aliases, project setup |
@@ -184,6 +185,8 @@ The `obsidian/` folder contains developer workflow notes for every tool in the s
 | [11-lazygit](obsidian/11-lazygit.md) | TUI for staging, rebasing, conflicts |
 | [12-github-cli](obsidian/12-github-cli.md) | PRs, issues, API, completions |
 | [13-zsh-shell](obsidian/13-zsh-shell.md) | Plugins, history, functions, shell options |
+| [14-claude-pkm](obsidian/14-claude-pkm.md) | Private Obsidian vault for persistent knowledge |
+| [15-quickstart](obsidian/15-quickstart.md) | Install, post-install checklist, day-one commands |
 
 ## Maintenance
 
