@@ -72,7 +72,9 @@ These keymaps activate when an LSP server attaches to a buffer:
 | `gO` | Document symbols |
 | `gW` | Workspace symbols |
 
-### Git (Space g)
+### Git (Space g) and Hunks (Space h)
+
+**Diffview:**
 
 | Shortcut | Action |
 |----------|--------|
@@ -82,6 +84,22 @@ These keymaps activate when an LSP server attaches to a buffer:
 | `Space gc` | Close diff view |
 
 Inside diffview: `Tab`/`Shift+Tab` to cycle files, `Enter` to open a diff, `Space e` to focus file panel, `Space b` to toggle file panel.
+
+**Hunk navigation and actions (gitsigns):**
+
+| Shortcut | Action |
+|----------|--------|
+| `]h` / `[h` | Jump to next / previous hunk |
+| `Space hp` | Preview hunk (inline popup) |
+| `Space hs` | Stage hunk (accept this change) |
+| `Space hu` | Undo stage hunk |
+| `Space hr` | Reset hunk (discard this change) |
+| `Space hS` | Stage entire buffer |
+| `Space hR` | Reset entire buffer |
+| `Space hb` | Blame line (who wrote this) |
+| `Space hd` | Diff this file against index |
+
+Visual mode: select lines then `Space hs` to stage or `Space hr` to reset just the selection.
 
 ### Toggle (Space t)
 
@@ -224,6 +242,8 @@ Typical workflow after Claude makes changes:
 ```
 Space gd            Open side-by-side diff of all working changes
 Tab / Shift+Tab     Cycle through changed files
+]h / [h             Jump between changed hunks
+Space hp            Preview a hunk inline
 ]d / [d             Jump between diagnostics (errors/warnings)
 Space sd            Search ALL diagnostics across the project
 grd                 Jump into a definition to verify it exists
@@ -232,12 +252,20 @@ Space sg            Grep for a pattern Claude might have missed
 Space gc            Close diff view when done
 ```
 
+Accepting or rejecting changes at the hunk level:
+- `Space hs` — stage this hunk (accept it)
+- `Space hr` — reset this hunk (discard it)
+- Select lines in visual mode, then `Space hs` / `Space hr` for partial hunks
+- `Space hS` — accept the entire file
+- `Space hR` — discard the entire file
+
 Quick audit checklist:
 1. `Space gd` — scan the full diff, file by file
-2. `]d` in each file — check for LSP errors/warnings
-3. `grr` on key symbols — confirm all call sites were updated
-4. `Space sg` — search for old names/patterns that should have been replaced
-5. `:ConformInfo` — verify formatting is clean
+2. `]h` to walk through hunks, `Space hp` to preview each
+3. `]d` in each file — check for LSP errors/warnings
+4. `grr` on key symbols — confirm all call sites were updated
+5. `Space sg` — search for old names/patterns that should have been replaced
+6. `Space hs` / `Space hr` — accept or reject each hunk
 
 ## Git commit authoring
 

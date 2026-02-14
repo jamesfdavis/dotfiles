@@ -172,7 +172,7 @@ require("lazy").setup({
   -- Auto-detect indentation
   { "NMAC427/guess-indent.nvim", opts = {} },
 
-  -- Git signs in the gutter
+  -- Git signs in the gutter + hunk actions
   {
     "lewis6991/gitsigns.nvim",
     opts = {
@@ -183,6 +183,32 @@ require("lazy").setup({
         topdelete = { text = "‾" },
         changedelete = { text = "~" },
       },
+      on_attach = function(bufnr)
+        local gs = require("gitsigns")
+        local function bmap(mode, l, r, desc)
+          vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+        end
+
+        -- Navigation between hunks
+        bmap("n", "]h", function() gs.nav_hunk("next") end, "Next hunk")
+        bmap("n", "[h", function() gs.nav_hunk("prev") end, "Previous hunk")
+
+        -- Hunk actions
+        bmap("n", "<leader>hp", gs.preview_hunk, "Preview hunk")
+        bmap("n", "<leader>hs", gs.stage_hunk, "Stage hunk")
+        bmap("n", "<leader>hu", gs.undo_stage_hunk, "Undo stage hunk")
+        bmap("n", "<leader>hr", gs.reset_hunk, "Reset hunk")
+
+        -- Visual mode stage/reset
+        bmap("v", "<leader>hs", function() gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "Stage selection")
+        bmap("v", "<leader>hr", function() gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "Reset selection")
+
+        -- Buffer-level actions
+        bmap("n", "<leader>hS", gs.stage_buffer, "Stage buffer")
+        bmap("n", "<leader>hR", gs.reset_buffer, "Reset buffer")
+        bmap("n", "<leader>hb", function() gs.blame_line({ full = true }) end, "Blame line")
+        bmap("n", "<leader>hd", gs.diffthis, "Diff against index")
+      end,
     },
   },
 
