@@ -364,6 +364,7 @@ require("lazy").setup({
         ts_ls = {},
         pyright = {},
         eslint = {},
+        svelte = {},
       }
 
       -- Ensure servers + tools are installed via Mason
@@ -533,7 +534,7 @@ require("lazy").setup({
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
-          "javascript", "typescript", "tsx", "json", "yaml", "toml",
+          "javascript", "typescript", "tsx", "svelte", "json", "yaml", "toml",
           "lua", "luadoc", "python", "markdown", "markdown_inline",
           "bash", "html", "css", "diff", "vim", "vimdoc", "query",
         },

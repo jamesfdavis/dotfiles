@@ -205,6 +205,7 @@ LSP provides go-to-definition, references, rename, diagnostics, and more. Server
 |----------|--------|-----------------|
 | JavaScript/TypeScript | ts_ls | Type errors, missing imports, bad references |
 | JavaScript/TypeScript | eslint | Lint rules, unused vars, React hooks, style |
+| Svelte | svelte | `.svelte` files — script, template, and style blocks |
 | Python | pyright | Type errors, missing imports |
 | Lua | lua_ls (Neovim-aware) | Lua/Neovim API errors |
 
