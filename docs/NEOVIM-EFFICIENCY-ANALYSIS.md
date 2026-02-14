@@ -103,12 +103,16 @@ is the primary development tool," so this may be intentional).
 
 ---
 
-### 4. Editing Primitives — 3.5 / 5
+### 4. Editing Primitives — 4.5 / 5
 
 | Feature | Plugin | Assessment |
 |---------|--------|------------|
 | Surround | mini.surround | Add/delete/replace surroundings |
 | Text objects | mini.ai | Enhanced a/i objects, 500-line context |
+| Comment toggling | mini.comment | `gcc` line, `gc` + motion |
+| Auto-close pairs | mini.pairs | Brackets, quotes, backticks |
+| Character-level jump | flash.nvim | `s` + 2 chars to jump anywhere visible |
+| Treesitter select | flash.nvim | `S` to select treesitter nodes |
 | Indent detection | guess-indent.nvim | Auto-detects file style |
 | Auto-format | conform.nvim | Format on save + `<leader>f` |
 | Center after jump | `<C-d>zz`, `<C-u>zz` | Keeps context visible |
@@ -116,15 +120,14 @@ is the primary development tool," so this may be intentional).
 | Yank highlight | TextYankPost | Visual feedback |
 | Whitespace strip | `<leader>xw` | Cursor-position preserving |
 
-**Strengths:** mini.surround and mini.ai are lightweight and effective.
-Format-on-save with fallback to LSP is well-configured with per-filetype
-formatters.
+**Strengths:** Five mini.nvim modules (ai, surround, comment, pairs,
+statusline) provide core editing primitives with zero-config defaults.
+flash.nvim adds labeled character-level jumping that replaces multi-step
+`/search` for in-view navigation. Format-on-save with fallback to LSP
+is well-configured with per-filetype formatters.
 
-**Gap:** No autopairs plugin (auto-closing brackets/quotes). No comment
-toggling plugin (mini.comment, Comment.nvim, or ts-context-commentstring).
-No multi-cursor or substitute plugin for bulk edits. No flash.nvim / leap.nvim
-for character-level motion. These are common productivity multipliers that
-are absent.
+**Gap:** No multi-cursor or substitute plugin for bulk edits. No indent
+guides (indent-blankline.nvim) for visual nesting depth.
 
 ---
 
@@ -233,18 +236,18 @@ deliberately chose not to include produces a misleading number.
 | Navigation & File Switching | 25% | 4.5 | 1.13 |
 | LSP Intelligence | 25% | 4.0 | 1.00 |
 | Autocompletion & Snippets | 15% | 4.0 | 0.60 |
-| Editing Primitives | 15% | 3.5 | 0.53 |
+| Editing Primitives | 15% | 4.5 | 0.68 |
 | Git Workflow | 10% | 4.5 | 0.45 |
 | UI & Visual Feedback | 10% | 4.0 | 0.40 |
-| | | **Total** | **4.1 / 5.0** |
+| | | **Total** | **4.3 / 5.0** |
 
-### Overall: 4.1 / 5.0 (82%) — Strong
+### Overall: 4.3 / 5.0 (85%) — Strong
 
 Every feature that is configured is configured well. The plugin set is
-conservative (20 plugins, no redundancy), keymaps are mnemonic and
+conservative (21 plugins, no redundancy), keymaps are mnemonic and
 discoverable via which-key, and Mason + lazy.nvim keep the maintenance
-burden near zero. The 0.9 points lost come from missing editing primitives
-(comment toggling, autopairs, motion plugin) — not from architectural gaps.
+burden near zero. Five mini.nvim modules and flash.nvim cover the full
+range of editing primitives with minimal config lines.
 
 ---
 
@@ -263,20 +266,18 @@ this adds comfort for direct use."* This shapes three design decisions:
 
 ---
 
-## Highest-Impact Potential Improvements
+## Remaining Potential Improvements
 
-Ranked by effort-to-impact ratio for this specific workflow:
+Lower-priority additions that could incrementally improve the setup:
 
 | Priority | Addition | Impact | Effort |
 |----------|----------|--------|--------|
-| 1 | **mini.comment** or Comment.nvim | Comment toggling is used constantly; `gcc`/`gc` motions | 1 line |
-| 2 | **mini.pairs** or nvim-autopairs | Auto-close brackets/quotes saves keystrokes on every insertion | 1 line |
-| 3 | **flash.nvim** or leap.nvim | Character-level jumping replaces `f`/`t` and search for in-view navigation | ~5 lines |
-| 4 | **indent-blankline.nvim** | Visual indent guides help in Python and nested JS/TS | ~3 lines |
-| 5 | **oil.nvim** | File system as a buffer; lightweight directory editing | ~5 lines |
+| 1 | **indent-blankline.nvim** | Visual indent guides help in Python and nested JS/TS | ~3 lines |
+| 2 | **oil.nvim** | File system as a buffer; lightweight directory editing | ~5 lines |
+| 3 | **trouble.nvim** | Persistent diagnostics panel, better than quickfix | ~5 lines |
 
-These five additions would raise the composite score to approximately
-**4.3 / 5.0** with minimal configuration complexity.
+These are preference-level additions, not gaps. The current config covers
+all high-frequency editing operations.
 
 ---
 
@@ -287,7 +288,7 @@ configuration is well-organized with clear section headers, consistent
 formatting, and logical plugin ordering. It does not need to be split into
 multiple files until it exceeds ~800–1000 lines.
 
-**Plugin count (20):** Conservative and intentional. Each plugin serves a
+**Plugin count (21):** Conservative and intentional. Each plugin serves a
 clear purpose with no redundancy. Startup time should be fast given lazy.nvim's
 event-based loading.
 

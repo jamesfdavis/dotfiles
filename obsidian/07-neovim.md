@@ -153,6 +153,23 @@ Visual mode: select lines then `Space hs` to stage or `Space hr` to reset just t
 | `sd'` | Surround delete quotes |
 | `sr)"` | Surround replace parens with quotes |
 
+### Comment toggling (mini.comment)
+
+| Key | Action |
+|-----|--------|
+| `gcc` | Toggle comment on current line |
+| `gc` + motion | Toggle comment on motion (e.g. `gcap` for paragraph) |
+| `gc` (visual) | Toggle comment on selection |
+
+### Jump anywhere (flash.nvim)
+
+| Key | Action |
+|-----|--------|
+| `s` + 2 chars | Flash jump — type two characters, then a label to jump |
+| `S` | Flash Treesitter — select treesitter nodes |
+
+Flash replaces multi-step `/search` workflows for in-view navigation. Press `s`, type two characters from where you want to go, and press the highlighted label.
+
 ### Search
 
 | Key | Action |
@@ -234,7 +251,10 @@ Diagnostics show inline as virtual text. Errors are underlined. Use `[d` / `]d` 
 | **todo-comments.nvim** | Highlights TODO/FIXME/HACK in comments |
 | **mini.ai** | Better around/inside text objects |
 | **mini.surround** | Add/delete/replace surrounding brackets, quotes |
+| **mini.comment** | Toggle comments with `gcc` / `gc` + motion |
+| **mini.pairs** | Auto-close brackets, quotes, backticks |
 | **mini.statusline** | Lightweight status bar |
+| **flash.nvim** | Jump anywhere with `s` + 2 chars |
 | **guess-indent.nvim** | Auto-detects file indentation |
 | **nvim-web-devicons** | File type icons (Nerd Font) |
 | **lazy.nvim** | Plugin manager (auto-bootstraps on first run) |
@@ -422,6 +442,9 @@ yy p                Copy a line, paste it
 u                   Undo
 ciw                 Replace a word
 saiw"               Surround word with quotes
+gcc                 Toggle comment on line
+gcap                Comment a paragraph
+s{2chars}           Flash jump to any visible location
 /search             Find text in file
 :%s/old/new/g       Find and replace in file
 :Lazy               Open plugin manager
