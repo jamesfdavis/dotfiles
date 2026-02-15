@@ -33,11 +33,11 @@ The global `CLAUDE.md` is intentionally lean. Per [context engineering best prac
 
 ```mermaid
 graph LR
-    A[/scaffold] --> B[/plan]
-    B --> C[/issues]
-    C --> D[/build]
-    D --> E[/verify]
-    E --> F[Commit & PR]
+    A[scaffold] --> B[plan]
+    B --> C[issues]
+    C --> D[build]
+    D --> E[verify]
+    E --> F[Commit and PR]
 
     B -.->|small task| D
     D -.->|no UI| F
