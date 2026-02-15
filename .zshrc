@@ -127,7 +127,7 @@ else
 fi
 
 command -v gh &>/dev/null && eval "$(gh completion -s zsh)"
-command -v wrangler &>/dev/null && eval "$(wrangler completions zsh 2>/dev/null)" || true
+command -v wrangler &>/dev/null && eval "$(wrangler complete zsh 2>/dev/null)" || true
 
 # ------------------------------------------------------------------------------
 # History
