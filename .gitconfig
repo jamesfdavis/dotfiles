@@ -31,6 +31,7 @@
     autocrlf = input
     excludesfile = ~/.gitignore
     attributesfile = ~/.gitattributes
+    hooksPath = ~/dotfiles/hooks
     precomposeunicode = true
     untrackedCache = true
 

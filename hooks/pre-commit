@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Global pre-commit hook - gitleaks secret scanning
+# Installed via dotfiles: core.hooksPath = ~/dotfiles/hooks
+
+# Run gitleaks on staged changes
+if command -v gitleaks &>/dev/null; then
+    gitleaks git --pre-commit --staged --verbose
+    if [ $? -ne 0 ]; then
+        echo ""
+        echo "gitleaks: Secret detected in staged changes. Commit blocked."
+        echo "If this is a false positive, commit with: git commit --no-verify"
+        exit 1
+    fi
+fi
+
+# Run local project hooks if they exist (so per-project hooks still work)
+local_hook="$(git rev-parse --git-dir)/hooks/pre-commit"
+if [ -x "$local_hook" ]; then
+    "$local_hook" "$@"
+fi

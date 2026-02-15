@@ -28,6 +28,7 @@ brew "python@3.12"                      # System Python for tooling
 brew "git"
 brew "gh"                               # GitHub CLI
 brew "lazygit"                          # Terminal UI for git
+brew "gitleaks"                         # Secret scanning pre-commit hook
 
 # ------------------------------------------------------------------------------
 # Containers (Cloudflare D1/R2 local dev, databases)
