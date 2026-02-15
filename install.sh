@@ -11,6 +11,7 @@
 # 5. Node.js LTS via NVM
 # 6. npm globals (claude-code, wrangler)
 # 7. Chrome DevTools MCP server for Claude Code
+# 8. Cloudflare Docs MCP server for Claude Code
 
 set -e
 
@@ -46,27 +47,27 @@ echo -e "${GREEN}  Running on macOS${NC}"
 echo ""
 
 # Step 1: Homebrew
-echo -e "${YELLOW}  Step 1/7: Homebrew...${NC}"
+echo -e "${YELLOW}  Step 1/8: Homebrew...${NC}"
 "$DOTFILES_DIR/scripts/setup-homebrew.sh"
 echo ""
 
 # Step 2: Symlink dotfiles + config
-echo -e "${YELLOW}  Step 2/7: Symlinking dotfiles...${NC}"
+echo -e "${YELLOW}  Step 2/8: Symlinking dotfiles...${NC}"
 "$DOTFILES_DIR/bootstrap.sh"
 echo ""
 
 # Step 3: macOS defaults
-echo -e "${YELLOW}  Step 3/7: Applying macOS defaults...${NC}"
+echo -e "${YELLOW}  Step 3/8: Applying macOS defaults...${NC}"
 "$DOTFILES_DIR/scripts/setup-macos.sh"
 echo ""
 
 # Step 4: SSH Signing Key
-echo -e "${YELLOW}  Step 4/7: SSH commit signing + Keychain persistence...${NC}"
+echo -e "${YELLOW}  Step 4/8: SSH commit signing + Keychain persistence...${NC}"
 "$DOTFILES_DIR/scripts/setup-ssh-signing.sh"
 echo ""
 
 # Step 5: Node.js + npm globals
-echo -e "${YELLOW}  Step 5/7: Installing Node.js LTS via NVM...${NC}"
+echo -e "${YELLOW}  Step 5/8: Installing Node.js LTS via NVM...${NC}"
 
 # Determine HOMEBREW_PREFIX for NVM
 if [[ $(uname -m) == "arm64" ]]; then
@@ -87,7 +88,7 @@ else
 fi
 
 # Step 6: npm globals
-echo -e "${YELLOW}  Step 6/7: Installing npm globals...${NC}"
+echo -e "${YELLOW}  Step 6/8: Installing npm globals...${NC}"
 if command -v npm &>/dev/null; then
     npm install -g @anthropic-ai/claude-code 2>/dev/null && \
         echo -e "${GREEN}  Installed claude-code${NC}" || \
@@ -102,9 +103,15 @@ fi
 echo ""
 
 # Step 7: Chrome DevTools MCP
-echo -e "${YELLOW}  Step 7/7: Chrome DevTools MCP server...${NC}"
+echo -e "${YELLOW}  Step 7/8: Chrome DevTools MCP server...${NC}"
 "$DOTFILES_DIR/scripts/setup-chrome-mcp.sh" || \
     echo -e "${YELLOW}  Chrome MCP setup skipped (can retry: $DOTFILES_DIR/scripts/setup-chrome-mcp.sh)${NC}"
+echo ""
+
+# Step 8: Cloudflare Docs MCP
+echo -e "${YELLOW}  Step 8/8: Cloudflare Docs MCP server...${NC}"
+"$DOTFILES_DIR/scripts/setup-cloudflare-mcp.sh" || \
+    echo -e "${YELLOW}  Cloudflare Docs MCP setup skipped (can retry: $DOTFILES_DIR/scripts/setup-cloudflare-mcp.sh)${NC}"
 echo ""
 
 # Post-install verification
@@ -134,6 +141,10 @@ command -v gh &>/dev/null && \
 (claude mcp list 2>/dev/null | grep -q "chrome-devtools") && \
     echo -e "${GREEN}  Chrome DevTools MCP registered${NC}" || \
     { echo -e "${YELLOW}  Chrome DevTools MCP not registered (run: claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest)${NC}"; }
+
+(claude mcp list 2>/dev/null | grep -q "cloudflare-docs") && \
+    echo -e "${GREEN}  Cloudflare Docs MCP registered${NC}" || \
+    { echo -e "${YELLOW}  Cloudflare Docs MCP not registered (run: claude mcp add cloudflare-docs -- npx mcp-remote@latest https://docs.mcp.cloudflare.com/sse)${NC}"; }
 
 if [ "$_fail" -eq 1 ]; then
     echo ""
