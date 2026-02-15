@@ -90,3 +90,36 @@ function genpass() {
     local length="${1:-24}"
     openssl rand -base64 "$length" | tr -d "=+/" | cut -c1-"$length"
 }
+
+# Fetch llms.txt from any domain
+# Usage: llmstxt svelte.dev           → fetches https://svelte.dev/llms.txt
+#        llmstxt svelte.dev full      → fetches https://svelte.dev/llms-full.txt
+#        llmstxt svelte.dev small     → fetches https://svelte.dev/llms-small.txt
+function llmstxt() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: llmstxt <domain> [full|small|medium]"
+        echo "  llmstxt svelte.dev        → /llms.txt"
+        echo "  llmstxt svelte.dev full   → /llms-full.txt"
+        return 1
+    fi
+
+    local domain="$1"
+    local variant="${2:-}"
+    local url
+
+    if [[ -n "$variant" ]]; then
+        url="https://${domain}/llms-${variant}.txt"
+    else
+        url="https://${domain}/llms.txt"
+    fi
+
+    local status
+    status=$(curl -s -o /dev/null -w "%{http_code}" "$url" 2>/dev/null)
+
+    if [[ "$status" == "200" ]]; then
+        curl -s "$url" 2>/dev/null
+    else
+        echo "No llms.txt found at $url (HTTP $status)"
+        return 1
+    fi
+}
