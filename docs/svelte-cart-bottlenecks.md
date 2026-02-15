@@ -66,11 +66,18 @@ the result before reporting completion.
 claude mcp add --transport stdio playwright -- npx -y @playwright/mcp@latest
 ```
 
-### Option C: Chrome DevTools MCP (debugging)
+### Option C: Chrome DevTools MCP (performance / network / debugging)
 
 ```bash
-claude mcp add chrome-devtools --scope project npx chrome-devtools-mcp@latest
+claude mcp add chrome-devtools -- \
+  npx chrome-devtools-mcp@latest \
+  --headless=true \
+  --isolated=true \
+  --no-usage-statistics \
+  --viewport=1280x720
 ```
+
+Flags: `--headless` (terminal-native, no GUI), `--isolated` (temp profile), `--no-usage-statistics` (opt out of telemetry), `--viewport` (consistent screenshots).
 
 **Verify setup:** Run `/mcp` inside Claude Code to see connected servers.
 

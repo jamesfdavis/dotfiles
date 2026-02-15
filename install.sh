@@ -140,7 +140,7 @@ command -v gh &>/dev/null && \
 
 (claude mcp list 2>/dev/null | grep -q "chrome-devtools") && \
     echo -e "${GREEN}  Chrome DevTools MCP registered${NC}" || \
-    { echo -e "${YELLOW}  Chrome DevTools MCP not registered (run: claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest)${NC}"; }
+    { echo -e "${YELLOW}  Chrome DevTools MCP not registered (run: claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest --headless=true --isolated=true --no-usage-statistics --viewport=1280x720)${NC}"; }
 
 (claude mcp list 2>/dev/null | grep -q "cloudflare-docs") && \
     echo -e "${GREEN}  Cloudflare Docs MCP registered${NC}" || \
