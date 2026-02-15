@@ -2,7 +2,17 @@
 # ------------------------------------------------------------------------------
 # setup-chrome-mcp.sh - Register Chrome DevTools MCP server with Claude Code
 #
-# Requires: claude (npm @anthropic-ai/claude-code), Node.js 20+, Chrome
+# Provides 26 tools across performance tracing, network inspection, debugging,
+# input automation, navigation, and emulation via Chrome DevTools Protocol.
+#
+# Key flags for Claude Code dev sessions:
+#   --headless=true        Terminal-native; no visible browser needed for profiling
+#   --isolated=true        Temporary profile; no interference with normal Chrome
+#   --no-usage-statistics  Opt out of anonymous telemetry
+#   --viewport=1280x720    Consistent viewport for screenshots/snapshots
+#
+# Requires: claude (npm @anthropic-ai/claude-code), Node.js 20.19+, Chrome
+# Repo: https://github.com/ChromeDevTools/chrome-devtools-mcp
 # Docs: https://developer.chrome.com/blog/chrome-devtools-mcp
 # ------------------------------------------------------------------------------
 set -e
@@ -30,11 +40,22 @@ if claude mcp list 2>/dev/null | grep -q "chrome-devtools"; then
 fi
 
 # Register Chrome DevTools MCP server with Claude Code
+# Flags tuned for terminal-native Claude Code sessions:
+#   --headless       no GUI needed for perf/network/debug tools
+#   --isolated       temp profile avoids leaking browsing state
+#   --no-usage-stats opt out of telemetry
+#   --viewport       stable size for consistent screenshots
 echo "  Registering Chrome DevTools MCP server..."
-if claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest 2>/dev/null; then
+if claude mcp add chrome-devtools -- \
+    npx chrome-devtools-mcp@latest \
+    --headless=true \
+    --isolated=true \
+    --no-usage-statistics \
+    --viewport=1280x720 2>/dev/null; then
     echo -e "  ${GREEN}Chrome DevTools MCP registered${NC}"
 else
-    echo -e "  ${YELLOW}Chrome DevTools MCP registration failed (can retry: claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest)${NC}"
+    echo -e "  ${YELLOW}Chrome DevTools MCP registration failed${NC}"
+    echo -e "  ${YELLOW}Retry: claude mcp add chrome-devtools -- npx chrome-devtools-mcp@latest --headless=true --isolated=true --no-usage-statistics --viewport=1280x720${NC}"
     exit 1
 fi
 
