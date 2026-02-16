@@ -69,3 +69,7 @@ wrp  # wrangler deploy -- that's it
 ```
 
 Wrangler reads `wrangler.toml` for configuration. Secrets are managed separately via `wrsec`.
+
+## Best practices
+
+See [Workers Best Practices](../docs/cloudflare-workers-best-practices.md) for production patterns covering configuration, streaming, architecture (Queues vs Workflows, Hyperdrive, Durable Objects), observability, security, and testing.
