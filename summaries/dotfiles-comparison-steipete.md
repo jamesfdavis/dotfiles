@@ -35,7 +35,7 @@ what Peter Steinberger describes across his two posts:
 | **Desktop** | None mentioned | Tauri |
 | **Browser ext** | None mentioned | Chrome extension |
 | **Testing** | vitest, testing-library, Playwright | Mentioned but not detailed |
-| **AI agent** | Claude Code (sole agent) | GPT-5 Codex (primary), multi-model |
+| **AI agent** | Claude Code (sole agent) | Multi-model: Claude Code + OpenAI GPT-5/Codex (pragmatic per-task selection) |
 | **Agent instances** | Single agent, sequential workflow | 3-8 parallel instances in tmux grid |
 | **Terminal** | Ghostty | tmux (terminal not specified) |
 | **Shell** | Zsh + Starship | Not detailed |
@@ -54,7 +54,7 @@ what Peter Steinberger describes across his two posts:
 | Practice | Your Approach | Steinberger's Approach |
 |----------|--------------|----------------------|
 | **Agent count** | 1 agent at a time | 3-8 agents in parallel (tmux 3x3 grid) |
-| **Agent model** | Claude Code only | GPT-5 Codex primary, multi-model |
+| **Agent model** | Claude Code only | Multi-model: Claude Code + GPT-5/Codex (best tool per task) |
 | **Prompting style** | Structured slash commands + skillchain roles | Conversational ("just talk to it") |
 | **Planning** | `/plan` command with stack constraints | "Discuss" and "give me options" -- no rigid plan mode |
 | **Task scoping** | GitHub issues via `/issues` command | "Blast radius thinking" -- scope to limit impact |
@@ -68,7 +68,13 @@ what Peter Steinberger describes across his two posts:
 
 ---
 
-## Cost Comparison: Claude Code vs. GPT Codex
+## Cost Comparison: Claude Code vs. OpenAI Codex
+
+> **Note:** OpenAI Codex is OpenAI's cloud-based agentic coding tool (part of
+> ChatGPT). Steinberger uses **both** Claude Code and OpenAI's models -- his
+> `agents.md` symlinked to `claude.md` confirms Claude Code usage, while he
+> credits GPT-5 as a quality unlock and references Codex for cross-project work.
+> He's pragmatically multi-model, not locked to either provider.
 
 ### Subscription Plans
 
@@ -113,10 +119,12 @@ gives 300-1,500 messages/5hrs but limits are message-based, not token-based.
   Claude cache reads)
 - Claude offers 50% batch processing discount for non-urgent tasks
 
-**Steinberger's cost profile:** Running 3-8 parallel Codex instances burning
-tokens constantly. At API rates with GPT-5.2-Codex, this would be extremely
-expensive. He likely uses the ChatGPT Pro $200/mo plan, making parallel agents
-cost-effective within message limits.
+**Steinberger's cost profile:** Running 3-8 parallel agent instances (Claude Code
+and/or OpenAI Codex) burning tokens constantly. He uses a multi-model approach,
+picking the best tool per task and language. At API rates this would be extremely
+expensive across either provider. He likely uses subscription plans for both
+($200/mo Claude Max + $200/mo ChatGPT Pro), making parallel agents cost-effective
+within their respective limits.
 
 **Your cost profile:** Single Claude Code agent with structured commands that
 reduce wasted tokens. The Max $200/mo plan is the sweet spot for heavy daily
