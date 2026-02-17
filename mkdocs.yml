@@ -1,0 +1,83 @@
+site_name: dotfiles
+site_description: Agent-first Cloudflare development on macOS
+site_url: https://jamesfdavis.github.io/dotfiles/
+repo_url: https://github.com/jamesfdavis/dotfiles
+repo_name: jamesfdavis/dotfiles
+
+docs_dir: .
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Home: README.md
+  - Getting Started:
+      - Quickstart: docs/QUICKSTART.md
+      - SSH Keys: docs/KEYS.md
+  - Stack Guides:
+      - Stack Overview: obsidian/00-stack.md
+      - Ghostty + Starship: obsidian/01-ghostty-starship.md
+      - Claude Code: obsidian/02-claude-code.md
+      - Cloudflare: obsidian/03-cloudflare.md
+      - Docker: obsidian/04-docker.md
+      - Git Workflow: obsidian/05-git-workflow.md
+      - Python + uv: obsidian/06-python-uv.md
+      - Neovim: obsidian/07-neovim.md
+      - FZF + ripgrep + fd: obsidian/08-fzf-ripgrep-fd.md
+      - CLI Utilities: obsidian/09-cli-utilities.md
+      - Node + NVM: obsidian/10-node-nvm.md
+      - Lazygit: obsidian/11-lazygit.md
+      - GitHub CLI: obsidian/12-github-cli.md
+      - Zsh Shell: obsidian/13-zsh-shell.md
+      - Claude PKM: obsidian/14-claude-pkm.md
+  - Reference:
+      - Dev Home (Obsidian): obsidian/README.md
+      - Obsidian Quickstart: obsidian/15-quickstart.md
+      - Neovim Efficiency: docs/NEOVIM-EFFICIENCY-ANALYSIS.md
+      - Svelte Cart Bottlenecks: docs/svelte-cart-bottlenecks.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - admonition
+  - pymdownx.details
+  - toc:
+      permalink: true
+  - attr_list
+
+plugins:
+  - search
+
+exclude_docs: |
+  .git/
+  node_modules/
+  site/
