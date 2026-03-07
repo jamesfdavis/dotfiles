@@ -158,3 +158,5 @@ setopt NO_CASE_GLOB
 if [[ "$OSTYPE" == "darwin"* ]]; then
     ssh-add --apple-load-keychain 2>/dev/null
 fi
+export GPG_TTY=$(tty)
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
