@@ -87,23 +87,23 @@ dotfiles/
 
 ```mermaid
 graph LR
-    S["/scaffold"] --> P["/plan"]
-    P --> I["/issues"]
-    I --> B["/build"]
-    B --> V["/verify"]
+    S["Scaffold"] --> P["Plan"]
+    P --> I["Issues"]
+    I --> B["Build"]
+    B --> V["Verify"]
     V --> C["Commit & PR"]
 
     P -.->|small task| B
     B -.->|no UI| C
 ```
 
-| Command | Purpose |
-|---------|---------|
-| `/scaffold` | Generate a new SvelteKit PWA + Cloudflare project |
-| `/plan` | Research codebase, evaluate Svelte 5 / Workers / PWA constraints, draft design |
-| `/issues` | Break plan into sized, ordered GitHub issues with dependency links |
-| `/build` | Layered TDD: unit (vitest) → component (testing-library) → E2E (playwright/browser) |
-| `/verify` | Browser-based UI verification via `claude --chrome` |
+| Phase | Purpose |
+|-------|---------|
+| Scaffold | Generate a new SvelteKit PWA + Cloudflare project |
+| Plan | Research codebase, evaluate Svelte 5 / Workers / PWA constraints, draft design |
+| Issues | Break plan into sized, ordered GitHub issues with dependency links |
+| Build | Layered TDD: unit (vitest) → component (testing-library) → E2E (playwright/browser) |
+| Verify | Browser-based UI verification via `claude --chrome` |
 
 ## Key aliases
 

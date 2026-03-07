@@ -6,7 +6,7 @@
 No project template exists in the dotfiles repo. Every new project requires manual setup:
 `npm create svelte@latest`, Cloudflare adapter wiring, D1 bindings, `wrangler.toml`, etc.
 
-**Mitigation:** Create a reusable `/scaffold` slash command or cookiecutter template.
+**Mitigation:** Create a reusable scaffold template or cookiecutter.
 
 ### 2. Blind UI Iteration
 Claude Code is terminal-native. It generates Svelte components with zero visual feedback
@@ -19,7 +19,7 @@ on layout, responsive behavior, or animations. For a shopping cart where UX deta
 Svelte 5's runes (`$state`, `$derived`, `$effect`) can produce subtle bugs in cart logic:
 derived totals, persisted cart across tabs via `$effect` + localStorage, optimistic updates.
 
-**Mitigation:** Use `/tdd` with component tests + browser runtime verification.
+**Mitigation:** Use layered TDD with component tests + browser runtime verification.
 
 ### 4. Backend Integration Gap
 Shopping cart needs: product catalog (D1), cart persistence (KV/D1), image storage (R2),
@@ -27,8 +27,8 @@ and payment integration (Stripe). Testing the full flow requires `wrangler dev` 
 
 **Mitigation:** Browser access + `wrangler dev` running locally.
 
-### 5. Context Loss Between Slash Commands
-The `/plan` -> `/milestone` -> `/issues` -> `/tdd` workflow is sequential but stateless
+### 5. Context Loss Between Workflow Phases
+The Plan -> Issues -> Build workflow is sequential but stateless
 between sessions. Architectural decisions can be lost.
 
 **Mitigation:** Persist decisions in a design doc referenced by project `CLAUDE.md`.
@@ -87,8 +87,8 @@ Flags: `--headless` (terminal-native, no GUI), `--isolated` (temp profile), `--n
 
 | Bottleneck | Fix |
 |---|---|
-| No project scaffold | `/scaffold` slash command or template |
+| No project scaffold | Scaffold template or cookiecutter |
 | Blind UI iteration | `claude --chrome` |
-| Svelte 5 edge cases | `/tdd` + component tests + browser |
+| Svelte 5 edge cases | Layered TDD + component tests + browser |
 | Backend integration | Browser access + `wrangler dev` |
 | Context loss | Design doc in project `CLAUDE.md` |

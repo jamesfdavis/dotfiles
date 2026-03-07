@@ -6,7 +6,7 @@ A private Obsidian vault for project knowledge that persists across Claude Code 
 
 Dotfiles are public config -- they define *how* you work. PKM is private knowledge -- it captures *what* you've learned, decided, and planned across projects. These live in separate repos:
 
-- **Dotfiles** (`~/.dotfiles`) — Shell config, editor setup, global CLAUDE.md, slash commands
+- **Dotfiles** (`~/.dotfiles`) — Shell config, editor setup, global CLAUDE.md
 - **PKM vault** (`~/vault` or similar) — Project notes, decision logs, session summaries, goals
 
 The PKM vault is gitignored from project repos but version-controlled in its own private repo.

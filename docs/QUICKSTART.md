@@ -41,15 +41,15 @@ Agent writes code, you steer. Everything runs in the terminal.
 
 Features follow: **Scaffold → Plan → Issues → Build → Verify**
 
-In Claude Code, use the slash commands:
+Follow the workflow phases:
 
-- `/scaffold` — generate a new SvelteKit PWA + Cloudflare project
-- `/plan` — research codebase, draft stack-aware design, get approval
-- `/issues` — break plan into sized GitHub issues with dependency links
-- `/build` — layered TDD: unit → component → E2E, then commit
-- `/verify` — browser-based UI verification via `claude --chrome`
+- **Scaffold** — generate a new SvelteKit PWA + Cloudflare project
+- **Plan** — research codebase, draft stack-aware design, get approval
+- **Issues** — break plan into sized GitHub issues with dependency links
+- **Build** — layered TDD: unit → component → E2E, then commit
+- **Verify** — browser-based UI verification via `claude --chrome`
 
-Skip steps when appropriate: existing project? skip `/scaffold`. Small fix? skip to `/build`. No UI? skip `/verify`.
+Skip steps when appropriate: existing project? skip Scaffold. Small fix? skip to Build. No UI? skip Verify.
 
 ## Day-one commands
 

@@ -19,15 +19,10 @@ Claude Code reads config from `~/.claude/`, which is symlinked from the dotfiles
 ```
 ~/.claude/
 ├── CLAUDE.md              # Global preferences (stack, workflow, conventions)
-└── commands/              # Slash commands available in every session
-    ├── scaffold.md        # /scaffold — Generate SvelteKit PWA + Cloudflare project
-    ├── plan.md            # /plan — Stack-aware research & design doc
-    ├── issues.md          # /issues — Break plan into sized GitHub issues
-    ├── build.md           # /build — Layered TDD: unit → component → E2E
-    └── verify.md          # /verify — Browser-based UI verification
+└── docs/                  # Reference docs loaded via project CLAUDE.md
 ```
 
-The global `CLAUDE.md` is intentionally lean. Per [context engineering best practices](https://www.humanlayer.dev/blog/writing-a-good-claude-md), fewer instructions means better instruction-following. Workflow details live in slash commands that only enter context when invoked.
+The global `CLAUDE.md` is intentionally lean. Per [context engineering best practices](https://www.humanlayer.dev/blog/writing-a-good-claude-md), fewer instructions means better instruction-following. The workflow phases are documented in CLAUDE.md as a mental model, not as executable commands.
 
 ## Developer Workflow
 
@@ -50,7 +45,7 @@ graph LR
 5. **Verify** — Open in Chrome (`claude --chrome`), visually verify, check console, test interactions
 6. **Commit** — Conventional commits, PR via `gh pr create`
 
-For small tasks, skip straight to `/build`. For non-UI changes, skip `/verify`. The workflow is composable, not rigid.
+For small tasks, skip straight to Build. For non-UI changes, skip Verify. The workflow is composable, not rigid.
 
 ## Browser Feedback Loop
 
@@ -75,7 +70,7 @@ After making any frontend changes, visually verify in Chrome before reporting co
 | Component | testing-library/svelte | Render, interaction, reactive state |
 | E2E | playwright or Chrome | User flows, navigation, offline |
 
-The `/build` command drives all three layers in sequence.
+The Build phase drives all three layers in sequence.
 
 ## Project Setup
 

@@ -17,26 +17,26 @@ The agent writes the code, you steer. Everything runs in the terminal.
 
 ```mermaid
 graph TD
-    S["/scaffold"] --> P["/plan"]
-    P --> I["/issues"]
-    I --> B["/build"]
-    B --> V["/verify"]
+    S["Scaffold"] --> P["Plan"]
+    P --> I["Issues"]
+    I --> B["Build"]
+    B --> V["Verify"]
     V --> C["Commit & PR"]
 
     P -.->|small task| B
     B -.->|no UI| C
 ```
 
-| Phase | Command | What happens |
-|-------|---------|--------------|
-| Generate | `/scaffold` | New SvelteKit PWA + Cloudflare project |
-| Design | `/plan` | Research codebase, draft stack-aware design, get approval |
-| Track | `/issues` | Break plan into sized, ordered GitHub issues |
-| Implement | `/build` | Layered TDD: unit (vitest) -> component (testing-library) -> E2E (playwright) |
-| Verify | `/verify` | Browser-based UI verification via `claude --chrome` |
-| Ship | `gh pr create` | Conventional commit, open PR |
+| Phase | What happens |
+|-------|--------------|
+| Scaffold | Generate a new SvelteKit PWA + Cloudflare project |
+| Plan | Research codebase, draft stack-aware design, get approval |
+| Issues | Break plan into sized, ordered GitHub issues |
+| Build | Layered TDD: unit (vitest) -> component (testing-library) -> E2E (playwright) |
+| Verify | Browser-based UI verification via `claude --chrome` |
+| Ship | Conventional commit, open PR via `gh pr create` |
 
-Skip steps when appropriate -- existing project? skip `/scaffold`. Small fix? straight to `/build`. No UI? skip `/verify`.
+Skip steps when appropriate -- existing project? skip Scaffold. Small fix? straight to Build. No UI? skip Verify.
 
 ## Vault Index
 
@@ -44,7 +44,7 @@ Every tool in the stack has a dedicated reference doc.
 
 - [[00-stack|The Stack]] — Full stack overview and principles
 - [[01-ghostty-starship|Ghostty + Starship]] — Terminal config, keybindings, prompt
-- [[02-claude-code|Claude Code]] — Agent workflow, aliases, slash commands, browser loop
+- [[02-claude-code|Claude Code]] — Agent workflow, aliases, browser loop
 - [[03-cloudflare|Cloudflare]] — Workers, D1, KV, R2, Wrangler aliases
 - [[04-docker|Docker]] — Colima, Docker Compose, cleanup
 - [[05-git-workflow|Git Workflow]] — Aliases, commit signing, branch strategy
