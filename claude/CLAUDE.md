@@ -1,6 +1,6 @@
 # Developer Preferences
 
-Agent-first, terminal-native, Cloudflare-native development. Neovim as editor, Ghostty as terminal.
+Global instructions for all projects. Agent-first, terminal-native, Cloudflare-native development.
 
 ## Output
 
@@ -9,19 +9,7 @@ Agent-first, terminal-native, Cloudflare-native development. Neovim as editor, G
 
 ## Workflow
 
-All features follow: Scaffold → Plan → Issues → Build → Verify.
-
-Use the slash commands to drive each phase:
-- `/scaffold` — Generate a new SvelteKit PWA + Cloudflare project with opinionated defaults
-- `/plan` — Research codebase, draft a stack-aware design doc, get approval before coding
-- `/issues` — Break approved plan into sized, ordered GitHub issues with dependency links
-- `/build` — Implement with layered TDD: unit (vitest) → component (testing-library) → E2E (playwright/browser)
-- `/verify` — Browser-based UI verification via `claude --chrome`
-
-Skip steps when appropriate:
-- Existing project? Skip `/scaffold`.
-- Small fix? Skip `/plan` and `/issues`, go straight to `/build`.
-- No UI changes? Skip `/verify`.
+All features follow: Scaffold > Plan > Issues > Build > Verify. Scaffold a new project if needed, plan and get approval before coding, break work into GitHub issues, implement with layered TDD (unit > component > E2E), then visually verify UI changes in Chrome. Skip steps proportional to task size -- small fixes can go straight to build.
 
 ## Stack
 
@@ -40,46 +28,12 @@ Skip steps when appropriate:
 | Search | ripgrep, fd, fzf |
 | Browser | `claude --chrome` for UI verification feedback loop |
 
-## Svelte 5 Rules
-
-- Always use runes: `$state`, `$derived`, `$effect`.
-- Never use legacy Svelte 4 patterns: `$:`, `writable()`, `readable()`, `derived()`.
-- Server-side code goes in `src/lib/server/` or `+page.server.ts` / `+server.ts`.
-- Components go in `src/lib/components/`, stores in `src/lib/stores/`.
-
-## Testing Layers
-
-| Layer | Tool | Location | Tests |
-|-------|------|----------|-------|
-| Unit | vitest | `tests/unit/` | Stores, utils, API handlers |
-| Component | testing-library/svelte | `tests/component/` | Render, interaction, reactive state |
-| E2E | playwright or Chrome | `tests/e2e/` | User flows, navigation, offline |
-
-After making any frontend changes, visually verify in Chrome before reporting completion (if `claude --chrome` is available).
-
-## LLM-Friendly Documentation (llms.txt)
-
-When looking up framework or platform docs, prefer fetching llms.txt URLs over browsing full documentation sites. These are concise, LLM-optimized, and version-matched.
-
-### Stack docs (curated)
-
-| Library | URL | Notes |
-|---------|-----|-------|
-| SvelteKit | `https://svelte.dev/docs/kit/llms.txt` | SvelteKit-specific |
-| Svelte | `https://svelte.dev/llms-small.txt` | Svelte 5 compressed |
-| Svelte (full) | `https://svelte.dev/llms-full.txt` | Complete Svelte + SvelteKit |
-| Cloudflare Workers | `https://developers.cloudflare.com/workers/llms-full.txt` | Workers API |
-| Cloudflare Pages | `https://developers.cloudflare.com/pages/llms-full.txt` | Pages deployment |
-| Cloudflare Agents | `https://developers.cloudflare.com/agents/llms-full.txt` | Agents SDK |
-| Cloudflare (index) | `https://developers.cloudflare.com/llms.txt` | All products index |
-| Vite | `https://vite.dev/llms.txt` | Build tooling |
-
-Tailwind CSS v4 has no official llms.txt. Use training data or fetch docs manually.
-
-For libraries not listed above, check `<domain>/llms.txt` or use the Cloudflare Docs MCP tool.
-
 ## Conventions
 
 - Conventional commits: `<type>(<scope>): <description>`
 - Test before commit. Verify changes compile and pass before suggesting a commit.
 - Prefer `pnpm` for JS/TS projects, `uv` for Python projects.
+
+## Project-Specific Docs
+
+For SvelteKit + Cloudflare projects, see `claude/docs/sveltekit-cloudflare.md` for Svelte 5 rules, testing layers, and llms.txt references.
