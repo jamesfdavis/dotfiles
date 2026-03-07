@@ -46,6 +46,11 @@ dotfiles/
 │   ├── starship.toml       # Prompt config    -> ~/.config/starship.toml
 │   └── nvim/init.lua       # Neovim config    -> ~/.config/nvim/
 │
+├── .devcontainer/
+│   ├── devcontainer.json   # Claude Code devcontainer config
+│   ├── Dockerfile          # node:20 + firewall + Claude Code
+│   └── init-firewall.sh    # Default-deny egress firewall
+│
 ├── scripts/
 │   ├── setup-homebrew.sh   # Brew + bundle
 │   └── setup-ssh-signing.sh# SSH keys + Keychain persistence
@@ -64,7 +69,10 @@ dotfiles/
 │   ├── 10-node-nvm.md
 │   ├── 11-lazygit.md
 │   ├── 12-github-cli.md
-│   └── 13-zsh-shell.md
+│   ├── 13-zsh-shell.md
+│   ├── 14-claude-pkm.md
+│   ├── 15-quickstart.md
+│   └── 16-devcontainer.md
 │
 ├── docs/
 │   └── KEYS.md             # SSH key docs
@@ -187,6 +195,7 @@ The `obsidian/` folder contains developer workflow notes for every tool in the s
 | [13-zsh-shell](obsidian/13-zsh-shell.md) | Plugins, history, functions, shell options |
 | [14-claude-pkm](obsidian/14-claude-pkm.md) | Private Obsidian vault for persistent knowledge |
 | [15-quickstart](obsidian/15-quickstart.md) | Install, post-install checklist, day-one commands |
+| [16-devcontainer](obsidian/16-devcontainer.md) | Sandboxed Claude Code on macOS with OrbStack + network firewall |
 
 ## Maintenance
 

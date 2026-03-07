@@ -53,6 +53,7 @@ nav:
   - Reference:
       - Dev Home (Obsidian): obsidian/README.md
       - Obsidian Quickstart: obsidian/15-quickstart.md
+      - Devcontainer + OrbStack: obsidian/16-devcontainer.md
       - Neovim Efficiency: docs/NEOVIM-EFFICIENCY-ANALYSIS.md
       - Svelte Cart Bottlenecks: docs/svelte-cart-bottlenecks.md
 
