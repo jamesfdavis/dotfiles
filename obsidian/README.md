@@ -58,6 +58,7 @@ Every tool in the stack has a dedicated reference doc.
 - [[13-zsh-shell|Zsh Shell]] — Plugins, history, functions, shell options
 - [[14-claude-pkm|Claude PKM]] — Private Obsidian vault for persistent knowledge
 - [[15-quickstart|Quickstart]] — Install, post-install checklist, day-one commands
+- [[16-devcontainer|Devcontainer + OrbStack]] — Sandboxed Claude Code on macOS with network firewall
 
 ## External Docs
 

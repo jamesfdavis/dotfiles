@@ -1,0 +1,46 @@
+{
+  "name": "Claude Code",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "CLAUDE_CODE_VERSION": "latest"
+    }
+  },
+
+  "runArgs": [
+    "--cap-drop=ALL",
+    "--cap-add=NET_ADMIN",
+    "--cap-add=NET_RAW",
+    "--security-opt=no-new-privileges",
+    "--pids-limit=512",
+    "--memory=4g"
+  ],
+
+  "remoteUser": "node",
+  "containerUser": "node",
+
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind,consistency=cached",
+    "source=claude-code-history-${devcontainerId},target=/commandhistory,type=volume"
+  ],
+
+  "remoteEnv": {},
+
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "usernamehw.errorlens"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true
+      }
+    }
+  }
+}
